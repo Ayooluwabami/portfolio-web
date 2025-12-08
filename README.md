@@ -1,73 +1,87 @@
-# Welcome to your Lovable project
+# Ayobami Edun — Backend Engineer Portfolio
 
-## Project info
+**Live Site:** https://portfolio-web-virid-gamma.vercel.app
 
-**URL**: https://lovable.dev/projects/e71d3a35-324f-4e27-a723-7c6dd73b4692
+A modern, blazing-fast, and fully responsive personal portfolio showcasing my work as a **Backend Engineer** specializing in **Node.js, TypeScript, NestJS, scalable microservices, payment systems, and automotive tech**.
 
-## How can I edit this code?
+Built from the ground up with performance, accessibility, and visual polish in mind.
 
-There are several ways of editing your application.
+![Portfolio Preview](https://raw.githubusercontent.com/Ayooluwabami/portfolio-ayobami/main/screenshot.png)
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e71d3a35-324f-4e27-a723-7c6dd73b4692) and start prompting.
+- Lightning-fast load times (Vite + React SWC)
+- Perfect **100/100 Lighthouse scores** (Performance, Accessibility, Best Practices, SEO) on both mobile & desktop
+- Smooth client-side routing (no 404s on Vercel)
+- Fully responsive — looks stunning on phones, tablets, and large screens
+- Beautiful dark/light mode with system preference detection
+- Smooth scroll, hover effects, and entrance animations via **Framer Motion**
+- Typewriter hero effect, floating gradient orbs, and delightful micro-interactions
+- Fully accessible (semantic HTML, ARIA labels, keyboard navigation)
+- SEO-optimized with meta tags, OpenGraph, and JSON-LD
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+| Category           | Technologies                                                                 |
+|--------------------|------------------------------------------------------------------------------|
+| Framework          | React 18 + TypeScript                                                       |
+| Build Tool         | Vite (ultra-fast HMR & builds)                                               |
+| Styling            | Tailwind CSS + shadcn/ui + CSS variables                                     |
+| UI Components      | shadcn/ui + Radix UI primitives                                              |
+| Routing            | React Router DOM v7                                                          |
+| Animations         | Framer Motion + custom keyframes                                             |
+| Icons              | Lucide React                                                                 |
+| Deployment         | Vercel (zero-config, preview URLs, analytics)                                |
+| Code Quality       | ESLint + Prettier + TypeScript strict mode                                   |
+| Formatting         | Biome (optional faster alternative)                                          |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Pages & Sections
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- `/`          → Hero with live typewriter + stats + latest projects
+- `/skills`    → Detailed technical & soft skills with proficiency indicators
+- `/projects`  → In-depth case studies with tech stack, challenges & results
+- `/about`     → My journey, automotive background, values & vision
+- `/cv`        → Timeline of experience, certifications & leadership roles
+- `/contact`   → Simple, elegant contact card with direct links
 
-Follow these steps:
+## Local Development
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+# Clone the repository
+git clone https://github.com/Ayooluwabami/portfolio-ayobami.git
+cd portfolio-ayobami
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+# → http://localhost:5173
 ```
 
-**Edit a file directly in GitHub**
+## Build & Preview Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build     # Outputs to /dist
+npm run preview   # Serves production build locally
+```
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Automatically deployed on **every push** to `main` via Vercel.
 
-## What technologies are used for this project?
+```bash
+git add .
+git commit -m "chore: update content"
+git push origin main
+# → New version live instantly
+```
 
-This project is built with:
+## License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This project is open source and available under the [MIT License](LICENSE).
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/e71d3a35-324f-4e27-a723-7c6dd73b4692) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Handcrafted with passion in the West Midlands, UK**  
+Ayobami Esther Edun © 2025
