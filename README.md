@@ -6,8 +6,6 @@ A modern, blazing-fast, and fully responsive personal portfolio showcasing my wo
 
 Built from the ground up with performance, accessibility, and visual polish in mind.
 
-![Portfolio Preview](https://raw.githubusercontent.com/Ayooluwabami/portfolio-ayobami/main/screenshot.png)
-
 ## Features
 
 - Lightning-fast load times (Vite + React SWC)
