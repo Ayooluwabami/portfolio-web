@@ -132,7 +132,7 @@ const Home = () => {
                 >
                   {[
                     { href: "https://github.com/Ayooluwabami", icon: <Github size={20} />, label: "GitHub" },
-                    { href: "https://www.linkedin.com/in/ayobami-ekundayo", icon: <Linkedin size={20} />, label: "LinkedIn" },
+                    { href: "https://www.linkedin.com/in/ayobami-edun", icon: <Linkedin size={20} />, label: "LinkedIn" },
                     { href: "mailto:ayobamieae@gmail.com", icon: <Mail size={20} />, label: "Email" }
                   ].map((social) => (
                     <a 
@@ -270,7 +270,7 @@ const Home = () => {
                   <ArrowRight size={18} />
                 </Link>
                 <a 
-                  href="https://www.linkedin.com/in/ayobami-ekundayo"
+                  href="https://www.linkedin.com/in/ayobami-edun"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-secondary flex items-center gap-2"
