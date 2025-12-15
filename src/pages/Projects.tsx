@@ -195,6 +195,14 @@ const Projects = () => {
       link: "https://github.com/Ayooluwabami/library-management-system",
       github: "https://github.com/Ayooluwabami/library-management-system",
       category: "backend"
+    },
+    {
+      title: "Personal Portfolio v1",
+      description: "My previous portfolio website showcasing projects and skills with a clean, modern design and smooth animations.",
+      tech: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Vercel"],
+      link: "https://my-portfolio-iota-hazel.vercel.app",
+      github: "https://github.com/Ayooluwabami/my-portfolio",
+      category: "frontend"
     }
   ];
 
@@ -202,6 +210,7 @@ const Projects = () => {
     { value: 'all', label: 'All' },
     { value: 'featured', label: 'Featured' },
     { value: 'backend', label: 'Backend' },
+    { value: 'frontend', label: 'Frontend' },
     { value: 'fullstack', label: 'Full Stack' }
   ];
 
