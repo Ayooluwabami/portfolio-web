@@ -1,92 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Briefcase, GraduationCap, Award, Heart, MapPin, Mail, Phone, ArrowRight, Download } from 'lucide-react';
+import { Briefcase, GraduationCap, Award, Heart, MapPin, Mail, Phone, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 
 const CV = () => {
-  const experiences = [
-    {
-      title: "Lead Backend Developer",
-      company: "Ebidhaa Services (DriveWell)",
-      period: "Feb. 2025 – Present",
-      location: "Remote",
-      tech: "Node.js, Restana, TypeScript, MySQL, Redis, Docker, GCP, GitHub Actions, Paystack, Piggyvest",
-      highlights: [
-        "Designed and built backend infrastructure for a car hire and vehicle documentation platform across web, admin dashboard, and mobile app",
-        "Engineered multi-service architecture with secure JWT + RBAC, Redis caching, and encrypted sessions",
-        "Built multi-environment configuration with validation for 40+ critical variables, reducing deployment errors",
-        "Integrated third-party providers (Paystack, Piggyvest, Flutterwave, Termii, WhatsApp API, Metamap, Firebase) for payments, messaging, and CRM",
-        "Implemented CI/CD using GitHub Actions → Docker Buildx → Google Cloud GCE, reducing deployment time by 90%"
-      ]
-    },
-    {
-      title: "Lead Backend Developer",
-      company: "African Institute for Artificial Intelligence (AI4AI)",
-      period: "April 2025 – August 2025",
-      location: "Remote",
-      tech: "NestJS, TypeScript, PostgreSQL, Prisma, Docker, Railway, JWT, Redis, Swagger, Jest",
-      highlights: [
-        "Architected backend for SchoolHub Nigeria, a multi-tenant SaaS platform serving 50+ schools",
-        "Built secure authentication with JWT access/refresh tokens, RBAC, bcrypt/argon2 hashing, and audit logging",
-        "Configured multi-environment deployments with DB pooling, SSL, and automated seeding",
-        "Optimised performance through Redis caching, query optimisation, and API throttling—deployed via Docker + Railway"
-      ]
-    },
-    {
-      title: "Support Staff (Diagnostics & Training)",
-      company: "Auto Clinic, Ibadan",
-      period: "July 2021 – Aug. 2024",
-      location: "Nigeria",
-      highlights: [
-        "Conducted computerized vehicle diagnostics and maintenance for 25+ vehicles weekly",
-        "Led summer workshops training over 50 teenagers on automotive diagnostics and repair fundamentals",
-        "Authored weekly educational automotive articles for 'Gist with the Mechanic' radio segment on Splash FM"
-      ]
-    },
-    {
-      title: "Fleet Supervisor",
-      company: "Metro Africa Express (MAX)",
-      period: "Mar. 2021 – June 2021",
-      location: "Nigeria",
-      highlights: [
-        "Managed refurbishment and documentation for 100+ motorcycles, cutting spare parts costs by 5%",
-        "Oversaw GPS tracker installations and asset monitoring, improving operational efficiency"
-      ]
-    }
-  ];
-
-  const volunteerExperience = [
-    {
-      role: "Acting Assistant Head & Unit Lead",
-      organization: "Global Harvest Teens Church",
-      period: "July 2021 – Sep. 2024",
-      highlights: [
-        "Supervised and mentored 50+ teenagers in leadership and creativity",
-        "Coordinated meetings, maintained records, and designed digital media initiatives"
-      ]
-    },
-    {
-      role: "Researcher & Volunteer",
-      organization: "REES Africa",
-      period: "Jan. 2022 – Sep. 2023",
-      highlights: ["Coordinated literacy drives, donation campaigns, and environmental sustainability initiatives"]
-    }
-  ];
-
-  const education = [
-    { degree: "Introduction to Cybersecurity", school: "Cisco Networking Academy", year: "2025" },
-    { degree: "Diploma in Backend Engineering", school: "AltSchool Africa", year: "2024" },
-    { degree: "JavaScript Essentials", school: "Cisco & JS Institute", year: "2024" },
-    { degree: "Diploma in Automotive Technology (Distinction)", school: "Auto Clinic Academy", year: "2024" },
-    { degree: "Technical Modular Trade Certificate (Distinction)", school: "NABTEB", year: "2022" },
-    { degree: "B.A. Religious Studies (Upper Second Class)", school: "University of Ibadan", year: "2019" }
-  ];
-
-  const awards = [
-    "Dedicated Teen Teacher Award - Global Harvest Church (2021, 2023)",
-    "Astute Volunteer (SDG Literacy Drive) - REES Africa & TNCI Africa (2022)"
-  ];
-
   return (
     <div className="min-h-screen pt-28 pb-20">
       <div className="container mx-auto px-6">
@@ -97,12 +14,12 @@ const CV = () => {
             <h1 className="text-headline mb-6">
               Curriculum <span className="text-gradient">Vitae</span>
             </h1>
-            
+
             {/* Contact Info */}
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-4">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground mb-5">
               <div className="flex items-center gap-1.5">
                 <MapPin size={14} className="text-primary" />
-                <span>Dudley, UK</span>
+                <span>England, United Kingdom</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Phone size={14} className="text-primary" />
@@ -114,12 +31,15 @@ const CV = () => {
               </div>
             </div>
 
-            <div className="flex justify-center gap-4 text-sm">
-              <a href="https://github.com/Ayooluwabami" target="_blank" rel="noopener noreferrer" 
-                 className="text-primary hover:underline">GitHub</a>
-              <span className="text-muted-foreground">|</span>
-              <a href="https://www.linkedin.com/in/ayobami-ekundayo" target="_blank" rel="noopener noreferrer"
-                 className="text-primary hover:underline">LinkedIn</a>
+            <div className="flex justify-center gap-5 text-sm">
+              <a
+                href="https://github.com/Ayooluwabami"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                GitHub
+              </a>
             </div>
           </div>
         </AnimatedSection>
@@ -133,29 +53,60 @@ const CV = () => {
                 Professional Summary
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Backend Engineer specialising in Node.js, TypeScript, NestJS, Restana, Express.js, and scalable microservice architectures. 
-                Experienced in shipping production-ready APIs, optimising SQL and NoSQL databases, integrating secure payment systems 
-                (Paystack, Piggyvest, Stripe, Flutterwave), and building multi-tenant SaaS platforms. Skilled in Redis caching, 
-                cloud services (Google Cloud Storage), CI/CD automation, authentication systems, and RESTful API design.
+                Software Engineer with 2+ years of experience building production-ready applications, specialising in backend 
+                engineering with Node.js, TypeScript, NestJS, and Express, while also delivering front-end interfaces using 
+                React, Vite, and Tailwind. Proven ability to design scalable microservices, integrate complex payment systems, 
+                optimise SQL/NoSQL databases, and deploy cloud-based infrastructure. Delivered multi-tenant SaaS platforms 
+                serving 50+ organisations and reduced deployment time by 90% through CI/CD automation. Collaborative team 
+                contributor experienced in agile delivery, cloud deployments, and full SDLC ownership.
               </p>
             </div>
           </div>
         </AnimatedSection>
 
-        {/* Core Skills */}
+        {/* Core Technical Skills */}
         <AnimatedSection delay={75}>
           <div className="max-w-4xl mx-auto mb-10">
             <h2 className="text-lg font-semibold mb-4">Core Technical Skills</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { label: "Languages & Frameworks", value: "JavaScript, TypeScript, Node.js, NestJS, Express.js, Restana, React" },
-                { label: "Databases", value: "MongoDB, MySQL, PostgreSQL, Redis, Prisma, Knex" },
-                { label: "Security & Payments", value: "JWT, OAuth2, bcrypt, Paystack, Stripe, Piggyvest, Flutterwave" },
-                { label: "DevOps", value: "Git, GitHub Actions, Docker, Google Cloud, Railway, Vercel" }
+                {
+                  label: "Languages & Frameworks",
+                  value: "JavaScript, TypeScript, Node.js, NestJS, Express.js, Restana, React, Vite, Tailwind CSS",
+                },
+                {
+                  label: "Backend & Systems",
+                  value: "Microservices, MVC architecture, Event-driven workflows, Queue processing, Scheduled jobs, Webhooks",
+                },
+                {
+                  label: "Databases",
+                  value: "MongoDB, MySQL, PostgreSQL, Prisma ORM, Knex.js, Redis (caching, session management)",
+                },
+                {
+                  label: "API Development",
+                  value: "REST APIs, OpenAPI/Swagger, Postman, JWT, OAuth2, RBAC, API versioning, pagination, error handling",
+                },
+                {
+                  label: "DevOps & Tools",
+                  value: "Git, GitHub Actions, Docker, Bash/CLI, Render, Vercel, Heroku, Google Cloud Storage",
+                },
+                {
+                  label: "Security & Payments",
+                  value:
+                    "JWT, OAuth2, bcrypt/argon2 hashing, rate limiting, API key management, Stripe, Flutterwave, Paystack, Piggyvest Business",
+                },
+                {
+                  label: "Testing & Logging",
+                  value: "Jest, Supertest (Unit & Integration), Pino, Papertrail",
+                },
+                {
+                  label: "Methodologies",
+                  value: "Agile/Scrum, CI/CD pipelines, Code reviews, SDLC, Documentation-first development",
+                },
               ].map((skill, index) => (
                 <div key={index} className="p-4 bg-secondary/50 rounded-lg border border-border">
-                  <p className="text-sm font-medium text-primary mb-1">{skill.label}</p>
-                  <p className="text-xs text-muted-foreground">{skill.value}</p>
+                  <p className="text-sm font-medium text-primary mb-1.5">{skill.label}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{skill.value}</p>
                 </div>
               ))}
             </div>
@@ -169,88 +120,178 @@ const CV = () => {
               <Briefcase className="text-primary" size={20} />
               Professional Experience
             </h2>
-            <div className="space-y-4">
-              {experiences.map((exp, index) => (
-                <motion.div 
-                  key={index}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="relative pl-5 border-l-2 border-primary/30 hover:border-primary transition-colors"
-                >
-                  <div className="absolute -left-[7px] top-0 w-3 h-3 bg-primary rounded-full" />
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-                      <div>
-                        <h3 className="font-semibold text-primary text-sm">{exp.title}</h3>
-                        <p className="font-medium text-sm">{exp.company}</p>
-                      </div>
-                      <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                        <p>{exp.period}</p>
-                        <p>{exp.location}</p>
-                      </div>
+            <div className="space-y-6">
+              {/* DriveWell */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="relative pl-5 border-l-2 border-primary/30"
+              >
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-primary">Backend Engineer</h3>
+                      <p className="font-medium">Ebidhaa Services (DriveWell Platform)</p>
                     </div>
-                    {exp.tech && (
-                      <p className="text-xs text-muted-foreground mb-2 font-mono">{exp.tech}</p>
-                    )}
-                    <ul className="space-y-1">
-                      {exp.highlights.map((highlight, i) => (
-                        <li key={i} className="flex gap-2 text-xs text-muted-foreground">
-                          <span className="text-primary mt-0.5">•</span>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                      <p>Feb 2025 – Present</p>
+                      <p>Remote</p>
+                    </div>
                   </div>
-                </motion.div>
-              ))}
+                  <p className="text-xs text-muted-foreground mb-3 font-mono">
+                    Node.js, Restana, TypeScript, MySQL, Knex.js, Redis, Paystack, Flutterwave, Piggyvest, Google Cloud Storage, Docker, GitHub Actions
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
+                    <li>Engineered backend for multi-service platform (vehicle hire, towing, documentation, licensing)</li>
+                    <li>Integrated 10+ third-party services: payments, messaging (Termii, WhatsApp, Mailchimp), verification (Metamap), maps</li>
+                    <li>Designed JWT + bcrypt authentication, API key management, Redis sessions</li>
+                    <li>Built multi-env config (40+ validated variables) → improved stability</li>
+                    <li>Implemented CI/CD (GitHub Actions + Docker Buildx + GCE) → 90% faster deployments</li>
+                    <li>Added centralised logging (Papertrail) and SQL query optimisation</li>
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* AI4AI Internship */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="relative pl-5 border-l-2 border-primary/30"
+              >
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-primary">Backend Engineer (Internship)</h3>
+                      <p className="font-medium">African Institute for Artificial Intelligence (AI4AI)</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                      <p>April 2025 – August 2025</p>
+                      <p>Remote</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 font-mono">
+                    NestJS, PostgreSQL, Prisma, Redis, JWT, RBAC
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
+                    <li>Contributed to multi-tenant SaaS backend (SchoolHub) serving 50+ schools</li>
+                    <li>Designed modular services, tenant-aware RBAC, data validation</li>
+                    <li>Implemented JWT auth (access/refresh), bcrypt/argon2, audit logging</li>
+                    <li>Configured env-specific deployments, DB pooling, SSL, auto-migrations, health checks</li>
+                    <li>Improved performance with Redis caching, throttling & query optimisation</li>
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* Auto Clinic */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="relative pl-5 border-l-2 border-primary/30"
+              >
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-primary">Support Staff (Diagnostics & Training)</h3>
+                      <p className="font-medium">Auto Clinic</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                      <p>July 2021 – Aug 2024</p>
+                      <p>Nigeria</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
+                    <li>Performed diagnostics and maintenance for 25+ vehicles weekly</li>
+                    <li>Trained 50+ teenagers on automotive diagnostics</li>
+                    <li>Produced weekly automotive educational content for Splash FM radio</li>
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* MAX */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="relative pl-5 border-l-2 border-primary/30"
+              >
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-primary">Fleet Supervisor</h3>
+                      <p className="font-medium">Metro Africa Express (MAX)</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                      <p>Mar 2021 – June 2021</p>
+                      <p>Nigeria</p>
+                    </div>
+                  </div>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
+                    <li>Managed refurbishment & documentation for 100+ motorcycles</li>
+                    <li>Oversaw GPS installation and asset monitoring</li>
+                  </ul>
+                </div>
+              </motion.div>
             </div>
           </div>
         </AnimatedSection>
 
-        {/* Volunteer & Education */}
-        <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-          {/* Volunteer */}
+        {/* Education & Volunteer – side by side on large screens */}
+        <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* Education */}
           <AnimatedSection delay={125}>
             <div>
               <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Heart className="text-primary" size={20} />
-                Volunteer Work
+                <GraduationCap className="text-primary" size={20} />
+                Education & Certifications
               </h2>
               <div className="space-y-3">
-                {volunteerExperience.map((exp, index) => (
-                  <div key={index} className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <h3 className="font-medium text-primary text-sm">{exp.role}</h3>
-                    <p className="text-sm">{exp.organization}</p>
-                    <p className="text-xs text-muted-foreground mb-2">{exp.period}</p>
-                    <ul className="space-y-1">
-                      {exp.highlights.map((h, i) => (
-                        <li key={i} className="text-xs text-muted-foreground flex gap-2">
-                          <span className="text-primary">•</span>
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
+                {[
+                  { degree: "Introduction to Cybersecurity Certification", inst: "Cisco Networking Academy", year: "2025" },
+                  { degree: "Diploma in Backend Engineering", inst: "AltSchool Africa, School of Engineering", year: "2024" },
+                  { degree: "JavaScript Essentials", inst: "Cisco & JS Institute", year: "2024" },
+                  { degree: "Diploma in Automotive Technology (Distinction)", inst: "Auto Clinic Academy", year: "2024" },
+                  { degree: "Technical Modular Trade Certification (Distinction)", inst: "National Business & Technical Examination Board", year: "2022" },
+                  { degree: "Bachelor of Arts, Religious Studies (Upper Second Class Honours)", inst: "University of Ibadan, Nigeria", year: "2019" },
+                ].map((edu, i) => (
+                  <div key={i} className="p-4 bg-secondary/50 rounded-lg border border-border">
+                    <p className="font-medium text-sm">{edu.degree}</p>
+                    <p className="text-xs text-muted-foreground">{edu.inst} • {edu.year}</p>
                   </div>
                 ))}
               </div>
             </div>
           </AnimatedSection>
 
-          {/* Education */}
+          {/* Volunteer / Leadership */}
           <AnimatedSection delay={150}>
             <div>
               <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <GraduationCap className="text-primary" size={20} />
-                Education
+                <Heart className="text-primary" size={20} />
+                Leadership & Volunteer
               </h2>
-              <div className="space-y-2">
-                {education.map((edu, index) => (
-                  <div key={index} className="p-3 bg-secondary/50 rounded-lg border border-border hover:border-primary/30 transition-colors">
-                    <p className="font-medium text-sm">{edu.degree}</p>
-                    <p className="text-xs text-muted-foreground">{edu.school} • {edu.year}</p>
-                  </div>
-                ))}
+              <div className="space-y-4">
+                <div className="p-4 bg-secondary/50 rounded-lg border border-border">
+                  <h3 className="font-medium text-sm text-primary">Acting Assistant Head & Technical Unit Lead</h3>
+                  <p className="text-sm">Global Harvest Teens Church</p>
+                </div>
+                <div className="p-4 bg-secondary/50 rounded-lg border border-border">
+                  <h3 className="font-medium text-sm text-primary">Researcher & Volunteer</h3>
+                  <p className="text-sm">REES Africa</p>
+                </div>
+                <div className="p-4 bg-secondary/50 rounded-lg border border-border">
+                  <h3 className="font-medium text-sm text-primary">Assistant General Secretary</h3>
+                  <p className="text-sm">NCCF</p>
+                </div>
+                <div className="p-4 bg-secondary/50 rounded-lg border border-border">
+                  <h3 className="font-medium text-sm text-primary">Vice President</h3>
+                  <p className="text-sm">NIFES</p>
+                </div>
               </div>
             </div>
           </AnimatedSection>
@@ -261,11 +302,17 @@ const CV = () => {
           <div className="max-w-4xl mx-auto mb-10">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <Award className="text-primary" size={20} />
-              Awards & Recognition
+              Awards
             </h2>
-            <div className="flex flex-wrap gap-2">
-              {awards.map((award, index) => (
-                <span key={index} className="px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-xs border border-primary/20">
+            <div className="flex flex-wrap gap-3">
+              {[
+                "Dedicated Teen Teacher Award - Global Harvest Church (2021, 2023)",
+                "Astute Volunteer (SDG Literacy Drive) - REES Africa & TNCI Africa (2022)",
+              ].map((award, i) => (
+                <span
+                  key={i}
+                  className="px-4 py-2 bg-primary/10 text-primary text-xs rounded-lg border border-primary/20"
+                >
                   {award}
                 </span>
               ))}
@@ -273,31 +320,12 @@ const CV = () => {
           </div>
         </AnimatedSection>
 
-        {/* Additional Info */}
-        <AnimatedSection delay={200}>
-          <div className="max-w-4xl mx-auto mb-10">
-            <div className="p-5 bg-secondary/50 rounded-xl border border-border">
-              <h2 className="font-semibold mb-3 text-sm">Additional Information</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-muted-foreground">
-                <div>
-                  <p><strong className="text-foreground">Legal Name:</strong> Ayobami Esther Edun</p>
-                  <p><strong className="text-foreground">Previous Name:</strong> Ayobami Esther Ekundayo</p>
-                </div>
-                <div>
-                  <p><strong className="text-foreground">Visa Status:</strong> Skilled Worker Dependent Visa</p>
-                  <p><strong className="text-foreground">Work Authorization:</strong> Eligible to Work in the UK</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-
         {/* CTA */}
-        <AnimatedSection delay={225}>
+        <AnimatedSection delay={200}>
           <div className="max-w-4xl mx-auto text-center">
-            <Link 
-              to="/contact" 
-              className="btn-primary inline-flex items-center gap-2"
+            <Link
+              to="/contact"
+              className="btn-primary inline-flex items-center gap-2 px-6 py-3"
             >
               Get in Touch
               <ArrowRight size={16} />

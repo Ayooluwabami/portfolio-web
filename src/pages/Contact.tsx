@@ -34,7 +34,7 @@ const Contact = () => {
     {
       icon: <Linkedin size={20} />,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/ayobami-ekundayo",
+      href: "https://www.linkedin.com/in/ayobami-edun",
       username: "ayobami-ekundayo"
     }
   ];
@@ -173,7 +173,7 @@ const Contact = () => {
                   Send an Email
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/ayobami-ekundayo"
+                  href="https://www.linkedin.com/in/ayobami-edun"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-secondary flex items-center gap-2 text-sm"
