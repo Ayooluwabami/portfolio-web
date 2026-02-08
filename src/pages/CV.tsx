@@ -53,7 +53,7 @@ const CV = () => {
                 Professional Summary
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Software Engineer with 2+ years of experience building production-ready applications, specialising in backend 
+                Software Engineer with 3+ years of experience building production-ready applications, specialising in backend 
                 engineering with Node.js, TypeScript, NestJS, and Express, while also delivering front-end interfaces using 
                 React, Vite, and Tailwind. Proven ability to design scalable microservices, integrate complex payment systems, 
                 optimise SQL/NoSQL databases, and deploy cloud-based infrastructure. Delivered multi-tenant SaaS platforms 
@@ -149,6 +149,40 @@ const CV = () => {
                     <li>Built multi-env config (40+ validated variables) → improved stability</li>
                     <li>Implemented CI/CD (GitHub Actions + Docker Buildx + GCE) → 90% faster deployments</li>
                     <li>Added centralised logging (Papertrail) and SQL query optimisation</li>
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* Freelance Software Engineer */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 }}
+                className="relative pl-5 border-l-2 border-primary/30"
+              >
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-primary">Software Engineer – Freelance</h3>
+                      <p className="font-medium">Remote</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                      <p>Jan 2023 – Present</p>
+                      <p>Remote</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 font-mono">
+                    Node.js, NestJS, Express.js, Restana, React, Vite, Tailwind, MongoDB, MySQL, Redis, Paystack
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
+                    <li>Delivered backend and frontend solutions for startups and SMEs, specialising in payment systems, REST APIs, and production-ready web applications.</li>
+                    <li>Built and maintained RESTful APIs for car hire, marketplace, and service-booking platforms using Node.js, NestJS, ExpressJS, Restana, MongoDB, MySQL, and Redis.</li>
+                    <li>Implemented secure digital wallet and escrow systems with double-entry ledger logic, webhook verification, dispute handling, and multi-gateway payment integrations (Paystack).</li>
+                    <li>Developed frontend applications with React, Vite, and Tailwind, improving performance, usability, and deployment speed.</li>
+                    <li>Configured Google Workspace and DNS security (SPF, DKIM, DMARC, MTA-STS), significantly improving email deliverability and reliability.</li>
+                    <li>Delivered end-to-end features independently, from requirements and system design to deployment and documentation.</li>
+                    <li>Contributed to Owiwi, a multi-category service marketplace and business automation platform, building backend APIs and platform features enabling service discovery, bookings, and provider workflow automation.</li>
                   </ul>
                 </div>
               </motion.div>
