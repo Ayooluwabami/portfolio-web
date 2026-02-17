@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import CodeSnippet from '../components/CodeSnippet';
 import photoshoot from '@/assets/photoshoot.jpg';
-import { getYearsOfExperienceLabel } from '@/lib/experience';
 
 const Home = () => {
   const [displayText, setDisplayText] = useState('');
@@ -172,17 +171,6 @@ const Home = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
                     </div>
-                    
-                    {/* Years Experience Badge */}
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="absolute -top-3 -right-3 bg-background px-3 py-2 rounded-lg shadow-card border border-border"
-                    >
-                      <p className="text-xl font-bold text-primary">{getYearsOfExperienceLabel()}</p>
-                      <p className="text-[10px] text-muted-foreground">Years Exp.</p>
-                    </motion.div>
                   </div>
                 </motion.div>
 

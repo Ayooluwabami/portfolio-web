@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 import photoshoot from '@/assets/photoshoot.jpg';
 import working from '@/assets/working.jpg';
-import { getYearsOfExperienceLabel } from '@/lib/experience';
 
 const About = () => {
   const expertise = [
@@ -70,11 +69,6 @@ const About = () => {
                       alt="Ayobami Edun" 
                       className="w-full h-full object-cover object-center"
                     />
-                  </div>
-                  {/* Years badge */}
-                  <div className="absolute -bottom-2 -right-2 bg-background px-4 py-3 rounded-lg shadow-card border border-border">
-                    <p className="text-xl font-bold text-primary">{getYearsOfExperienceLabel()}</p>
-                    <p className="text-xs text-muted-foreground">Years Experience</p>
                   </div>
                 </div>
               </div>
