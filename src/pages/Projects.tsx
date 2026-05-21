@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Github, ArrowUpRight, Folder } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Github, ArrowUpRight, Folder, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 
@@ -13,7 +14,7 @@ interface Project {
   category: string;
   role?: string;
   impact?: string;
-  challenges?: string;
+  caseStudy?: string;
 }
 
 const ProjectCard = ({ project }: { project: Project }) => {
@@ -80,6 +81,16 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
       )}
       
+      {project.caseStudy && (
+        <Link
+          to={project.caseStudy}
+          className="inline-flex items-center gap-1.5 text-xs text-primary font-medium mb-3 hover:gap-2 transition-all"
+        >
+          <BookOpen size={12} />
+          Read case study
+        </Link>
+      )}
+
       <div className="flex flex-wrap gap-2">
         {project.tech.slice(0, 5).map((item, index) => (
           <span
@@ -99,20 +110,64 @@ const ProjectCard = ({ project }: { project: Project }) => {
   );
 };
 
-const Projects = () => {
-  const [filter, setFilter] = useState('all');
-
-  const projects: Project[] = [
+const ALL_PROJECTS: Project[] = [
+    {
+      title: "CarePulse — NHS-Aligned Health Platform",
+      description: "Distributed microservices health platform with 8 NestJS services, Redis TCP transport, Next.js BFF web frontend, and React Native mobile app. Features AI-assisted triage (Claude API), real-time queue management via Redis sorted sets, and post-consultation clinical summaries. NHS Login OIDC PKCE, TOTP 2FA, RS256 JWT, immutable audit log for DSP Toolkit compliance.",
+      tech: ["NestJS", "Next.js", "React Native", "EKS", "Kubernetes", "Helm", "Jenkins", "AWS RDS", "ElastiCache", "CloudWatch", "Terraform", "CloudFormation", "Claude API"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "cloud",
+      role: "Backend & Cloud Engineer",
+      impact: "Zero-downtime RollingUpdate on EKS • IRSA (no static credentials) • Full Jenkins CI/CD with Helm staging → smoke test → production",
+      caseStudy: "/projects/carepulse"
+    },
+    {
+      title: "Serverless E-Commerce Order Pipeline",
+      description: "Event-driven order processing pipeline across 9 AWS CloudFormation nested stacks. API Gateway → Python Lambda → SQS with DLQ → ECS Fargate invoice generator → S3 → Lambda → SES email delivery. DynamoDB tracks 8 progressive order statuses with correlation ID tracing end-to-end via CloudWatch Logs Insights.",
+      tech: ["AWS CloudFormation", "ECS Fargate", "SQS", "Lambda (Python)", "SES", "DynamoDB", "S3", "API Gateway", "ECR", "CloudWatch", "SNS", "IAM"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "cloud",
+      role: "Cloud Engineer",
+      impact: "9 nested stacks • 5 least-privilege IAM roles • DLQ + CloudWatch alarm + SNS alert • Full correlation ID tracing",
+      caseStudy: "/projects/serverless-pipeline"
+    },
+    {
+      title: "Three-Tier AWS Architecture",
+      description: "Production-style three-tier architecture on AWS eu-west-2: EC2 + ALB + ASG across 2 AZs, Aurora MySQL RDS in private subnets, HTTPS via ACM, Route 53 custom domain. Full subnet segmentation with least-privilege security groups. Also built a full CloudFormation stack version (VPC, ALB, ASG, EFS, Multi-AZ RDS) validated with a live WordPress deployment.",
+      tech: ["AWS EC2", "ALB", "ASG", "Aurora MySQL", "RDS Multi-AZ", "VPC", "ACM", "Route 53", "EFS", "CloudFormation", "IAM"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "cloud",
+      role: "Cloud Engineer",
+      impact: "Live at the3tierapp.com • HA across 2 AZs • Zero-trust network segmentation"
+    },
+    {
+      title: "Owiwi — Service Marketplace Platform",
+      description: "Multi-category service marketplace and business automation platform. Built full backend with geo-based service discovery, appointment booking, provider workflow automation, AI-powered features via Vertex AI, push notifications, and cloud file storage.",
+      tech: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "Redis", "BullMQ", "AWS S3", "Firebase", "Google Vertex AI", "Gemini API", "OneSignal", "Twilio", "Docker"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "backend",
+      role: "Backend Engineer (Freelance)",
+      impact: "AI-enhanced search • Multi-provider booking • Real-time push notifications • Cloud-hosted media"
+    },
     {
       title: "DriveWell Backend",
       description: "Full backend ecosystem for a nationwide vehicle hire, towing, and documentation platform. Designed multi-service architecture with secure JWT + RBAC, Redis caching, and encrypted sessions.",
-      tech: ["Node.js", "Restana", "TypeScript", "MySQL", "Redis", "Docker", "GCP", "Paystack", "Piggyvest"],
+      tech: ["Node.js", "Restana", "TypeScript", "MySQL", "Redis", "Docker", "GCE", "Google Cloud Storage", "Terraform", "Paystack", "Piggyvest", "GitHub Actions"],
       link: "https://www.drivewellapp.com/",
       github: "https://github.com/Ayooluwabami",
       featured: true,
       category: "backend",
       role: "Lead Backend Developer",
-      impact: "99.9% transaction accuracy • 90% faster deployments via CI/CD • 20% reduced load times"
+      impact: "99.9% transaction accuracy • 90% faster deployments via CI/CD • 20% reduced load times",
+      caseStudy: "/projects/drivewell"
     },
     {
       title: "SchoolHub Nigeria",
@@ -197,6 +252,15 @@ const Projects = () => {
       category: "backend"
     },
     {
+      title: "Facial Recognition App — AWS Serverless",
+      description: "Event-driven facial recognition pipeline: S3 upload triggers Lambda → Amazon Rekognition facial analysis → results written to DynamoDB → returned to React frontend via API Gateway.",
+      tech: ["AWS Lambda", "Amazon Rekognition", "S3", "DynamoDB", "API Gateway", "React", "IAM"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      category: "cloud",
+      role: "Cloud Engineer"
+    },
+    {
       title: "Personal Portfolio v1",
       description: "My previous portfolio website showcasing projects and skills with a clean, modern design and smooth animations.",
       tech: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Vercel"],
@@ -204,17 +268,21 @@ const Projects = () => {
       github: "https://github.com/Ayooluwabami/my-portfolio",
       category: "frontend"
     }
-  ];
+];
 
-  const categories = [
-    { value: 'all', label: 'All' },
-    { value: 'featured', label: 'Featured' },
-    { value: 'backend', label: 'Backend' },
-    { value: 'frontend', label: 'Frontend' },
-    { value: 'fullstack', label: 'Full Stack' }
-  ];
+const CATEGORIES = [
+  { value: 'all', label: 'All' },
+  { value: 'featured', label: 'Featured' },
+  { value: 'cloud', label: 'Cloud' },
+  { value: 'backend', label: 'Backend' },
+  { value: 'frontend', label: 'Frontend' },
+  { value: 'fullstack', label: 'Full Stack' },
+] as const;
 
-  const filteredProjects = projects.filter(project => {
+const Projects = () => {
+  const [filter, setFilter] = useState('all');
+
+  const filteredProjects = ALL_PROJECTS.filter(project => {
     if (filter === 'all') return true;
     if (filter === 'featured') return project.featured;
     return project.category === filter;
@@ -241,7 +309,7 @@ const Projects = () => {
         <AnimatedSection delay={50}>
           <div className="max-w-5xl mx-auto mb-10">
             <div className="flex flex-wrap justify-center gap-2">
-              {categories.map((category) => (
+              {CATEGORIES.map((category) => (
                 <button
                   key={category.value}
                   onClick={() => setFilter(category.value)}

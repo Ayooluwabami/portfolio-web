@@ -4,67 +4,63 @@
 
 @layer base {
   :root {
-    /* Light Mode - Clean White + Deep Navy */
-    --background: 0 0% 100%;           /* #FFFFFF */
-    --foreground: 209 62% 22%;         /* ≈ #1C2A3A – slightly more saturated for readability */
-    
-    --primary: 209 62% 22%;            /* #1C2A3A */
-    --primary-foreground: 0 0% 100%;   /* #FFFFFF */
+    /* Light Mode — White + Deep Navy body, Electric Blue accent */
+    --background: 0 0% 100%;
+    --foreground: 209 62% 22%;           /* #1C2A3A deep navy body text */
 
-    --secondary: 210 25% 96%;
+    --primary: 216 90% 54%;              /* #1D64E0 — deep blue: buttons, active states */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 22% 93%;            /* lifted from 96% → more visible card surfaces */
     --secondary-foreground: 209 62% 22%;
 
-    --accent: 216 100% 66%;            /* #4F8CFF */
+    --accent: 216 100% 66%;              /* #4F8CFF electric blue — hover accents */
     --accent-foreground: 0 0% 100%;
 
-    --muted: 210 20% 93%;
-    --muted-foreground: 210 15% 45%;
+    --muted: 210 18% 90%;
+    --muted-foreground: 210 14% 42%;
 
-    --border: 210 20% 85%;
-    --ring: 216 100% 66%;              /* Focus ring = highlight blue */
+    --border: 210 18% 83%;
+    --ring: 216 100% 66%;
     --radius: 0.75rem;
 
-    /* Highlight Colors – Used for bold, animated, gradient text */
-    --highlight-primary: 216 100% 66%;   /* #4F8CFF – Electric Blue (Light Mode) */
-    --highlight-secondary: 209 62% 22%;  /* Navy fallback */
+    --highlight-primary: 216 100% 66%;   /* #4F8CFF gradient text */
+    --highlight-secondary: 209 62% 22%;
 
-    /* Gradients & Shadows */
-    --gradient-primary: linear-gradient(135deg, #4F8CFF, #3B7AFF);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 25% 96%));
-    --shadow-elegant: 0 4px 24px -8px rgba(28, 42, 58, 0.15);
-    --shadow-hover: 0 16px 48px -12px rgba(28, 42, 58, 0.20);
-    --shadow-card: 0 2px 16px -4px rgba(0, 0, 0, 0.08);
+    --gradient-primary: linear-gradient(135deg, #1D64E0, #4F8CFF);   /* deep → electric blue */
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 22% 93%));
+    --shadow-elegant: 0 4px 24px -8px rgba(29, 100, 224, 0.18);
+    --shadow-hover: 0 16px 48px -12px rgba(29, 100, 224, 0.22);
+    --shadow-card: 0 2px 16px -4px rgba(0, 0, 0, 0.07);
   }
 
   .dark {
-    /* Dark Mode – Rich Dark + Soft Gray */
-    --background: 216 28% 7%;           /* #0D1117 */
-    --foreground: 210 20% 81%;          /* #C5CFD9 */
+    /* Dark Mode — GitHub-style dark + Electric Blue primary */
+    --background: 216 28% 7%;            /* #0D1117 */
+    --foreground: 210 20% 81%;           /* #C5CFD9 */
 
-    --primary: 210 20% 81%;
-    --primary-foreground: 216 28% 7%;
+    --primary: 216 100% 66%;             /* #4F8CFF — NOW the actual accent colour */
+    --primary-foreground: 216 28% 7%;    /* near-black text on blue button */
 
     --secondary: 211 35% 12%;
     --secondary-foreground: 210 20% 81%;
 
-    --accent: 216 100% 66%;             /* Still #4F8CFF – looks amazing on dark */
+    --accent: 243 75% 75%;               /* #818CF8 soft indigo — secondary accent */
     --accent-foreground: 216 28% 7%;
 
     --muted: 211 30% 10%;
-    --muted-foreground: 210 10% 66%;
+    --muted-foreground: 210 10% 58%;
 
     --border: 211 25% 18%;
     --ring: 216 100% 66%;
 
-    /* Highlight Colors – Dark Mode */
-    --highlight-primary: 216 100% 66%;   /* #4F8CFF – bright & vibrant on dark */
-    --highlight-secondary: 0 0% 100%;    /* Pure white fallback */
+    --highlight-primary: 216 100% 66%;   /* #4F8CFF */
+    --highlight-secondary: 0 0% 100%;
 
-    /* Gradients & Shadows – Dark Mode */
-    --gradient-primary: linear-gradient(135deg, #4F8CFF, #6BA3FF);
+    --gradient-primary: linear-gradient(135deg, #4F8CFF, #818CF8);   /* blue → indigo */
     --gradient-subtle: linear-gradient(180deg, hsl(216 28% 7%), hsl(211 35% 12%));
-    --shadow-elegant: 0 4px 24px -8px rgba(79, 140, 255, 0.15);
-    --shadow-hover: 0 16px 48px -12px rgba(79, 140, 255, 0.20);
+    --shadow-elegant: 0 4px 24px -8px rgba(79, 140, 255, 0.18);
+    --shadow-hover: 0 16px 48px -12px rgba(79, 140, 255, 0.24);
     --shadow-card: 0 2px 16px -4px rgba(0, 0, 0, 0.60);
   }
 }

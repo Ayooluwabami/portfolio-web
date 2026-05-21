@@ -1,39 +1,59 @@
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 
-const Skills = () => {
-  const skillCategories = [
+const SKILL_CATEGORIES = [
     {
       title: "Languages & Frameworks",
       skills: ["JavaScript", "TypeScript", "Node.js", "Express.js", "NestJS", "Restana", "React", "Vite", "Tailwind"]
     },
     {
       title: "Databases & Caching",
-      skills: ["MongoDB", "MySQL", "PostgreSQL", "Redis", "Prisma ORM", "Knex"]
+      skills: ["MongoDB", "MySQL", "PostgreSQL", "Redis", "Prisma ORM", "Prisma Accelerate", "Knex", "GeoFirestore"]
     },
     {
-      title: "Cloud & DevOps",
-      skills: ["Google Cloud Platform", "GitHub Actions", "Docker", "Railway", "Render", "Vercel", "Heroku"]
+      title: "AWS",
+      skills: ["EC2", "VPC", "S3", "IAM", "RDS (Aurora MySQL / Oracle Multi-AZ)", "ALB", "ASG", "Lambda", "SQS", "SES", "SNS", "CloudFront", "Route 53", "ACM", "CloudFormation", "SSM", "ECS Fargate", "ECR", "EFS", "DynamoDB", "ElastiCache", "CloudWatch", "CloudTrail", "Lightsail"]
+    },
+    {
+      title: "Azure & GCP",
+      skills: ["Azure VMs", "App Service", "Azure Functions", "Blob Storage", "VNet/NSG", "Entra ID", "Key Vault", "Azure SQL", "GCP Compute Engine", "Google Cloud Storage", "Google Vertex AI"]
+    },
+    {
+      title: "DevOps & IaC",
+      skills: ["Terraform", "AWS CloudFormation", "GitHub Actions", "Jenkins", "Bitbucket Pipelines", "Docker", "Docker Buildx", "Docker Compose", "Kubernetes (EKS)", "Helm", "Bash/Shell scripting"]
+    },
+    {
+      title: "AI & Generative Services",
+      skills: ["Claude API (Anthropic)", "Google Vertex AI", "Gemini API", "Amazon Rekognition", "Firebase Admin", "AI-assisted triage & summaries"]
+    },
+    {
+      title: "Background & Event Systems",
+      skills: ["BullMQ", "Redis Queues", "Redis Pub/Sub", "Redis Sorted Sets", "Event-Driven Architecture", "Cron Jobs", "NestJS Microservices", "Socket.io", "Webhooks", "Health Checks"]
+    },
+    {
+      title: "Notifications & Integrations",
+      skills: ["OneSignal", "Expo Push Notifications", "Firebase FCM", "Twilio", "Termii", "WhatsApp API", "Mailchimp", "Metamap"]
     },
     {
       title: "Security & Payments",
-      skills: ["JWT", "OAuth2", "bcrypt/argon2", "Rate Limiting", "Paystack", "Stripe", "Piggyvest", "Flutterwave"]
+      skills: ["JWT", "OAuth2", "bcrypt/argon2", "Rate Limiting", "RBAC", "API Key Management", "Paystack", "Stripe", "Piggyvest", "Flutterwave"]
     },
     {
       title: "API & Testing",
-      skills: ["REST API Design", "OpenAPI/Swagger", "Postman", "Insomnia", "Jest", "Supertest", "Webhooks"]
+      skills: ["REST API Design", "OpenAPI/Swagger", "Postman", "Insomnia", "Jest", "Supertest", "Pino", "Papertrail"]
     },
     {
       title: "Tools & Methods",
-      skills: ["Git", "GitHub", "Agile/Scrum", "CI/CD", "MVC Architecture", "Microservices", "Bash/CLI"]
+      skills: ["Git", "GitHub", "Agile/Scrum", "CI/CD", "MVC Architecture", "Microservices", "DNS Management (SPF/DKIM/DMARC)", "Bash/CLI"]
     }
-  ];
+];
 
-  const softSkills = [
-    "Leadership", "Team Collaboration", "Problem-Solving", "Critical Thinking", 
-    "Communication", "Time Management", "Agile Delivery", "Mentoring", "Stakeholder Communication"
-  ];
+const SOFT_SKILLS = [
+  "Leadership", "Team Collaboration", "Problem-Solving", "Critical Thinking",
+  "Communication", "Time Management", "Agile Delivery", "Mentoring", "Stakeholder Communication",
+] as const;
 
+const Skills = () => {
   return (
     <div className="min-h-screen pt-28 pb-20">
       <div className="container mx-auto px-6">
@@ -53,7 +73,7 @@ const Skills = () => {
 
         {/* Skills Grid */}
         <div className="max-w-5xl mx-auto space-y-6 mb-16">
-          {skillCategories.map((category, categoryIndex) => (
+          {SKILL_CATEGORIES.map((category, categoryIndex) => (
             <AnimatedSection key={category.title} delay={categoryIndex * 50}>
               <div className="p-6 rounded-xl bg-secondary/50 border border-border">
                 <h2 className="text-lg font-semibold mb-4">{category.title}</h2>
@@ -108,7 +128,7 @@ const Skills = () => {
               </h2>
             </div>
             <div className="flex flex-wrap justify-center gap-2">
-              {softSkills.map((skill, index) => (
+              {SOFT_SKILLS.map((skill, index) => (
                 <motion.span 
                   key={skill}
                   initial={{ opacity: 0, y: 5 }}

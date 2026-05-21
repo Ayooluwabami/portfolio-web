@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Github, Linkedin, ArrowUpRight } from 'lucide-react';
+import { Mail, MapPin, Phone, Github, Linkedin, BookOpen, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 
@@ -19,7 +19,7 @@ const Contact = () => {
     {
       icon: <MapPin size={20} />,
       label: "Location",
-      value: "Dudley, West Midlands, UK",
+      value: "England, United Kingdom",
       href: null
     }
   ];
@@ -35,7 +35,13 @@ const Contact = () => {
       icon: <Linkedin size={20} />,
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/ayobami-edun",
-      username: "ayobami-ekundayo"
+      username: "linkedin.com/in/ayobami-edun"
+    },
+    {
+      icon: <BookOpen size={20} />,
+      label: "Medium",
+      href: "https://medium.com/@ayobamieae",
+      username: "@ayobamieae"
     }
   ];
 
@@ -64,7 +70,7 @@ const Contact = () => {
               <div className="p-6 lg:p-8 space-y-5">
                 <div>
                   <h2 className="text-xl font-bold mb-1">Ayobami Edun</h2>
-                  <p className="text-muted-foreground text-sm">Backend Engineer • API Architect</p>
+                  <p className="text-muted-foreground text-sm">Backend & Cloud Engineer • AWS · Azure · GCP</p>
                 </div>
 
                   {/* Contact Methods */}
@@ -133,7 +139,7 @@ const Contact = () => {
                   key={social.label}
                   href={social.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="me noopener noreferrer"
                   whileHover={{ y: -2 }}
                   className="flex items-center justify-between p-4 bg-secondary/50 rounded-lg border border-border 
                            hover:border-primary/40 transition-all group"

@@ -20,7 +20,7 @@ const About = () => {
     {
       icon: <Cloud size={22} />,
       title: "Cloud & DevOps",
-      description: "Deploying on GCP, Docker, Railway with CI/CD pipelines using GitHub Actions."
+      description: "AWS, Azure, and GCP infrastructure with Terraform, CloudFormation, EKS/Kubernetes, Jenkins, GitHub Actions, and Docker, from three-tier architectures to serverless pipelines."
     },
     {
       icon: <Shield size={22} />,
@@ -77,35 +77,35 @@ const About = () => {
               <div className="space-y-5">
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    I'm a <span className="text-foreground font-medium">results-oriented Backend Engineer</span> with 
-                    a strong foundation in JavaScript, TypeScript, and modern backend frameworks including Node.js, 
-                    Restana, NestJS, and Express.js.
+                    I'm a <span className="text-foreground font-medium">Backend-focused Software & Cloud Engineer</span> with
+                    3+ years building production systems with Node.js, TypeScript, NestJS, and Express,
+                    combined with hands-on cloud and DevOps engineering across AWS, Azure, and GCP.
                   </p>
                   <p>
-                    My passion lies in building <span className="text-foreground font-medium">secure, scalable, and 
-                    user-centric applications</span> with robust database management using MongoDB, MySQL, and PostgreSQL.
+                    I've deployed distributed microservices on{' '}
+                    <span className="text-foreground font-medium">EKS with Kubernetes</span>, built serverless
+                    pipelines across CloudFormation nested stacks, provisioned infrastructure with Terraform,
+                    and automated deployments with Jenkins and GitHub Actions.
                   </p>
                   <p>
-                    Currently based in <span className="text-foreground font-medium">Dudley, West Midlands, UK</span>, 
-                    I work remotely with teams across the globe, bringing ideas to life through clean, efficient code 
-                    and thoughtful architecture.
+                    Currently based in <span className="text-foreground font-medium">England, West Midlands, UK</span>,
+                    I work remotely with teams across the globe, owning delivery from requirements and system design
+                    through to cloud deployment and monitoring.
                   </p>
                   <p>
-                    What drives me is the challenge of solving complex problems and seeing the direct impact of my work. 
-                    Every API endpoint I build, every database I optimize, represents a real improvement in how people 
-                    interact with technology.
+                    Currently pursuing the <span className="text-foreground font-medium">AWS Solutions Architect Associate (SAA-C03)</span> certification.
                   </p>
                 </div>
                 
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-3 pt-4">
                   <div className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <p className="text-xl font-bold text-primary">99.9%</p>
-                    <p className="text-xs text-muted-foreground">API Uptime</p>
+                    <p className="text-xl font-bold text-primary">20+</p>
+                    <p className="text-xs text-muted-foreground">Cloud Projects (AWS/Azure/GCP)</p>
                   </div>
                   <div className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <p className="text-xl font-bold text-primary">50+</p>
-                    <p className="text-xs text-muted-foreground">Mentees Trained</p>
+                    <p className="text-xl font-bold text-primary">90%</p>
+                    <p className="text-xs text-muted-foreground">Faster Deployments via CI/CD</p>
                   </div>
                 </div>
               </div>
@@ -199,14 +199,30 @@ const About = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
-                  { title: "Cybersecurity Certification", org: "Cisco Networking Academy", year: "2025" },
+                  { title: "AWS SimuLearn: Cloud Practitioner", org: "Amazon Web Services (AWS)", year: "Issued Apr 2026", badge: "AWS" },
+                  { title: "Cloud & Advanced DevOps Engineering", org: "Cloudboosta Academy", year: "Ongoing" },
+                  { title: "Introduction to Cybersecurity", org: "Cisco Networking Academy", year: "2025" },
                   { title: "Diploma in Backend Engineering", org: "AltSchool Africa", year: "2024" },
                   { title: "JavaScript Essentials", org: "Cisco & JS Institute", year: "2024" },
-                  { title: "B.A. Religious Studies (2:1)", org: "University of Ibadan", year: "2019" }
+                  { title: "B.A. Religious Studies (2:1)", org: "University of Ibadan", year: "2019" },
                 ].map((edu, index) => (
-                  <div key={index} className="p-4 bg-background/50 rounded-lg border border-border hover:border-primary/30 transition-colors">
-                    <p className="font-medium mb-1">{edu.title}</p>
-                    <p className="text-sm text-muted-foreground">{edu.org} • {edu.year}</p>
+                  <div
+                    key={index}
+                    className={`p-4 rounded-lg border transition-colors ${
+                      edu.badge
+                        ? 'bg-primary/5 border-primary/25 hover:border-primary/40'
+                        : 'bg-background/50 border-border hover:border-primary/30'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <p className="font-medium text-sm">{edu.title}</p>
+                      {edu.badge && (
+                        <span className="shrink-0 text-[10px] font-medium px-1.5 py-0.5 bg-primary/10 text-primary rounded border border-primary/20">
+                          {edu.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{edu.org} · {edu.year}</p>
                   </div>
                 ))}
               </div>

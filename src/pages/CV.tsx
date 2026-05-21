@@ -32,14 +32,9 @@ const CV = () => {
             </div>
 
             <div className="flex justify-center gap-5 text-sm">
-              <a
-                href="https://github.com/Ayooluwabami"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                GitHub
-              </a>
+              <a href="https://github.com/Ayooluwabami" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">GitHub</a>
+              <a href="https://www.linkedin.com/in/ayobami-edun" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">LinkedIn</a>
+              <a href="https://medium.com/@ayobamieae" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Medium</a>
             </div>
           </div>
         </AnimatedSection>
@@ -53,12 +48,14 @@ const CV = () => {
                 Professional Summary
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Software Engineer with 3+ years of experience building production-ready applications, specialising in backend 
-                engineering with Node.js, TypeScript, NestJS, and Express, while also delivering front-end interfaces using 
-                React, Vite, and Tailwind. Proven ability to design scalable microservices, integrate complex payment systems, 
-                optimise SQL/NoSQL databases, and deploy cloud-based infrastructure. Delivered multi-tenant SaaS platforms 
-                serving 50+ organisations and reduced deployment time by 90% through CI/CD automation. Collaborative team 
-                contributor experienced in agile delivery, cloud deployments, and full SDLC ownership.
+                Cloud & Backend-focused Software Engineer with 3+ years of experience building production systems with
+                Node.js, TypeScript, NestJS, and Express, combined with hands-on cloud and DevOps engineering across AWS, Azure, and GCP.
+                Delivered production systems at scale — including an NHS-aligned health platform with 8 NestJS microservices
+                on EKS, a Nigerian service marketplace with 27 modules and dual payment gateways, and a serverless e-commerce
+                order pipeline across 9 CloudFormation nested stacks with ECS Fargate, SQS, Lambda, SES, and DynamoDB.
+                Reduced deployment time by 90% through CI/CD automation and completed 20+ cloud projects covering GitHub Actions,
+                Jenkins, Terraform, CloudFormation, three-tier AWS architectures, and Kubernetes. Currently pursuing
+                AWS Solutions Architect Associate (SAA-C03). UK-based on Skilled Worker Dependent Visa; eligible to work immediately.
               </p>
             </div>
           </div>
@@ -72,36 +69,39 @@ const CV = () => {
               {[
                 {
                   label: "Languages & Frameworks",
-                  value: "JavaScript, TypeScript, Node.js, NestJS, Express.js, Restana, React, Vite, Tailwind CSS",
+                  value: "JavaScript, TypeScript, Python, Node.js, NestJS, Express.js, Restana, React, Next.js, React Native (Expo), Vite, Tailwind CSS",
                 },
                 {
-                  label: "Backend & Systems",
-                  value: "Microservices, MVC architecture, Event-driven workflows, Queue processing, Scheduled jobs, Webhooks",
+                  label: "Backend & Architecture",
+                  value: "Microservices, MVC, Event-driven (BullMQ, EventEmitter2, Redis pub/sub), Queue processing, WebSockets (Socket.io), Scheduled jobs, Webhooks",
                 },
                 {
                   label: "Databases",
-                  value: "MongoDB, MySQL, PostgreSQL, Prisma ORM, Knex.js, Redis (caching, session management)",
+                  value: "PostgreSQL, MongoDB, MySQL, Prisma ORM, Prisma Accelerate, Knex.js, Redis (caching, queues, sorted sets, sessions), GeoFirestore",
                 },
                 {
-                  label: "API Development",
-                  value: "REST APIs, OpenAPI/Swagger, Postman, JWT, OAuth2, RBAC, API versioning, pagination, error handling",
+                  label: "AWS",
+                  value: "EC2, VPC, S3, IAM, RDS (Aurora MySQL Multi-AZ, Oracle Multi-AZ), ALB, ASG, Lambda, SQS, SES, SNS, CloudFront, Route 53, ACM, CloudFormation, SSM, ECS Fargate, ECR, EFS, DynamoDB, ElastiCache, CloudWatch, CloudTrail, Lightsail",
                 },
                 {
-                  label: "DevOps & Tools",
-                  value: "Git, GitHub Actions, Docker, Bash/CLI, Render, Vercel, Heroku, Google Cloud Storage",
+                  label: "Azure & GCP",
+                  value: "Azure VMs, App Service, Functions, Blob Storage, VNet/NSG, Entra ID, RBAC, Key Vault, Azure SQL | GCP Compute Engine, Cloud Storage, Vertex AI",
                 },
                 {
-                  label: "Security & Payments",
-                  value:
-                    "JWT, OAuth2, bcrypt/argon2 hashing, rate limiting, API key management, Stripe, Flutterwave, Paystack, Piggyvest Business",
+                  label: "DevOps & IaC",
+                  value: "Terraform (S3 backend, DynamoDB locking, multi-env, GitHub Actions automation), AWS CloudFormation (nested stacks, cross-stack exports), GitHub Actions, Jenkins (Freestyle, Pipeline, Jenkinsfile, webhook, ECR/ECS/Helm), Bitbucket Pipelines, Docker, Docker Buildx, Kubernetes (EKS, Helm), Bash scripting",
                 },
                 {
-                  label: "Testing & Logging",
-                  value: "Jest, Supertest (Unit & Integration), Pino, Papertrail",
+                  label: "AI & Integrations",
+                  value: "Claude API (Anthropic), Google Vertex AI / Gemini, Amazon Rekognition, Firebase, OneSignal, Expo Push, Twilio, Termii, WhatsApp API, Mailchimp, Metamap, Google Maps",
                 },
                 {
-                  label: "Methodologies",
-                  value: "Agile/Scrum, CI/CD pipelines, Code reviews, SDLC, Documentation-first development",
+                  label: "API, Security & Payments",
+                  value: "OpenAPI/Swagger, JWT (RS256 + HS256), OAuth2, OIDC PKCE, TOTP 2FA, RBAC, bcrypt/argon2, rate limiting, Paystack, Flutterwave, KoraPay, Piggyvest, Stripe",
+                },
+                {
+                  label: "Monitoring & Testing",
+                  value: "CloudWatch (alarms, Logs Insights, FluentBit DaemonSet), CloudTrail, SNS alerts, Papertrail, Pino, Winston, Jest, Supertest, correlation ID tracing",
                 },
               ].map((skill, index) => (
                 <div key={index} className="p-4 bg-secondary/50 rounded-lg border border-border">
@@ -121,6 +121,40 @@ const CV = () => {
               Professional Experience
             </h2>
             <div className="space-y-6">
+              {/* Cloudboosta */}
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="relative pl-5 border-l-2 border-primary/30"
+              >
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-primary">Cloud & DevOps Engineer</h3>
+                      <p className="font-medium">Cloudboosta Academy</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                      <p>Jan 2026 – Present</p>
+                      <p>Remote</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3 font-mono">
+                    AWS (EC2, ECS, EKS, CloudFormation, RDS, Lambda, SQS, SES, DynamoDB, CloudWatch) · Terraform · Jenkins · GitHub Actions · Docker · Kubernetes · Helm · Azure · Python
+                  </p>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
+                    <li>Built end-to-end GitHub Actions CI/CD pipelines: matrix builds, Terraform automation, PR plan comments, staging/production approval gates</li>
+                    <li>Provisioned Jenkins on EC2 with webhook integration, RBAC credentials vault, full Jenkinsfile pipeline, and ECR/ECS ecommerce deployment</li>
+                    <li>Built CarePulse (NHS-aligned health platform) on EKS: IRSA, zero-downtime RollingUpdate, pod security hardening, FluentBit DaemonSet, Jenkins CI/CD: CFN validation → lint/tests → ECR build → Helm staging → smoke test → Helm production</li>
+                    <li>Built serverless e-commerce order pipeline across 9 CloudFormation nested stacks: API Gateway → Lambda → SQS (DLQ) → ECS Fargate → S3 → Lambda → SES; DynamoDB order tracking; CloudWatch correlation ID tracing</li>
+                    <li>Deployed three-tier AWS architecture (EC2/ALB/ASG/Aurora MySQL/ACM/Route 53) and full CloudFormation multi-tier stack validated with live WordPress deployment</li>
+                    <li>Deployed RDS Oracle Multi-AZ; connected via SSM Session Manager; validated manual failover with zero data loss</li>
+                    <li>Completed Azure projects: Blob Storage, VNet/NSG, Entra ID, App Service + Managed Identity + Key Vault, Azure SQL + serverless Functions</li>
+                    <li>Independently resolved a Lightsail VPC peering limitation — architected a cost-optimised hybrid Lightsail + EC2 solution with Nginx reverse proxy</li>
+                  </ul>
+                </div>
+              </motion.div>
+
               {/* DriveWell */}
               <motion.div
                 initial={{ opacity: 0, x: -10 }}
@@ -135,7 +169,7 @@ const CV = () => {
                       <p className="font-medium">Ebidhaa Services (DriveWell Platform)</p>
                     </div>
                     <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>Feb 2025 – Present</p>
+                      <p>Feb 2025 – Dec 2025</p>
                       <p>Remote</p>
                     </div>
                   </div>
@@ -286,6 +320,8 @@ const CV = () => {
               </h2>
               <div className="space-y-3">
                 {[
+                  { degree: "AWS SimuLearn: Cloud Practitioner", inst: "Amazon Web Services (AWS)", year: "Issued Apr 2026", highlight: true },
+                  { degree: "Cloud & Advanced DevOps Engineering (AWS & Azure)", inst: "Cloudboosta Academy", year: "Ongoing" },
                   { degree: "Introduction to Cybersecurity Certification", inst: "Cisco Networking Academy", year: "2025" },
                   { degree: "Diploma in Backend Engineering", inst: "AltSchool Africa, School of Engineering", year: "2024" },
                   { degree: "JavaScript Essentials", inst: "Cisco & JS Institute", year: "2024" },
@@ -293,9 +329,23 @@ const CV = () => {
                   { degree: "Technical Modular Trade Certification (Distinction)", inst: "National Business & Technical Examination Board", year: "2022" },
                   { degree: "Bachelor of Arts, Religious Studies (Upper Second Class Honours)", inst: "University of Ibadan, Nigeria", year: "2019" },
                 ].map((edu, i) => (
-                  <div key={i} className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <p className="font-medium text-sm">{edu.degree}</p>
-                    <p className="text-xs text-muted-foreground">{edu.inst} • {edu.year}</p>
+                  <div
+                    key={i}
+                    className={`p-4 rounded-lg border ${
+                      edu.highlight
+                        ? 'bg-primary/5 border-primary/25'
+                        : 'bg-secondary/50 border-border'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="font-medium text-sm">{edu.degree}</p>
+                      {edu.highlight && (
+                        <span className="shrink-0 text-[10px] font-medium px-2 py-0.5 bg-primary/10 text-primary rounded-full border border-primary/20">
+                          AWS
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">{edu.inst} · {edu.year}</p>
                   </div>
                 ))}
               </div>
@@ -311,8 +361,12 @@ const CV = () => {
               </h2>
               <div className="space-y-4">
                 <div className="p-4 bg-secondary/50 rounded-lg border border-border">
+                  <h3 className="font-medium text-sm text-primary">Worship Team Musician</h3>
+                  <p className="text-sm">Champions Church, Netherton, West Midlands, UK</p>
+                </div>
+                <div className="p-4 bg-secondary/50 rounded-lg border border-border">
                   <h3 className="font-medium text-sm text-primary">Acting Assistant Head & Technical Unit Lead</h3>
-                  <p className="text-sm">Global Harvest Teens Church</p>
+                  <p className="text-sm">Global Harvest International</p>
                 </div>
                 <div className="p-4 bg-secondary/50 rounded-lg border border-border">
                   <h3 className="font-medium text-sm text-primary">Researcher & Volunteer</h3>
@@ -356,14 +410,30 @@ const CV = () => {
 
         {/* CTA */}
         <AnimatedSection delay={200}>
-          <div className="max-w-4xl mx-auto text-center">
-            <Link
-              to="/contact"
-              className="btn-primary inline-flex items-center gap-2 px-6 py-3"
-            >
-              Get in Touch
-              <ArrowRight size={16} />
-            </Link>
+          <div className="max-w-4xl mx-auto text-center space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Want a formatted copy? Download the PDF version of this CV.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {/* TODO: Host your CV PDF on Vercel/S3 and update this href */}
+              <a
+                href="/ayobami-edun-cv.pdf"
+                download
+                className="btn-secondary inline-flex items-center gap-2 px-6 py-3 text-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download PDF
+              </a>
+              <Link
+                to="/contact"
+                className="btn-primary inline-flex items-center gap-2 px-6 py-3"
+              >
+                Get in Touch
+                <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
         </AnimatedSection>
       </div>

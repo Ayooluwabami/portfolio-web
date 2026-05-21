@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react';
+import { Github, Linkedin, Mail, BookOpen, ArrowRight, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import CodeSnippet from '../components/CodeSnippet';
 import photoshoot from '@/assets/photoshoot.jpg';
 
+const ROLES = ['Backend Engineer', 'Cloud & DevOps Engineer', 'API Architect', 'System Designer'] as const;
+
 const Home = () => {
   const [displayText, setDisplayText] = useState('');
-  const roles = ['Backend Engineer', 'API Architect', 'System Designer'];
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentRole = roles[roleIndex];
+    const currentRole = ROLES[roleIndex];
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (displayText.length < currentRole.length) {
@@ -26,13 +27,13 @@ const Home = () => {
           setDisplayText(displayText.slice(0, -1));
         } else {
           setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
+          setRoleIndex((prev) => (prev + 1) % ROLES.length);
         }
       }
     }, isDeleting ? 50 : 100);
 
     return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex, roles]);
+  }, [displayText, isDeleting, roleIndex, ROLES]);
 
 
   return (
@@ -99,15 +100,36 @@ const Home = () => {
                   transition={{ duration: 0.4, delay: 0.2 }}
                   className="text-subheadline mb-8 max-w-lg mx-auto lg:mx-0"
                 >
-                  I build scalable, high-performance backend systems using{' '}
-                  <span className="text-foreground font-medium">Node.js</span>,{' '}
-                  <span className="text-foreground font-medium">TypeScript</span>,{' '}
-                  <span className="text-foreground font-medium">NestJS</span>,{' '}
-                  <span className="text-foreground font-medium">Restana</span>,{' '}
-                  and cloud platforms. Based in the UK.
+                  Cloud & DevOps engineer with a strong focus on backend development. Builds and operates cloud infrastructure on{' '}
+                  <span className="text-foreground font-medium">AWS</span>,{' '}
+                  <span className="text-foreground font-medium">Azure</span>, and{' '}
+                  <span className="text-foreground font-medium">GCP</span>{' '}
+                  — with Terraform, Kubernetes, CI/CD pipelines, and production-grade backend systems.{' '}
+                  Based in the UK.
                 </motion.p>
 
-                <motion.div 
+                {/* Currently pursuing */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.22 }}
+                  className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6"
+                >
+                  {[
+                    { label: "Open to opportunities", dot: "bg-green-500" },
+                  ].map(({ label, dot }) => (
+                    <span
+                      key={label}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium
+                                 bg-secondary border border-border rounded-full text-muted-foreground"
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+                      {label}
+                    </span>
+                  ))}
+                </motion.div>
+
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.25 }}
@@ -119,7 +141,7 @@ const Home = () => {
                   </Link>
                   <Link to="/cv" className="btn-secondary flex items-center gap-2">
                     <Download size={18} />
-                    Download CV
+                    View CV
                   </Link>
                 </motion.div>
 
@@ -132,13 +154,14 @@ const Home = () => {
                   {[
                     { href: "https://github.com/Ayooluwabami", icon: <Github size={20} />, label: "GitHub" },
                     { href: "https://www.linkedin.com/in/ayobami-edun", icon: <Linkedin size={20} />, label: "LinkedIn" },
-                    { href: "mailto:ayobamieae@gmail.com", icon: <Mail size={20} />, label: "Email" }
+                    { href: "https://medium.com/@ayobamieae", icon: <BookOpen size={20} />, label: "Medium" },
+                    { href: "mailto:ayobamieae@gmail.com", icon: <Mail size={20} />, label: "Email" },
                   ].map((social) => (
                     <a 
                       key={social.label}
                       href={social.href} 
                       target={social.href.startsWith('http') ? "_blank" : undefined}
-                      rel={social.href.startsWith('http') ? "noopener noreferrer" : undefined}
+                      rel={social.href.startsWith('http') ? "me noopener noreferrer" : undefined}
                       className="p-3 rounded-lg bg-secondary border border-border hover:border-primary/50 
                                hover:text-primary transition-all duration-200"
                       aria-label={social.label}
@@ -203,20 +226,19 @@ const Home = () => {
             
             <AnimatedSection delay={100}>
               <p className="text-subheadline mb-10">
-                With expertise in JavaScript, TypeScript, and modern frameworks like NestJS, Express.js, and Restana, 
-                I specialize in designing scalable architectures, optimizing database performance, and integrating 
-                secure payment and authentication systems. My work has achieved{' '}
-                <span className="text-foreground font-semibold">99.9% transaction accuracy</span> and{' '}
-                <span className="text-foreground font-semibold">25% faster response times</span>.
+                I build production backend systems with Node.js, NestJS, and TypeScript, and design cloud infrastructure
+                on AWS, Azure, and GCP — using Terraform, CloudFormation, Kubernetes (EKS), Jenkins, and GitHub Actions.
+                From serverless pipelines and multi-tier architectures to scalable microservices, I own delivery{' '}
+                <span className="text-foreground font-semibold">end to end</span>.
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={150}>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { value: "99.9%", label: "API Uptime" },
-                  { value: "30%", label: "Performance Gain" },
-                  { value: "40%", label: "Security Improved" }
+                  { value: "3+", label: "Years Experience" },
+                  { value: "20+", label: "Cloud Projects" },
+                  { value: "90%", label: "Faster Deployments" }
                 ].map((stat, index) => (
                   <div key={index} className="text-center p-5 bg-background rounded-lg border border-border">
                     <p className="text-2xl md:text-3xl font-bold text-primary mb-1">{stat.value}</p>
@@ -235,6 +257,136 @@ const Home = () => {
                   Learn more about my journey
                   <ArrowRight size={18} />
                 </Link>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Currently Building */}
+      <section className="section-padding">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <AnimatedSection>
+              <p className="text-label mb-4">Currently</p>
+              <h2 className="text-section-title mb-10">
+                What I'm <span className="text-gradient">Building Now</span>
+              </h2>
+            </AnimatedSection>
+            <AnimatedSection delay={80}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  {
+                    status: 'Active',
+                    dot: 'bg-green-500',
+                    title: 'CarePulse',
+                    sub: 'NHS-aligned health platform',
+                    detail: '8 NestJS microservices on AWS EKS with Jenkins CI/CD, IRSA, and Kubernetes pod security hardening.',
+                  },
+                  {
+                    status: 'Active',
+                    dot: 'bg-green-500',
+                    title: 'Cloudboosta Academy',
+                    sub: 'Cloud & Advanced DevOps',
+                    detail: 'AWS (EC2, ECS, EKS, CloudFormation, RDS, Lambda) and Azure infrastructure projects.',
+                  },
+                  {
+                    status: 'Active',
+                    dot: 'bg-blue-500',
+                    title: 'Technical Writing',
+                    sub: 'medium.com/@ayobamieae',
+                    detail: 'Writing about backend systems, cloud architecture, and DevOps engineering on Medium.',
+                    href: 'https://medium.com/@ayobamieae',
+                  },
+                ].map((item) => (
+                  <motion.div
+                    key={item.title}
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.2 }}
+                    className="p-5 bg-secondary/50 rounded-xl border border-border hover:border-primary/40 transition-all"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className={`w-2 h-2 rounded-full ${item.dot}`} />
+                      <span className="text-xs font-medium text-muted-foreground">{item.status}</span>
+                    </div>
+                    <h3 className="font-semibold mb-0.5">{item.title}</h3>
+                    {item.href
+                      ? <a href={item.href} target="_blank" rel="me noopener noreferrer" className="text-xs text-primary hover:underline">{item.sub}</a>
+                      : <p className="text-xs text-primary mb-2">{item.sub}</p>
+                    }
+                    <p className="text-xs text-muted-foreground leading-relaxed mt-2">{item.detail}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Writing / Blog */}
+      <section className="section-padding">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <AnimatedSection>
+              <div className="flex items-end justify-between mb-10">
+                <div>
+                  <p className="text-label mb-4">Technical Writing</p>
+                  <h2 className="text-section-title">
+                    From the <span className="text-gradient">Blog</span>
+                  </h2>
+                </div>
+                <a href="https://medium.com/@ayobamieae" target="_blank" rel="me noopener noreferrer"
+                   className="hidden sm:inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all link-underline">
+                  All articles
+                  <ArrowRight size={16} />
+                </a>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={80}>
+              {/* TODO: Replace titles/slugs with your actual Medium article URLs */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                {[
+                  {
+                    title: 'Building a Serverless Order Pipeline with 9 CloudFormation Nested Stacks',
+                    readTime: '8 min read',
+                    tag: 'AWS · CloudFormation',
+                    href: 'https://medium.com/@ayobamieae',
+                  },
+                  {
+                    title: 'Kubernetes on EKS: IRSA, Pod Security Hardening, and Zero-Downtime Deploys',
+                    readTime: '10 min read',
+                    tag: 'AWS · Kubernetes',
+                    href: 'https://medium.com/@ayobamieae',
+                  },
+                  {
+                    title: 'From Monolith to Microservices: How We Cut Deployment Time by 90%',
+                    readTime: '6 min read',
+                    tag: 'DevOps · NestJS',
+                    href: 'https://medium.com/@ayobamieae',
+                  },
+                ].map((article) => (
+                  <motion.a
+                    key={article.title}
+                    href={article.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ y: -3 }}
+                    transition={{ duration: 0.2 }}
+                    className="group p-5 bg-secondary/50 rounded-xl border border-border hover:border-primary/40 transition-all block"
+                  >
+                    <span className="text-[10px] font-medium text-primary uppercase tracking-wider">{article.tag}</span>
+                    <h3 className="text-sm font-semibold mt-2 mb-4 group-hover:text-primary transition-colors leading-snug">
+                      {article.title}
+                    </h3>
+                    <span className="text-xs text-muted-foreground">{article.readTime}</span>
+                  </motion.a>
+                ))}
+              </div>
+              <div className="sm:hidden text-center">
+                <a href="https://medium.com/@ayobamieae" target="_blank" rel="me noopener noreferrer"
+                   className="inline-flex items-center gap-2 text-sm text-primary font-medium">
+                  All articles <ArrowRight size={16} />
+                </a>
               </div>
             </AnimatedSection>
           </div>
