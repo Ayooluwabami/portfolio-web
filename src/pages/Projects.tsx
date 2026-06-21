@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Github, ArrowUpRight, Folder, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
+import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
+import TiltCard from '../components/TiltCard';
+import SpotlightCard from '../components/SpotlightCard';
 
 interface Project {
   title: string;
@@ -19,12 +22,10 @@ interface Project {
 
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
-    <motion.article 
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
+    <article
       className={`group relative bg-secondary/50 rounded-xl p-6 md:p-8
                  border border-border hover:border-primary/40 transition-all duration-200
-                 hover:shadow-elegant`}
+                 hover:shadow-elegant h-full`}
     >
       {project.featured && (
         <div className="absolute top-4 right-4">
@@ -106,11 +107,88 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </span>
         )}
       </div>
-    </motion.article>
+    </article>
   );
 };
 
 const ALL_PROJECTS: Project[] = [
+    {
+      title: "Thina — Recovery & Mental Wellness Platform",
+      description: "Full-stack mental health and recovery ecosystem: NestJS monolith API, dedicated AI microservice, reusable notifications microservice (TCP transport), React web app, and public landing page. Features daily check-ins, recovery journals, streak tracking, peer communities, buddy system, AI-powered journaling assistance via Gemini, multilingual content via Google Translate, and moderated resource library.",
+      tech: ["NestJS", "TypeScript", "PostgreSQL", "Prisma", "Redis", "AWS S3", "Google Gemini API", "Google Translate API", "BullMQ", "OneSignal", "Sentry", "JWT", "React", "Vite", "TanStack Query", "Zustand", "Tailwind CSS"],
+      link: "https://thina.app/",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "fullstack",
+      role: "Lead Fullstack Engineer",
+      impact: "5 repositories • Gemini-powered journaling • Multilingual via Google Translate • Real-time push notifications • Streak & check-in gamification"
+    },
+    {
+      title: "NaijaSafe — Civic Security Intelligence Platform",
+      description: "Full-stack civic safety platform enabling citizens to anonymously report security incidents with geo-tagging. NestJS API with PostGIS for location-aware queries, AWS SNS/SQS event pipeline, S3 media storage, React/Leaflet web frontend with interactive map, and full Terraform + EKS infrastructure with Kubernetes NetworkPolicies and Helm charts.",
+      tech: ["NestJS", "TypeScript", "PostgreSQL", "PostGIS", "Redis", "AWS S3", "SNS", "SQS", "Terraform", "EKS", "Kubernetes", "Helm", "React", "Leaflet", "Zustand", "TanStack Query", "Sentry"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "fullstack",
+      role: "Fullstack & Cloud Engineer",
+      impact: "Geo-aware incident reporting • PostGIS radius queries • Anonymous reporting • EKS + Terraform IaC • AWS event-driven pipeline"
+    },
+    {
+      title: "EKS 3-Tier App — DevSecOps on AWS",
+      description: "Production-grade three-tier application on Amazon EKS with a shift-left DevSecOps pipeline. Provisioned with Terraform (remote state S3+DynamoDB, modular), GitOps via ArgoCD App-of-Apps, monitored with Prometheus + Grafana. GitHub Actions uses OIDC (no static keys); pods use IRSA. NetworkPolicies enforce default-deny between tiers. Every PR blocked by Semgrep, Checkov, Trivy, and Gitleaks before merge.",
+      tech: ["EKS", "Terraform", "ArgoCD", "GitHub Actions", "OIDC", "IRSA", "Prometheus", "Grafana", "Semgrep", "Checkov", "Trivy", "Gitleaks", "ECR", "AWS VPC", "ALB", "NetworkPolicies", "React", "TypeScript", "PostgreSQL"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "cloud",
+      role: "Cloud & DevSecOps Engineer",
+      impact: "Zero static credentials • OIDC + IRSA • Default-deny NetworkPolicies • SBOM + signed provenance on every image • Shift-left security across 4 gate types"
+    },
+    {
+      title: "CI/CD Azure GitOps Pipeline on AKS",
+      description: "Security-gated CI/CD pipeline using Azure DevOps, GitOps (ArgoCD), and AKS. Five mandatory security gates — Gitleaks (secret scan), Checkov (IaC misconfig), Semgrep (SAST), Trivy (container CVE), OWASP ZAP DAST — block any promotion that fails. ArgoCD self-heals from GitHub as the single source of truth. Deploys three polyglot services (Flask, Express, ASP.NET Core) behind NGINX Ingress.",
+      tech: ["Azure DevOps", "AKS", "ArgoCD", "Docker", "Gitleaks", "Checkov", "Semgrep", "Trivy", "OWASP ZAP", "ACR", "Azure Key Vault", "NGINX Ingress", "Helm", "Flask", "Express", "ASP.NET Core"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "cloud",
+      role: "DevSecOps Engineer",
+      impact: "5 security gates before any deployment • GitOps self-healing via ArgoCD • Secrets from Azure Key Vault, never in code • Polyglot multi-service deployment"
+    },
+    {
+      title: "Fulcrum — Secure Infrastructure Blueprint CLI",
+      description: "CLI tool that turns plain-English intent into validated, signed, secure-by-default infrastructure code. Retrieves from a curated blueprint catalogue rather than free-handing AI-generated code. Runs a fail-closed gate (lint, security scan, policy check, cost estimate, signature) before emitting any artifact. AI layer (Anthropic/OpenAI) is optional — without a key it's a deterministic, safe blueprint catalogue.",
+      tech: ["Python", "Anthropic Claude API", "OpenAI API", "Cosign", "Checkov", "Terraform", "CLI", "IaC", "PyPI"],
+      link: "https://github.com/Ayooluwabami",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "cloud",
+      role: "Creator & Engineer",
+      impact: "Fail-closed security gate • Signed artifact with Cosign • Zero vendor lock-in • AI optional — deterministic by default"
+    },
+    {
+      title: "InnovaSwift — Software Consultancy Website",
+      description: "Marketing and conversion site for InnovaSwift, a registered Nigerian software consultancy (Est. 2018) building bespoke web apps, e-learning platforms, and business automation. Designed for earned confidence: proof over promise, terse copy, restraint over decoration. Smooth scroll powered by Lenis. Live in production.",
+      tech: ["React", "Vite", "TypeScript", "Tailwind CSS", "Lenis", "React Router", "Vercel"],
+      link: "https://innovaswift.com.ng/",
+      github: "https://github.com/Ayooluwabami",
+      featured: true,
+      category: "frontend",
+      role: "Frontend Developer",
+      impact: "Live at innovaswift.com.ng • Smooth-scroll with Lenis • Conversion-optimised for project inquiries"
+    },
+    {
+      title: "Thina Landing Page",
+      description: "Public marketing and onboarding landing page for the Thina recovery platform. Lightweight React/Vite single-page site built for fast load times and clear conversion paths. Designed to communicate the platform's purpose to users entering recovery journeys.",
+      tech: ["React", "Vite", "TypeScript", "Tailwind CSS", "React Router"],
+      link: "https://thina.app/",
+      github: "https://github.com/Ayooluwabami",
+      featured: false,
+      category: "frontend",
+      role: "Frontend Developer",
+      impact: "Live at thina.app"
+    },
     {
       title: "CarePulse — NHS-Aligned Health Platform",
       description: "Distributed microservices health platform with 8 NestJS services, Redis TCP transport, Next.js BFF web frontend, and React Native mobile app. Features AI-assisted triage (Claude API), real-time queue management via Redis sorted sets, and post-consultation clinical summaries. NHS Login OIDC PKCE, TOTP 2FA, RS256 JWT, immutable audit log for DSP Toolkit compliance.",
@@ -295,9 +373,9 @@ const Projects = () => {
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-label mb-4">Portfolio</p>
-            <h1 className="text-headline mb-6">
+            <AnimatedHeadline as="h1" className="text-headline mb-6">
               Featured <span className="text-gradient">Projects</span>
-            </h1>
+            </AnimatedHeadline>
             <p className="text-subheadline">
               Real-world projects showcasing expertise in backend development, API architecture, 
               and scalable system design. Each project includes context, my role, technologies used, and measurable impact.
@@ -308,18 +386,25 @@ const Projects = () => {
         {/* Filter */}
         <AnimatedSection delay={50}>
           <div className="max-w-5xl mx-auto mb-10">
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-1 p-1 bg-secondary/50 rounded-xl border border-border w-fit mx-auto">
               {CATEGORIES.map((category) => (
                 <button
                   key={category.value}
                   onClick={() => setFilter(category.value)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`relative px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-150 ${
                     filter === category.value
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary hover:bg-muted text-muted-foreground hover:text-foreground border border-border'
+                      ? 'text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  {category.label}
+                  {filter === category.value && (
+                    <motion.div
+                      layoutId="activeFilter"
+                      className="absolute inset-0 bg-primary rounded-lg"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10">{category.label}</span>
                 </button>
               ))}
             </div>
@@ -334,7 +419,11 @@ const Projects = () => {
           >
             {filteredProjects.map((project, index) => (
               <AnimatedSection key={project.title} delay={index * 30}>
-                <ProjectCard project={project} />
+                <TiltCard intensity={6}>
+                  <SpotlightCard>
+                    <ProjectCard project={project} />
+                  </SpotlightCard>
+                </TiltCard>
               </AnimatedSection>
             ))}
           </motion.div>

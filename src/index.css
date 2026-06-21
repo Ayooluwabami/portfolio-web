@@ -4,68 +4,77 @@
 
 @layer base {
   :root {
-    /* Light Mode — White + Deep Navy body, Electric Blue accent */
-    --background: 0 0% 100%;
-    --foreground: 209 62% 22%;           /* #1C2A3A deep navy body text */
+    /*
+     * Light mode — cool slate base, not pure white.
+     * Hue 215 (cool blue-grey) gives a "technical spec sheet" feel:
+     * precise, readable, clearly not a generic white marketing site.
+     * Cards are distinctly visible against the background.
+     * Primary shifts deeper (42% L) for AA contrast on the lighter surface.
+     */
+    --background: 216 24% 94%;
+    --foreground: 222 32% 11%;
 
-    --primary: 216 90% 54%;              /* #1D64E0 — deep blue: buttons, active states */
+    --primary: 213 72% 40%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 22% 93%;            /* lifted from 96% → more visible card surfaces */
-    --secondary-foreground: 209 62% 22%;
+    --secondary: 216 22% 88%;
+    --secondary-foreground: 222 32% 11%;
 
-    --accent: 216 100% 66%;              /* #4F8CFF electric blue — hover accents */
+    --accent: 213 72% 40%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 210 18% 90%;
-    --muted-foreground: 210 14% 42%;
+    --muted: 216 18% 84%;
+    --muted-foreground: 218 14% 40%;
 
-    --border: 210 18% 83%;
-    --ring: 216 100% 66%;
-    --radius: 0.75rem;
+    --border: 216 18% 78%;
+    --ring: 213 72% 40%;
+    --radius: 0.625rem;
 
-    --highlight-primary: 216 100% 66%;   /* #4F8CFF gradient text */
-    --highlight-secondary: 209 62% 22%;
+    --highlight-primary: 213 72% 40%;
+    --highlight-secondary: 222 32% 11%;
 
-    --gradient-primary: linear-gradient(135deg, #1D64E0, #4F8CFF);   /* deep → electric blue */
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 22% 93%));
-    --shadow-elegant: 0 4px 24px -8px rgba(29, 100, 224, 0.18);
-    --shadow-hover: 0 16px 48px -12px rgba(29, 100, 224, 0.22);
-    --shadow-card: 0 2px 16px -4px rgba(0, 0, 0, 0.07);
+    --gradient-primary: linear-gradient(135deg, hsl(213 72% 36%), hsl(213 72% 54%));
+    --gradient-subtle: linear-gradient(180deg, hsl(216 24% 94%), hsl(216 22% 88%));
+    --shadow-elegant: 0 4px 24px -8px hsl(213 72% 40% / 0.20);
+    --shadow-hover: 0 16px 48px -12px hsl(213 72% 40% / 0.28);
+    --shadow-card: 0 2px 12px -3px hsl(222 32% 11% / 0.10);
   }
 
   .dark {
-    /* Dark Mode — GitHub-style dark + Electric Blue primary */
-    --background: 216 28% 7%;            /* #0D1117 */
-    --foreground: 210 20% 81%;           /* #C5CFD9 */
+    /*
+     * Dark mode — deep charcoal-navy, not GitHub's #0D1117.
+     * Hue 220 (slightly warm navy) at low saturation keeps it
+     * readable without copying GitHub's exact tone.
+     */
+    --background: 222 18% 8%;
+    --foreground: 213 18% 82%;
 
-    --primary: 216 100% 66%;             /* #4F8CFF — NOW the actual accent colour */
-    --primary-foreground: 216 28% 7%;    /* near-black text on blue button */
+    --primary: 213 80% 62%;
+    --primary-foreground: 222 18% 8%;
 
-    --secondary: 211 35% 12%;
-    --secondary-foreground: 210 20% 81%;
+    --secondary: 220 16% 13%;
+    --secondary-foreground: 213 18% 82%;
 
-    --accent: 243 75% 75%;               /* #818CF8 soft indigo — secondary accent */
-    --accent-foreground: 216 28% 7%;
+    --accent: 213 80% 62%;
+    --accent-foreground: 222 18% 8%;
 
-    --muted: 211 30% 10%;
-    --muted-foreground: 210 10% 58%;
+    --muted: 220 14% 11%;
+    --muted-foreground: 214 10% 54%;
 
-    --border: 211 25% 18%;
-    --ring: 216 100% 66%;
+    --border: 220 16% 19%;
+    --ring: 213 80% 62%;
 
-    --highlight-primary: 216 100% 66%;   /* #4F8CFF */
+    --highlight-primary: 213 80% 62%;
     --highlight-secondary: 0 0% 100%;
 
-    --gradient-primary: linear-gradient(135deg, #4F8CFF, #818CF8);   /* blue → indigo */
-    --gradient-subtle: linear-gradient(180deg, hsl(216 28% 7%), hsl(211 35% 12%));
-    --shadow-elegant: 0 4px 24px -8px rgba(79, 140, 255, 0.18);
-    --shadow-hover: 0 16px 48px -12px rgba(79, 140, 255, 0.24);
-    --shadow-card: 0 2px 16px -4px rgba(0, 0, 0, 0.60);
+    --gradient-primary: linear-gradient(135deg, hsl(213 80% 58%), hsl(213 80% 72%));
+    --gradient-subtle: linear-gradient(180deg, hsl(222 18% 8%), hsl(220 16% 13%));
+    --shadow-elegant: 0 4px 24px -8px hsl(213 80% 62% / 0.18);
+    --shadow-hover: 0 16px 48px -12px hsl(213 80% 62% / 0.24);
+    --shadow-card: 0 2px 16px -4px hsl(0 0% 0% / 0.5);
   }
 }
 
-/* Base Styling */
 @layer base {
   * {
     @apply border-border;
@@ -73,7 +82,8 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-feature-settings: 'kern' 1, 'liga' 1;
   }
 
   html {
@@ -81,25 +91,50 @@
   }
 
   ::selection {
-    background: hsl(var(--highlight-primary) / 0.25);
+    background: hsl(var(--highlight-primary) / 0.2);
     color: hsl(var(--foreground));
   }
 }
 
-/* Highlight Text Utility – Use this everywhere for bold/animated text */
 @layer utilities {
+  /* Display font utility — Bricolage Grotesque for headlines */
+  .font-display {
+    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+    font-optical-sizing: auto;
+  }
+
   .text-highlight {
     @apply font-bold text-transparent bg-clip-text;
     background-image: var(--gradient-primary);
   }
 
-  /* Simple bold blue version (great for single words) */
   .text-highlight-solid {
-    @apply font-bold text-highlight-primary;
+    @apply font-bold;
+    color: hsl(var(--highlight-primary));
+  }
+
+  /* Grain / noise overlay — breaks flat-screen sterility */
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+  }
+
+  /* Text balance for headlines */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
   }
 }
 
-/* Components */
 @layer components {
   .container-tight {
     @apply max-w-5xl mx-auto px-6;
@@ -110,48 +145,48 @@
   }
 
   .card-base {
-    @apply bg-secondary/50 backdrop-blur-sm border border-border rounded-xl;
+    @apply bg-secondary/60 border border-border rounded-xl;
   }
 
   .card-hover {
-    @apply transition-all duration-300 
-           hover:border-primary/40 hover:shadow-elegant hover:-translate-y-0.5;
+    @apply transition-all duration-300
+           hover:border-primary/35 hover:shadow-elegant hover:-translate-y-0.5;
   }
 
   .btn-primary {
-    @apply px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium 
-           transition-all duration-200 hover:brightness-110 hover:shadow-elegant active:scale-[0.98];
+    @apply px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-sm
+           transition-all duration-200 hover:brightness-110 hover:shadow-elegant active:scale-[0.97];
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-secondary border border-border rounded-lg font-medium 
-           transition-all duration-200 hover:border-primary/40 hover:bg-secondary/80;
+    @apply px-6 py-2.5 bg-transparent border border-border rounded-lg font-medium text-sm
+           transition-all duration-200 hover:border-primary/40 hover:bg-secondary/60 active:scale-[0.97];
   }
 
   .link-underline {
-    @apply relative after:content-[''] after:absolute after:bottom-0 after:left-0 
-           after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 
+    @apply relative after:content-[''] after:absolute after:bottom-0 after:left-0
+           after:w-0 after:h-px after:bg-primary after:transition-all after:duration-300
            hover:after:w-full;
   }
 
-  /* Text styles */
+  /* Headline — Bricolage Grotesque, tight tracking, balanced wrapping */
   .text-headline {
-    @apply text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1];
+    @apply font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-[-0.02em] text-balance;
   }
 
   .text-subheadline {
-    @apply text-lg sm:text-xl text-muted-foreground leading-relaxed;
+    @apply text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty;
+    max-width: 62ch;
   }
 
   .text-section-title {
-    @apply text-2xl md:text-3xl font-bold tracking-tight;
+    @apply font-display text-2xl md:text-3xl font-bold tracking-[-0.015em] text-balance;
   }
 
   .text-label {
-    @apply text-xs font-medium uppercase tracking-wider text-primary;
+    @apply text-xs font-semibold uppercase tracking-[0.1em] text-primary;
   }
 
-  /* Highlight utilities */
   .text-highlight-primary {
     color: hsl(var(--highlight-primary));
   }
@@ -160,14 +195,14 @@
     color: hsl(var(--highlight-secondary));
   }
 
-  /* Code snippet styling */
+  /* Code window */
   .code-window {
-    @apply bg-secondary/80 backdrop-blur-md border border-border rounded-xl overflow-hidden;
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    @apply bg-secondary/80 border border-border rounded-xl overflow-hidden;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .code-header {
-    @apply flex items-center gap-2 px-4 py-2.5 bg-muted/50 border-b border-border;
+    @apply flex items-center gap-2 px-4 py-2.5 bg-muted/40 border-b border-border;
   }
 
   .code-dot {
@@ -179,11 +214,11 @@
   }
 
   .code-keyword {
-    @apply text-highlight-primary;
+    color: hsl(var(--highlight-primary));
   }
 
   .code-string {
-    @apply text-green-400;
+    @apply text-emerald-500 dark:text-emerald-400;
   }
 
   .code-comment {
@@ -191,7 +226,7 @@
   }
 
   .code-function {
-    @apply text-amber-400;
+    @apply text-amber-500 dark:text-amber-400;
   }
 
   .code-variable {
@@ -199,7 +234,6 @@
   }
 }
 
-/* Utilities */
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
@@ -210,96 +244,118 @@
     background-image: var(--gradient-subtle);
   }
 
-  /* Subtle grid background */
-  .bg-grid {
-    background-image: 
-      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
-    background-size: 64px 64px;
+  /* Dot pattern */
+  .bg-dots {
+    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.12) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 
-  /* Dot pattern background */
-  .bg-dots {
-    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.15) 1px, transparent 1px);
-    background-size: 24px 24px;
+  /* Fine grid */
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 
   .animate-float {
-    animation: float 8s ease-in-out infinite;
+    animation: float 9s ease-in-out infinite;
   }
 
   .animate-float-delayed {
-    animation: float 8s ease-in-out infinite;
-    animation-delay: -4s;
+    animation: float 9s ease-in-out infinite;
+    animation-delay: -4.5s;
   }
 
   .animate-pulse-slow {
-    animation: pulse-slow 3s ease-in-out infinite;
+    animation: pulse-slow 2.8s ease-in-out infinite;
   }
 
-  .font-mono {
-    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  /* Tabular numbers for stats/metrics */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* Animations */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-16px) scale(1.02);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
 }
 
 @keyframes pulse-slow {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
 }
 
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+/* ── Spotlight card ─────────────────────────────────────────────────────────
+   Cursor-following radial glow that illuminates the card surface.
+   --mx / --my are set via JS in SpotlightCard.tsx.
+   When the cursor is absent (--mx not set), the gradient is off-screen.
+   ───────────────────────────────────────────────────────────────────────── */
+.spotlight-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    550px circle at var(--mx, -9999px) var(--my, -9999px),
+    hsl(var(--primary) / 0.13),
+    transparent 42%
+  );
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.25s ease;
+  opacity: 0;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Ensure card children sit above the glow layer */
+.spotlight-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Gradient shimmer on text-gradient elements ──────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.text-gradient-animate {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--primary) / 0.6) 40%,
+    hsl(var(--primary)) 60%,
+    hsl(var(--primary) / 0.6) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: hsl(var(--background)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.45); }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--background));
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
-}
-
-/* Focus styles */
+/* Focus ring */
 *:focus-visible {
   @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
 }

@@ -6,15 +6,15 @@ import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const NAV_LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
+  { to: '/',         label: 'Home' },
+  { to: '/about',    label: 'About' },
   { to: '/projects', label: 'Projects' },
-  { to: '/skills', label: 'Skills' },
-  { to: '/cv', label: 'CV' },
+  { to: '/skills',   label: 'Skills' },
+  { to: '/cv',       label: 'CV' },
 ] as const;
 
 const Navigation = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('theme');
@@ -28,16 +28,13 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location]);
+  useEffect(() => { setMobileMenuOpen(false); }, [location]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  const toggleTheme = () => setIsDark((prev) => !prev);
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -45,9 +42,11 @@ const Navigation = () => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-          scrolled ? 'bg-background/90 backdrop-blur-md border-b border-border py-3' : 'bg-transparent py-4'
+          scrolled
+            ? 'bg-background/92 backdrop-blur-md border-b border-border py-3'
+            : 'bg-transparent py-4'
         }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
@@ -55,22 +54,25 @@ const Navigation = () => {
             <Logo size="md" />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex gap-1 items-center">
+          {/* Desktop nav */}
+          <div className="hidden md:flex gap-0.5 items-center">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 aria-current={isActive(link.to) ? 'page' : undefined}
-                className={`px-3 py-2 text-sm font-medium transition-colors rounded-md relative ${
-                  isActive(link.to) ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                className={`relative px-3.5 py-2 text-sm font-medium transition-colors rounded-md ${
+                  isActive(link.to)
+                    ? 'text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {link.label}
+                {/* Active indicator — full-width underline, clearly visible */}
                 {isActive(link.to) && (
-                  <motion.div
+                  <motion.span
                     layoutId="activeNav"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full"
+                    className="absolute bottom-0.5 left-3.5 right-3.5 h-[2px] bg-primary rounded-full"
                   />
                 )}
               </Link>
@@ -78,23 +80,26 @@ const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
+            <ThemeToggle isDark={isDark} onToggle={() => setIsDark((p) => !p)} />
             <button
-              onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, metaKey: true, bubbles: true }))}
-              className="hidden lg:flex items-center gap-1 px-2 py-1 rounded border border-border text-xs text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all font-mono"
+              onClick={() =>
+                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, metaKey: true, bubbles: true }))
+              }
+              className="hidden lg:flex items-center gap-1 px-2 py-1 rounded border border-border text-xs
+                         text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all font-mono"
               aria-label="Open command palette"
             >
-              <span>{typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform) ? '⌘' : 'ctrl'}</span>
+              <span>{typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform) ? '⌘' : 'Ctrl'}</span>
               <span>K</span>
             </button>
-            <Link to="/contact" className="btn-primary text-sm py-2">
-              Let's Talk
+            <Link to="/contact" className="btn-primary text-sm">
+              Let's talk
             </Link>
           </div>
 
           {/* Mobile controls */}
           <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle isDark={isDark} onToggle={toggleTheme} size="sm" />
+            <ThemeToggle isDark={isDark} onToggle={() => setIsDark((p) => !p)} size="sm" />
             <button
               className="p-2"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -107,7 +112,7 @@ const Navigation = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -120,7 +125,7 @@ const Navigation = () => {
               className="absolute inset-0 bg-background/98 backdrop-blur-md"
               onClick={() => setMobileMenuOpen(false)}
             />
-            <div className="relative h-full flex flex-col items-center justify-center gap-4">
+            <div className="relative h-full flex flex-col items-center justify-center gap-5">
               {NAV_LINKS.map((link, index) => (
                 <motion.div
                   key={link.to}
@@ -131,7 +136,7 @@ const Navigation = () => {
                   <Link
                     to={link.to}
                     aria-current={isActive(link.to) ? 'page' : undefined}
-                    className={`text-xl font-medium transition-colors ${
+                    className={`text-xl font-display font-semibold transition-colors ${
                       isActive(link.to) ? 'text-primary' : 'text-muted-foreground'
                     }`}
                   >
@@ -145,7 +150,7 @@ const Navigation = () => {
                 transition={{ delay: NAV_LINKS.length * 0.05 }}
               >
                 <Link to="/contact" className="btn-primary mt-4">
-                  Let's Talk
+                  Let's talk
                 </Link>
               </motion.div>
             </div>

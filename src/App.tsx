@@ -47,23 +47,27 @@ class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryStat
 const App = () => (
   <Router>
     <div className="min-h-screen bg-background text-foreground">
+      {/* Grain overlay — subtle noise that breaks digital flatness */}
+      <div className="noise-overlay" aria-hidden="true" />
       <ScrollProgress />
       <Navigation />
       <CommandPalette />
       <ErrorBoundary>
         <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/cv" element={<CV />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/projects/carepulse" element={<CarePulse />} />
-            <Route path="/projects/serverless-pipeline" element={<ServerlessPipeline />} />
-            <Route path="/projects/drivewell" element={<DriveWell />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <main id="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/cv" element={<CV />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/projects/carepulse" element={<CarePulse />} />
+              <Route path="/projects/serverless-pipeline" element={<ServerlessPipeline />} />
+              <Route path="/projects/drivewell" element={<DriveWell />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
         </Suspense>
       </ErrorBoundary>
     </div>
