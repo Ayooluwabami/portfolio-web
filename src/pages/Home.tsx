@@ -70,7 +70,7 @@ const Home = () => {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
                     </span>
-                    Available for opportunities
+                    Available now — Cloud · DevOps · SRE roles
                   </span>
                 </motion.div>
 
@@ -93,7 +93,7 @@ const Home = () => {
                   transition={{ duration: 0.4, delay: 0.14 }}
                   className="mb-6"
                 >
-                  <p className="text-xl sm:text-2xl font-display font-semibold h-8 tracking-tight">
+                  <p className="text-xl sm:text-2xl font-display font-semibold min-h-8 tracking-tight">
                     <span style={{ color: 'hsl(var(--highlight-primary))' }}>{displayText}</span>
                     <span className="animate-pulse-slow ml-0.5">|</span>
                   </p>
@@ -105,12 +105,11 @@ const Home = () => {
                   transition={{ duration: 0.4, delay: 0.2 }}
                   className="text-subheadline mb-8 mx-auto lg:mx-0"
                 >
-                  Backend-focused engineer targeting roles in{' '}
-                  <span className="text-foreground font-medium">Cloud, DevOps, DevSecOps, SRE, and Platform Engineering</span>.
-                  Builds production systems with NestJS and TypeScript, operates infrastructure on{' '}
-                  <span className="text-foreground font-medium">AWS · Azure · GCP</span>{' '}
-                  with Terraform and Kubernetes, and enforces security-gated CI/CD with zero-trust network policies.
-                  Based in the UK.
+                  I build the backend and run the infrastructure it lives on — NestJS microservices
+                  deployed on <span className="text-foreground font-medium">AWS, Azure, and GCP</span>,
+                  provisioned with Terraform and Kubernetes, shipped through security-gated CI/CD
+                  that <span className="text-foreground font-medium">cut deployment time by 90%</span>.
+                  UK-based, working with teams worldwide.
                 </motion.p>
 
                 <motion.div
@@ -193,10 +192,11 @@ const Home = () => {
 
             <AnimatedSection delay={100}>
               <p className="text-subheadline mb-10">
-                Production backend systems with Node.js, NestJS, and TypeScript — deployed on AWS, Azure,
-                and GCP with Terraform, CloudFormation, Kubernetes (EKS), Jenkins, and GitHub Actions.
-                From serverless pipelines and multi-tier architectures to scalable microservices, I own
-                delivery <span className="text-foreground font-semibold">end to end</span>.
+                Most teams lose weeks wiring deploys, chasing outages, and bolting on security late.
+                I build systems where that work is already done — NestJS services on EKS with
+                Helm blue/green deploys, infrastructure as code in Terraform and CloudFormation,
+                and pipelines that gate on SAST, secret, and container scans{' '}
+                <span className="text-foreground font-semibold">before anything ships</span>.
               </p>
             </AnimatedSection>
 
@@ -403,8 +403,8 @@ const Home = () => {
                 Looking for your next <span className="text-gradient">engineer?</span>
               </AnimatedHeadline>
               <p className="text-subheadline mx-auto mb-8">
-                Open to backend, cloud, and DevOps roles. I bring production experience across AWS, Azure,
-                GCP, and a track record of shipping reliable systems.
+                Open to backend, cloud, and DevOps roles. Production experience across AWS, Azure,
+                and GCP, a 90% deployment-time reduction on record, and I typically reply within 24 hours.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <Link to="/contact" className="btn-primary flex items-center gap-2">
