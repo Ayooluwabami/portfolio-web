@@ -1,432 +1,470 @@
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail, BookOpen, ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
 import CountUp from '../components/CountUp';
-import FloatingDock from '../components/FloatingDock';
 import CodeSnippet from '../components/CodeSnippet';
+import HeroNetwork from '../components/HeroNetwork';
+import StackMarquee from '../components/StackMarquee';
+import PipelinePanel from '../components/PipelinePanel';
+import RecruiterBrief from '../components/RecruiterBrief';
+import WhatYouGet from '../components/WhatYouGet';
+import GitHubActivity from '../components/GitHubActivity';
 import photoshoot from '@/assets/photoshoot.jpg';
+import thina from '@/assets/work/thina.jpg';
+import drivewell from '@/assets/work/drivewell.jpg';
+import innovaswift from '@/assets/work/innovaswift.jpg';
+import jotem from '@/assets/work/jotem.jpg';
 
-const ROLES = ['Backend Engineer', 'Cloud & DevOps Engineer', 'DevSecOps Engineer', 'Site Reliability Engineer', 'Platform Engineer'] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
-const Home = () => {
-  const [displayText, setDisplayText] = useState('');
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+const SOCIALS = [
+  { href: 'https://github.com/Ayooluwabami', label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/ayobami-edun', label: 'LinkedIn' },
+  { href: 'https://medium.com/@ayobamieae', label: 'Medium' },
+  { href: 'mailto:ayobamieae@gmail.com', label: 'Email' },
+];
 
-  useEffect(() => {
-    const currentRole = ROLES[roleIndex];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayText.length < currentRole.length) {
-          setDisplayText(currentRole.slice(0, displayText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        if (displayText.length > 0) {
-          setDisplayText(displayText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % ROLES.length);
-        }
-      }
-    }, isDeleting ? 50 : 100);
+const STATS = [
+  { to: 3, suffix: '+', label: 'Years building production backends' },
+  { to: 20, suffix: '+', label: 'Cloud builds across AWS, Azure and GCP' },
+  { to: 90, suffix: '%', label: 'Faster deployments after rebuilding CI/CD' },
+];
 
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex]);
+const LIVE = [
+  { title: 'Thina', role: 'Lead full-stack engineer', note: 'Recovery and mental wellness platform', href: 'https://thina.app/', img: thina },
+  { title: 'DriveWell', role: 'Lead backend engineer', note: 'Vehicle hire, towing and documentation', href: 'https://www.drivewellapp.com/', img: drivewell },
+  { title: 'InnovaSwift', role: 'Frontend developer', note: 'Software consultancy website', href: 'https://innovaswift.com.ng/', img: innovaswift },
+  { title: 'Jotem Agro Allied', role: 'Frontend & IT admin', note: 'Commodity supplier site and email security', href: 'https://www.jotemagro.com/', img: jotem },
+];
 
-  return (
-    <div className="min-h-screen">
-      {/* ── Hero ── */}
-      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
-        {/* Single contained radial glow — not the AI "floating orb" pattern */}
+// Real posts from medium.com/@ayobamieae (most recent and most relevant first)
+const ARTICLES = [
+  {
+    title: 'Building a Production-Grade CI/CD Pipeline on AWS: CodePipeline, CodeBuild, and CodeDeploy',
+    readTime: '8 min read',
+    tag: 'AWS · DevSecOps · Jul 2026',
+    href: 'https://medium.com/@ayobamieae/building-a-production-grade-ci-cd-pipeline-on-aws-codepipeline-codebuild-and-codedeploy-2bde222adc24',
+  },
+  {
+    title: 'Automating Kubernetes Deployments with Azure DevOps, GitOps, and AKS: A Security-First CI/CD',
+    readTime: '11 min read',
+    tag: 'Azure · Kubernetes · Jun 2026',
+    href: 'https://medium.com/@ayobamieae/automating-kubernetes-deployments-with-azure-devops-gitops-and-aks-a-security-first-ci-cd-f554e189b985',
+  },
+  {
+    title: 'Building a Highly Available Multi-Tier WordPress Platform on AWS with CloudFormation',
+    readTime: '15 min read',
+    tag: 'AWS · CloudFormation · Jun 2026',
+    href: 'https://medium.com/@ayobamieae/building-a-highly-available-multi-tier-wordpress-platform-on-aws-with-cloudformation-2a35cad00af7',
+  },
+  {
+    title: 'End-to-End CI/CD for an E-Commerce Application with Jenkins, Docker, ECR, ECS, and Terraform',
+    readTime: '8 min read',
+    tag: 'Jenkins · Terraform · Jun 2026',
+    href: 'https://medium.com/@ayobamieae/end-to-end-ci-cd-for-an-e-commerce-application-with-jenkins-docker-ecr-ecs-and-terraform-3048b241ece0',
+  },
+];
+
+const rise = (delay: number) => ({
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.7, ease, delay },
+});
+
+const Home = () => (
+  <div className="min-h-screen">
+    {/* ── Hero ── */}
+    <section className="relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] opacity-[0.07] dark:opacity-[0.06]"
-            style={{ background: 'radial-gradient(ellipse at 50% 0%, hsl(var(--primary)), transparent 70%)' }}
-          />
-          <div className="absolute inset-0 bg-dots opacity-20" />
-        </div>
+          className="absolute -top-40 right-[-10%] h-[620px] w-[820px] opacity-[0.10]"
+          style={{ background: 'radial-gradient(ellipse at 60% 30%, hsl(var(--primary)), transparent 65%)' }}
+        />
+        <div className="absolute -bottom-40 left-[-10%] h-[520px] w-[620px] animate-drift opacity-[0.07]"
+          style={{ background: 'radial-gradient(circle, hsl(var(--primary)), transparent 65%)' }}
+        />
+        <HeroNetwork className="absolute inset-0 [mask-image:radial-gradient(ellipse_75%_70%_at_70%_45%,black_30%,transparent_80%)]" />
+      </div>
 
-        <div className="container mx-auto px-6 z-10 pt-24 pb-12">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+      <div className="container relative z-10 mx-auto px-6 pb-20 pt-32 md:pb-28 md:pt-40">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-7">
+            <motion.p {...rise(0.05)} className="mb-8 inline-flex items-center gap-2.5 rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs font-medium text-muted-foreground">
+              <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+              Open to cloud, DevOps and SRE roles · eligible to work in the UK
+            </motion.p>
 
-              {/* Left — text */}
-              <div className="lg:col-span-7 text-center lg:text-left order-2 lg:order-1">
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="mb-6"
-                >
-                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-secondary border border-border rounded-full text-xs font-medium text-muted-foreground">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500" />
-                    </span>
-                    Available now — Cloud · DevOps · SRE roles
-                  </span>
-                </motion.div>
+            <motion.p {...rise(0.1)} className="mb-4 text-base font-medium text-foreground">
+              Ayobami Edun <span className="text-muted-foreground">· Cloud, DevOps & platform engineer</span>
+            </motion.p>
 
-                <div style={{ perspective: '900px' }}>
-                  <motion.h1
-                    initial={{ opacity: 0, y: 48, rotateX: -22 }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                    transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    style={{ transformOrigin: 'bottom center' }}
-                    className="text-headline font-display mb-4"
-                  >
-                    Hi, I'm{' '}
-                    <span className="text-gradient">Ayobami</span>
-                  </motion.h1>
-                </div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.14 }}
-                  className="mb-6"
-                >
-                  <p className="text-xl sm:text-2xl font-display font-semibold min-h-8 tracking-tight">
-                    <span style={{ color: 'hsl(var(--highlight-primary))' }}>{displayText}</span>
-                    <span className="animate-pulse-slow ml-0.5">|</span>
-                  </p>
-                </motion.div>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  className="text-subheadline mb-8 mx-auto lg:mx-0"
-                >
-                  I build the backend and run the infrastructure it lives on — NestJS microservices
-                  deployed on <span className="text-foreground font-medium">AWS, Azure, and GCP</span>,
-                  provisioned with Terraform and Kubernetes, shipped through security-gated CI/CD
-                  that <span className="text-foreground font-medium">cut deployment time by 90%</span>.
-                  UK-based, working with teams worldwide.
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.26 }}
-                  className="flex flex-wrap justify-center lg:justify-start gap-3 mb-8"
-                >
-                  <Link to="/projects" className="btn-primary flex items-center gap-2">
-                    View Projects
-                    <ArrowRight size={16} />
-                  </Link>
-                  <Link to="/cv" className="btn-secondary flex items-center gap-2">
-                    <Download size={16} />
-                    View CV
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.4, delay: 0.32 }}
-                  className="flex justify-center lg:justify-start"
-                >
-                  <FloatingDock
-                    items={[
-                      { href: "https://github.com/Ayooluwabami",          icon: <Github size={18} />,   label: "GitHub",   external: true },
-                      { href: "https://www.linkedin.com/in/ayobami-edun", icon: <Linkedin size={18} />, label: "LinkedIn", external: true },
-                      { href: "https://medium.com/@ayobamieae",           icon: <BookOpen size={18} />, label: "Medium",   external: true },
-                      { href: "mailto:ayobamieae@gmail.com",              icon: <Mail size={18} />,     label: "Email" },
-                    ]}
-                  />
-                </motion.div>
-              </div>
-
-              {/* Right — photo + code */}
-              <div className="lg:col-span-5 flex flex-col items-center gap-6 order-1 lg:order-2">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.18 }}
-                  className="relative"
-                >
-                  {/* Photo — rectangular with slight inner vignette, no floating glow ring */}
-                  <div className="relative w-48 h-60 sm:w-56 sm:h-72 rounded-xl overflow-hidden border border-border shadow-card">
-                    <img
-                      src={photoshoot}
-                      alt="Ayobami Edun — Backend & Cloud Engineer"
-                      className="w-full h-full object-cover object-top"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
-                  </div>
-                </motion.div>
-
-                <div className="hidden lg:block w-full">
-                  <CodeSnippet />
-                </div>
-              </div>
+            <div style={{ perspective: '900px' }}>
+              <motion.h1
+                initial={{ opacity: 0, y: 48, rotateX: -18 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.9, delay: 0.15, ease }}
+                style={{ transformOrigin: 'bottom center' }}
+                className="text-headline mb-7 max-w-[13ch]"
+              >
+                I build the backend{' '}
+                <span className="text-muted-foreground">
+                  and run the{' '}
+                  <span className="relative inline-block text-foreground">
+                    cloud
+                    <svg className="absolute -bottom-[0.12em] left-0 h-[0.32em] w-full overflow-visible" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
+                      <motion.path
+                        d="M3 14 C 50 4, 110 3, 197 9"
+                        fill="none"
+                        stroke="hsl(var(--primary))"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        vectorEffect="non-scaling-stroke"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 0.9, delay: 1, ease: [0.65, 0, 0.35, 1] }}
+                      />
+                    </svg>
+                  </span>{' '}
+                  it lives on.
+                </span>
+              </motion.h1>
             </div>
 
-            {/* Mobile code snippet */}
-            <div className="lg:hidden mt-10 flex justify-center">
+            <motion.p {...rise(0.3)} className="text-subheadline mb-9">
+              NestJS services on AWS, Azure and GCP, provisioned with Terraform and Kubernetes, shipped through
+              security-gated CI/CD that <span className="font-medium text-foreground">cut deployment time by 90%</span>.
+            </motion.p>
+
+            <motion.div {...rise(0.4)} className="mb-10 flex flex-wrap items-center gap-3">
+              <Link to="/projects" className="btn-primary group flex items-center gap-2">
+                See projects
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
+              <Link to="/cv" className="btn-secondary">
+                Read the CV
+              </Link>
+            </motion.div>
+
+            <motion.ul {...rise(0.5)} className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+              {SOCIALS.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target={s.href.startsWith('mailto') ? undefined : '_blank'}
+                    rel="me noopener noreferrer"
+                    className="link-underline pb-0.5 transition-colors hover:text-foreground"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </motion.ul>
+          </div>
+
+          {/* Photo with the Terraform window overlapping it, so the two read as one composition */}
+          <div className="relative mx-auto w-full max-w-[420px] lg:col-span-5 lg:mr-0">
+            <motion.div
+              initial={{ opacity: 0, clipPath: 'inset(100% 0% 0% 0%)' }}
+              animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
+              transition={{ duration: 1.1, delay: 0.2, ease }}
+              className="ml-auto w-[78%] overflow-hidden rounded-2xl border border-border shadow-card"
+            >
+              <motion.img
+                src={photoshoot}
+                alt="Ayobami Edun"
+                initial={{ scale: 1.12 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.5, delay: 0.2, ease }}
+                className="aspect-[4/5] w-full object-cover object-top"
+              />
+            </motion.div>
+            <div className="relative -mt-24 w-[88%] sm:-mt-28">
               <CodeSnippet />
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* ── About preview ── */}
-      <section className="section-padding bg-secondary/25">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
+    <StackMarquee />
+
+    {/* ── About preview ── */}
+    <section className="tone-white section-padding">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-7">
             <AnimatedSection>
-              <WordReveal text="About me" className="text-label mb-4" />
-              <AnimatedHeadline as="h2" className="text-section-title mb-6">
-                Building{' '}
-                <span className="text-gradient">systems that scale</span>
+              <WordReveal text="About me" className="text-label mb-5" />
+              <AnimatedHeadline as="h2" className="text-section-title mb-6 max-w-[18ch]">
+                Systems where the hard work is already done
               </AnimatedHeadline>
             </AnimatedSection>
-
             <AnimatedSection delay={100}>
-              <p className="text-subheadline mb-10">
-                Most teams lose weeks wiring deploys, chasing outages, and bolting on security late.
-                I build systems where that work is already done — NestJS services on EKS with
-                Helm blue/green deploys, infrastructure as code in Terraform and CloudFormation,
-                and pipelines that gate on SAST, secret, and container scans{' '}
-                <span className="text-foreground font-semibold">before anything ships</span>.
+              <p className="text-subheadline mb-8">
+                Most teams lose weeks wiring deploys, chasing outages and bolting on security late. I build systems where
+                that work is already done: NestJS services on EKS with Helm blue/green deploys, infrastructure as code in
+                Terraform and CloudFormation, and pipelines that gate on SAST, secret and container scans{' '}
+                <span className="font-medium text-foreground">before anything ships</span>.
+              </p>
+              <Link to="/about" className="group inline-flex items-center gap-2 text-sm font-medium text-primary">
+                <span className="link-underline pb-0.5">More about my journey</span>
+                <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
+            </AnimatedSection>
+          </div>
+
+          <AnimatedSection delay={150} className="lg:col-span-4 lg:col-start-9">
+            <dl className="divide-y divide-border border-y border-border">
+              {STATS.map((s) => (
+                <div key={s.label} className="flex items-baseline gap-6 py-6">
+                  <dt className="font-display tabular-nums w-28 shrink-0 text-5xl font-bold tracking-[-0.03em] text-foreground">
+                    <CountUp to={s.to} suffix={s.suffix} />
+                  </dt>
+                  <dd className="text-sm leading-snug text-muted-foreground">{s.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </AnimatedSection>
+        </div>
+      </div>
+    </section>
+
+    <RecruiterBrief />
+
+    {/* ── How I ship ── */}
+    <section className="dark tone-ink ink-glow section-padding">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <AnimatedSection>
+              <WordReveal text="How I ship" className="text-label mb-5" />
+              <AnimatedHeadline as="h2" className="text-section-title mb-6">
+                Every change takes the same path to production
+              </AnimatedHeadline>
+              <p className="mb-8 text-muted-foreground">
+                Secrets, code, infrastructure and images are scanned before anything merges. Staging has to pass smoke
+                tests before production sees it. Nothing ships by hand, and no pipeline holds a long-lived cloud key.
               </p>
             </AnimatedSection>
-
-            <AnimatedSection delay={150}>
-              <div className="grid grid-cols-3 gap-4">
+            <AnimatedSection delay={100}>
+              <ul className="divide-y divide-border border-y border-border text-sm">
                 {[
-                  { to: 3,  suffix: '+', label: 'Years experience' },
-                  { to: 20, suffix: '+', label: 'Cloud projects' },
-                  { to: 90, suffix: '%', label: 'Faster deployments' },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center p-5 bg-background rounded-xl border border-border">
-                    <p className="font-display tabular-nums text-2xl md:text-3xl font-bold text-primary mb-1">
-                      <CountUp to={stat.to} suffix={stat.suffix} />
-                    </p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  </div>
+                  ['OIDC, not access keys', 'CI assumes a short-lived role; pods use IRSA'],
+                  ['Fails closed', 'any gate that fails stops the promotion'],
+                  ['GitOps', 'ArgoCD keeps the cluster matching Git'],
+                ].map(([title, body]) => (
+                  <li key={title} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3.5">
+                    <span className="font-medium text-foreground">{title}</span>
+                    <span className="text-muted-foreground">{body}</span>
+                  </li>
                 ))}
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={200}>
-              <div className="mt-10">
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all link-underline"
-                >
-                  More about my journey
-                  <ArrowRight size={16} />
-                </Link>
-              </div>
+              </ul>
             </AnimatedSection>
           </div>
+          <AnimatedSection delay={120} className="lg:col-span-6 lg:col-start-7">
+            <PipelinePanel />
+          </AnimatedSection>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* ── Currently building ──
-           Changed from 3 equal columns (most generic AI layout) to a
-           featured-left + two stacked-right layout for visual variety.
-      -->*/}
-      <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <AnimatedSection>
-              <WordReveal text="Currently" className="text-label mb-4" />
-              <AnimatedHeadline as="h2" className="text-section-title mb-10">
-                What I'm <span className="text-gradient">building now</span>
-              </AnimatedHeadline>
-            </AnimatedSection>
-
-            <AnimatedSection delay={80}>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                {/* Featured — spans 3 of 5 cols */}
-                <motion.div
-                  whileHover={{ y: -3 }}
-                  transition={{ duration: 0.2 }}
-                  className="md:col-span-3 p-6 bg-secondary/50 rounded-xl border border-border hover:border-primary/40 transition-all flex flex-col"
-                >
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="w-2 h-2 rounded-full bg-green-500" />
-                    <span className="text-xs font-medium text-muted-foreground">Active</span>
-                  </div>
-                  <h3 className="font-display font-semibold text-lg mb-1">CarePulse</h3>
-                  <p className="text-xs text-primary font-medium mb-3">NHS-aligned health platform</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                    8 NestJS microservices on AWS EKS. Jenkins CI/CD with Helm-based blue/green deploys,
-                    IRSA (no static credentials), pod security standards, and NHS DSPT-compliant audit logging.
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-1.5">
-                    {["NestJS", "EKS", "Jenkins", "Terraform", "Helm"].map((t) => (
-                      <span key={t} className="px-2 py-0.5 text-[11px] font-medium bg-muted text-muted-foreground rounded-md">{t}</span>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Stack of 2 smaller cards — spans 2 of 5 */}
-                <div className="md:col-span-2 flex flex-col gap-4">
-                  <motion.div
-                    whileHover={{ y: -3 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-5 bg-secondary/50 rounded-xl border border-border hover:border-primary/40 transition-all flex-1"
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="w-2 h-2 rounded-full bg-green-500" />
-                      <span className="text-xs font-medium text-muted-foreground">Active</span>
-                    </div>
-                    <h3 className="font-semibold mb-0.5 text-sm">Cloudboosta Academy</h3>
-                    <p className="text-xs text-primary mb-2">Cloud & Advanced DevOps</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      AWS (EC2, ECS, EKS, Lambda, RDS) and Azure infrastructure labs.
-                    </p>
-                  </motion.div>
-
-                  <motion.a
-                    href="https://medium.com/@ayobamieae"
-                    target="_blank"
-                    rel="me noopener noreferrer"
-                    whileHover={{ y: -3 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-5 bg-secondary/50 rounded-xl border border-border hover:border-primary/40 transition-all flex-1 block"
-                  >
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      <span className="text-xs font-medium text-muted-foreground">Writing</span>
-                    </div>
-                    <h3 className="font-semibold mb-0.5 text-sm">Technical Writing</h3>
-                    <p className="text-xs text-primary mb-2 hover:underline">medium.com/@ayobamieae</p>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      Backend systems, cloud architecture, and DevOps engineering.
-                    </p>
-                  </motion.a>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Blog ── */}
-      <section className="section-padding">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <AnimatedSection>
-              <div className="flex items-end justify-between mb-10">
-                <div>
-                  <WordReveal text="Technical writing" className="text-label mb-4" />
-                  <AnimatedHeadline as="h2" className="text-section-title">
-                    From the <span className="text-gradient">blog</span>
-                  </AnimatedHeadline>
-                </div>
-                <a
-                  href="https://medium.com/@ayobamieae"
-                  target="_blank"
-                  rel="me noopener noreferrer"
-                  className="hidden sm:inline-flex items-center gap-2 text-sm text-primary font-medium hover:gap-3 transition-all link-underline"
-                >
-                  All articles
-                  <ArrowRight size={15} />
-                </a>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={80}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-                {[
-                  {
-                    title: 'Building a serverless order pipeline with 9 CloudFormation nested stacks',
-                    readTime: '8 min read',
-                    tag: 'AWS · CloudFormation',
-                    href: 'https://medium.com/@ayobamieae',
-                  },
-                  {
-                    title: 'Kubernetes on EKS: IRSA, pod security hardening, and zero-downtime deploys',
-                    readTime: '10 min read',
-                    tag: 'AWS · Kubernetes',
-                    href: 'https://medium.com/@ayobamieae',
-                  },
-                  {
-                    title: 'From monolith to microservices: cutting deployment time by 90%',
-                    readTime: '6 min read',
-                    tag: 'DevOps · NestJS',
-                    href: 'https://medium.com/@ayobamieae',
-                  },
-                ].map((article) => (
-                  <motion.a
-                    key={article.title}
-                    href={article.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -3 }}
-                    transition={{ duration: 0.2 }}
-                    className="group p-5 bg-secondary/50 rounded-xl border border-border hover:border-primary/40 transition-all block"
-                  >
-                    <span className="text-[10px] font-semibold text-primary uppercase tracking-[0.08em]">{article.tag}</span>
-                    <h3 className="text-sm font-medium mt-2 mb-4 group-hover:text-primary transition-colors leading-snug">
-                      {article.title}
-                    </h3>
-                    <span className="text-xs text-muted-foreground">{article.readTime}</span>
-                  </motion.a>
-                ))}
-              </div>
-
-              <div className="sm:hidden text-center">
-                <a
-                  href="https://medium.com/@ayobamieae"
-                  target="_blank"
-                  rel="me noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-primary font-medium"
-                >
-                  All articles <ArrowRight size={15} />
-                </a>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="section-padding relative">
-        <div className="container mx-auto px-6">
+    {/* ── Currently building ── */}
+    <section className="tone-lavender section-padding">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-6xl">
           <AnimatedSection>
-            <div className="max-w-2xl mx-auto text-center">
-              <WordReveal text="Let's work together" className="text-label mb-4" />
-              <AnimatedHeadline as="h2" className="text-section-title mb-5">
-                Looking for your next <span className="text-gradient">engineer?</span>
-              </AnimatedHeadline>
-              <p className="text-subheadline mx-auto mb-8">
-                Open to backend, cloud, and DevOps roles. Production experience across AWS, Azure,
-                and GCP, a 90% deployment-time reduction on record, and I typically reply within 24 hours.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link to="/contact" className="btn-primary flex items-center gap-2">
-                  Get in touch
-                  <ArrowRight size={16} />
-                </Link>
+            <WordReveal text="Currently" className="text-label mb-5" />
+            <AnimatedHeadline as="h2" className="text-section-title mb-12">
+              What I'm building now
+            </AnimatedHeadline>
+          </AnimatedSection>
+
+          <AnimatedSection delay={80}>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+              <Link
+                to="/projects/carepulse"
+                className="group flex flex-col rounded-xl border border-border bg-secondary/50 p-7 transition-colors duration-300 hover:border-primary/40 md:col-span-3 md:p-9"
+              >
+                <div className="mb-6 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                    Active · case study
+                  </span>
+                  <ArrowUpRight size={18} className="text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                </div>
+                <h3 className="font-display mb-1 text-3xl font-bold tracking-[-0.02em]">CarePulse</h3>
+                <p className="mb-4 text-sm font-medium text-primary">NHS-aligned health platform</p>
+                <p className="flex-1 text-[0.95rem] leading-relaxed text-muted-foreground">
+                  8 NestJS microservices on AWS EKS. Jenkins CI/CD with Helm-based deploys, IRSA (no static credentials),
+                  pod security standards, and NHS DSPT-compliant audit logging.
+                </p>
+                <p className="mt-6 font-mono text-xs text-muted-foreground">NestJS · EKS · Jenkins · Terraform · Helm</p>
+              </Link>
+
+              <div className="flex flex-col gap-4 md:col-span-2">
+                <div className="flex-1 rounded-xl border border-border bg-secondary/50 p-6">
+                  <span className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                    Active
+                  </span>
+                  <h3 className="mb-0.5 font-semibold">Cloudboosta Academy</h3>
+                  <p className="mb-2 text-xs text-primary">Cloud & advanced DevOps</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">AWS (EC2, ECS, EKS, Lambda, RDS) and Azure infrastructure labs.</p>
+                </div>
                 <a
-                  href="https://www.linkedin.com/in/ayobami-edun"
+                  href="https://medium.com/@ayobamieae"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary flex items-center gap-2"
+                  rel="me noopener noreferrer"
+                  className="group block flex-1 rounded-xl border border-border bg-secondary/50 p-6 transition-colors duration-300 hover:border-primary/40"
                 >
-                  <Linkedin size={16} />
-                  LinkedIn
+                  <span className="mb-4 inline-flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                    Writing
+                  </span>
+                  <h3 className="mb-0.5 font-semibold">Technical writing</h3>
+                  <p className="mb-2 text-xs text-primary">medium.com/@ayobamieae</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">Backend systems, cloud architecture and DevOps engineering.</p>
                 </a>
               </div>
             </div>
           </AnimatedSection>
         </div>
-      </section>
-    </div>
-  );
-};
+      </div>
+    </section>
+
+    {/* ── Live in production ── */}
+    <section className="tone-sky section-padding">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto max-w-6xl">
+          <AnimatedSection>
+            <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <WordReveal text="Shipped" className="text-label mb-5" />
+                <AnimatedHeadline as="h2" className="text-section-title">
+                  Live in production
+                </AnimatedHeadline>
+              </div>
+              <Link to="/projects" className="group inline-flex items-center gap-2 text-sm font-medium text-primary">
+                <span className="link-underline pb-0.5">All projects</span>
+                <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2">
+            {LIVE.map((p, i) => (
+              <AnimatedSection key={p.title} delay={(i % 2) * 90}>
+                <a href={p.href} target="_blank" rel="noopener noreferrer" className="group block">
+                  <div className="overflow-hidden rounded-xl border border-border bg-secondary">
+                    <img
+                      src={p.img}
+                      alt={`${p.title} website`}
+                      loading="lazy"
+                      className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div className="mt-5 flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-display text-xl font-bold tracking-[-0.02em] transition-colors group-hover:text-primary">{p.title}</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {p.note} · {p.role}
+                      </p>
+                    </div>
+                    <ArrowUpRight size={18} className="mt-1 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                  </div>
+                </a>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <WhatYouGet />
+
+    <GitHubActivity />
+
+    {/* ── Writing ── */}
+    <section className="tone-lavender section-padding">
+      <div className="container mx-auto px-6">
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
+          <AnimatedSection className="lg:col-span-4">
+            <WordReveal text="Technical writing" className="text-label mb-5" />
+            <AnimatedHeadline as="h2" className="text-section-title mb-6">
+              From the blog
+            </AnimatedHeadline>
+            <a
+              href="https://medium.com/@ayobamieae"
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-primary"
+            >
+              <span className="link-underline pb-0.5">All articles on Medium</span>
+              <ArrowUpRight size={15} />
+            </a>
+          </AnimatedSection>
+
+          <AnimatedSection delay={80} className="lg:col-span-8">
+            <ul className="border-t border-border">
+              {ARTICLES.map((a) => (
+                <li key={a.title} className="border-b border-border">
+                  <a
+                    href={a.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-6 py-6"
+                  >
+                    <div className="flex-1">
+                      <p className="mb-2 font-mono text-xs text-muted-foreground">
+                        {a.tag} · {a.readTime}
+                      </p>
+                      <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.01em] transition-colors group-hover:text-primary md:text-xl">
+                        {a.title}
+                      </h3>
+                    </div>
+                    <ArrowUpRight size={18} className="mt-6 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </AnimatedSection>
+        </div>
+      </div>
+    </section>
+
+    {/* ── CTA ── */}
+    <section className="tone-brand brand-glow section-padding">
+      <div className="container mx-auto px-6">
+        <AnimatedSection>
+          <div className="mx-auto grid max-w-6xl items-end gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <WordReveal text="Let's work together" className="text-label mb-5" />
+              <AnimatedHeadline as="h2" className="text-section-title max-w-[16ch]">
+                Looking for your next backend or cloud engineer?
+              </AnimatedHeadline>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="mb-7 text-muted-foreground">
+                Production experience across AWS, Azure and GCP, a 90% deployment-time reduction on record, and I usually
+                reply within a day.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/contact" className="btn-primary group flex items-center gap-2">
+                  Get in touch
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                </Link>
+                <a href="mailto:ayobamieae@gmail.com" className="btn-secondary">
+                  ayobamieae@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  </div>
+);
 
 export default Home;

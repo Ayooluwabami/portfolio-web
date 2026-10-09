@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "anniversary",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/DELL/Desktop/Desktop/SE/frontend/ja_2nd_anniversary"],
+      "port": 5173
+    },
+    {
+      "name": "aws-cicd-sample-app",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/DELL/Desktop/Desktop/SE/cloud/aws-cicd-pipeline/app/dist/server.js"],
+      "port": 3000
+    }
+  ]
+}

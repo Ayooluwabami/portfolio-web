@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Github, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../../components/AnimatedSection';
+import Band from '../../components/Band';
 
 const STACK = [
   { cat: 'Backend', items: ['NestJS 11', 'TypeScript', 'Redis (TCP transport, sorted sets)', 'Socket.io', 'BullMQ'] },
@@ -29,8 +30,9 @@ const FLOW = [
 ];
 
 const CarePulse = () => (
-  <div className="min-h-screen pt-28 pb-20">
-    <div className="container mx-auto px-6 max-w-4xl">
+  <div className="min-h-screen">
+    <Band tone="sky" first>
+      <div className="mx-auto max-w-4xl">
       {/* Back */}
       <AnimatedSection>
         <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8 group">
@@ -41,7 +43,7 @@ const CarePulse = () => (
 
       {/* Hero */}
       <AnimatedSection delay={30}>
-        <div className="mb-10">
+        <div className="">
           <span className="text-label block mb-3">Case Study</span>
           <h1 className="text-headline mb-4">CarePulse</h1>
           <p className="text-subheadline max-w-2xl mb-6">
@@ -51,17 +53,20 @@ const CarePulse = () => (
           <div className="flex flex-wrap gap-3">
             <span className="px-3 py-1.5 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20">Backend & Cloud Engineer</span>
             <span className="px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-medium rounded-full border border-border">Jan 2026 – Present</span>
-            <a href="https://github.com/Ayooluwabami" target="_blank" rel="noopener noreferrer"
-               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-medium rounded-full border border-border hover:border-primary/40 transition-colors">
-              <Github size={12} /> GitHub
-            </a>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-medium rounded-full border border-border" title="The code isn’t public. Happy to walk through it on a call.">
+              <Lock size={12} /> Private repo · walkthrough on request
+            </span>
           </div>
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="white">
+      <div className="mx-auto max-w-4xl">
       {/* Metrics */}
       <AnimatedSection delay={60}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {METRICS.map((m) => (
             <div key={m.label} className="p-4 bg-secondary/50 rounded-xl border border-border text-center">
               <p className="text-xl font-bold text-primary mb-1">{m.value}</p>
@@ -73,7 +78,7 @@ const CarePulse = () => (
 
       {/* Architecture diagram */}
       <AnimatedSection delay={80}>
-        <div className="mb-12">
+        <div className="">
           <h2 className="text-lg font-semibold mb-6">Architecture</h2>
           <div className="p-6 bg-secondary/50 rounded-xl border border-border overflow-x-auto">
             {/* Flow */}
@@ -120,9 +125,13 @@ const CarePulse = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="lavender">
+      <div className="mx-auto max-w-4xl">
       {/* Problem & Solution */}
       <AnimatedSection delay={100}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 bg-secondary/50 rounded-xl border border-border">
             <h3 className="font-semibold mb-3 text-sm uppercase tracking-wider text-muted-foreground">Problem</h3>
             <p className="text-sm leading-relaxed">
@@ -142,9 +151,13 @@ const CarePulse = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="white">
+      <div className="mx-auto max-w-4xl">
       {/* Key Decisions */}
       <AnimatedSection delay={120}>
-        <div className="mb-12">
+        <div className="">
           <h2 className="text-lg font-semibold mb-5">Key Technical Decisions</h2>
           <div className="space-y-3">
             {[
@@ -163,9 +176,13 @@ const CarePulse = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="mint">
+      <div className="mx-auto max-w-4xl">
       {/* Tech Stack */}
       <AnimatedSection delay={140}>
-        <div className="mb-12">
+        <div className="">
           <h2 className="text-lg font-semibold mb-5">Technology Stack</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {STACK.map(({ cat, items }) => (
@@ -180,6 +197,10 @@ const CarePulse = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="white">
+      <div className="mx-auto max-w-4xl">
       {/* Nav */}
       <AnimatedSection delay={160}>
         <div className="flex flex-wrap gap-4 justify-between items-center pt-6 border-t border-border">
@@ -193,7 +214,8 @@ const CarePulse = () => (
           </Link>
         </div>
       </AnimatedSection>
-    </div>
+      </div>
+    </Band>
   </div>
 );
 

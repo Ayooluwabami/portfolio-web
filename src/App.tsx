@@ -4,6 +4,11 @@ import './index.css';
 import Navigation from './components/Navigation';
 import ScrollProgress from './components/ScrollProgress';
 import CommandPalette from './components/CommandPalette';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+import PageMeta from './components/PageMeta';
+import Terminal from './components/Terminal';
+import KeyboardShortcuts from './components/KeyboardShortcuts';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -46,12 +51,22 @@ class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryStat
 
 const App = () => (
   <Router>
+    <ScrollToTop />
+    <PageMeta />
     <div className="min-h-screen bg-background text-foreground">
       {/* Grain overlay — subtle noise that breaks digital flatness */}
       <div className="noise-overlay" aria-hidden="true" />
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >
+        Skip to content
+      </a>
       <ScrollProgress />
       <Navigation />
       <CommandPalette />
+      <Terminal />
+      <KeyboardShortcuts />
       <ErrorBoundary>
         <Suspense fallback={<PageLoader />}>
           <main id="main-content">
@@ -70,6 +85,7 @@ const App = () => (
           </main>
         </Suspense>
       </ErrorBoundary>
+      <Footer />
     </div>
   </Router>
 );

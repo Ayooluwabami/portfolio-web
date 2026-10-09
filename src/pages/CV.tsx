@@ -9,21 +9,97 @@ const MediumIcon = ({ size = 14 }: { size?: number }) => (
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
+import Band from '../components/Band';
+
+/* Experience, kept in step with the current Cloud, DevSecOps, SRE and Platform CVs (Jul 2026).
+   The website is the long version, so earlier non-software roles stay. */
+const ROLES: { title: string; org: string; period: string; place: string; stack?: string; points: string[] }[] = [
+  {
+    title: 'Cloud & DevOps Engineer',
+    org: 'Cloudboosta Academy',
+    period: 'Jan 2026 – Present',
+    place: 'Remote',
+    stack: 'AWS · Azure · Kubernetes (EKS, AKS) · Terraform · CloudFormation · ArgoCD · GitHub Actions · Azure DevOps · CodePipeline · Jenkins · Prometheus · Grafana · X-Ray',
+    points: [
+      'AWS DevSecOps pipeline: a four-stage CodePipeline (Source, Security, Build, Deploy) that ships a TypeScript service from git push to EC2 with zero manual steps, gated by Gitleaks, npm audit, Semgrep SAST and Checkov, all mirrored locally as pre-commit hooks. The stack is one 25+ resource CloudFormation template with least-privilege IAM, IMDSv2, encrypted EBS and a TLS-only artifact bucket, with Ansible and Puppet equivalents; CodeDeploy runs the app as an unprivileged user behind a health-check gate with automatic rollback.',
+      'Wired observability across metrics, logs and traces (Prometheus, structured JSON logs to CloudWatch with a 5xx metric-filter alarm, X-Ray), with the service reporting live SLIs against SLO targets and the four golden signals. Documented an error-budget policy, a STRIDE threat model, incident runbooks and a blameless postmortem template, and cut new-service setup to one command with a golden-path scaffolder and Makefile.',
+      'UpCommerce SLO framework: defined four SLOs (availability, latency, pipeline freshness, storage reads) for a platform facing doubled peak traffic, calculated a 7.2-hour monthly error budget in a live-formula model, and wrote a release-gating policy tying feature velocity to the budget left.',
+      'Zero-trust EKS platform: a three-tier app (TypeScript API, React, PostgreSQL StatefulSet) across a multi-AZ private-subnet VPC with modular Terraform and S3 + DynamoDB state; GitOps via ArgoCD App-of-Apps with GitHub Actions OIDC keyless auth; zero-trust NetworkPolicies and per-pod IRSA. Every PR is blocked by Semgrep, OWASP Dependency-Check, Checkov, tfsec, Trivy, Gitleaks and Syft SBOM generation. kube-prometheus-stack with custom alerting, a STRIDE model (20+ threats, 4 accepted risks with owners) and an on-call runbook.',
+      'Azure DevOps on AKS: multi-stage YAML pipeline with four blocking gates (Gitleaks, Checkov, Semgrep, Trivy); Python, Node.js and .NET images built in parallel and pushed to ACR with build-ID tags; secrets fetched at runtime from Key Vault (AzureKeyVault@2), manifests patched, ArgoCD synced and OWASP ZAP run after deploy. Configured a self-hosted ARM64 agent and solved Trivy, ArgoCD CLI and QEMU architecture issues; end to end in under 15 minutes.',
+      'Serverless order pipeline across 9 CloudFormation nested stacks (eu-west-2): API Gateway, Python Lambda, SQS with a DLQ and CloudWatch alarm to SNS, ECS Fargate invoice generator, S3, Lambda and SES. DynamoDB tracks 8 order states; correlation IDs trace every order in Logs Insights; 5 least-privilege IAM roles.',
+      'GitHub Actions with Terraform (matrix builds, caching, PR plan comments, staging and production approval gates); Jenkins on EC2 with an RBAC credentials vault running Docker build, ECR push and Terraform-provisioned ECS and ALB.',
+      'CarePulse, an NHS-aligned platform on EKS: 8 NestJS microservices over Redis TCP, a Next.js BFF and React Native app, Claude API triage, NHS Login OIDC PKCE, TOTP 2FA and an immutable audit log; IRSA, zero-downtime RollingUpdate and pod hardening; Jenkins from CloudFormation validation through Helm staging and smoke tests to production.',
+    ],
+  },
+  {
+    title: 'Backend & Cloud Engineer',
+    org: 'Ebidhaa Services (DriveWell Platform)',
+    period: 'Feb 2025 – Dec 2025',
+    place: 'Remote',
+    stack: 'Node.js · Restana · TypeScript · MySQL · Knex.js · Redis · Docker Buildx · GitHub Actions · GCP Compute Engine',
+    points: [
+      'Deployed and ran production infrastructure on GCP Compute Engine and cut deployment time by 90% with a fully automated GitHub Actions and Docker Buildx pipeline across dev, staging and production.',
+      'Engineered the backend for vehicle hire, towing and licensing, serving the admin dashboard, mobile API and public web from one environment-aware codebase with 40+ validated environment variables preventing configuration drift.',
+      'Hardened security (JWT for web and mobile, API keys, bcrypt, Redis-backed sessions, rate limiting), added centralised logging (Papertrail + syslog) and tuned SQL for production load.',
+      'Integrated 10+ third-party services: Paystack, Flutterwave, Piggyvest, Termii, WhatsApp API, Mailchimp, Metamap, Google Maps and GCP Storage.',
+    ],
+  },
+  {
+    title: 'Backend Engineer (Internship)',
+    org: 'African Institute for Artificial Intelligence (AI4AI)',
+    period: 'Apr 2025 – Aug 2025',
+    place: 'Remote',
+    stack: 'NestJS · PostgreSQL · Prisma · Redis · Docker · Railway',
+    points: [
+      'Deployed and ran SchoolHub, a multi-tenant SaaS platform for 50+ schools, with connection pooling, SSL enforcement, automated migrations and health-check endpoints.',
+      'Built the auth system (JWT access and refresh rotation, RBAC, argon2, audit logging) and added Redis caching and throttling that measurably improved response times under concurrent load.',
+    ],
+  },
+  {
+    title: 'Backend, Cloud & DevOps Engineer (Freelance)',
+    org: 'Self-employed',
+    period: 'Jan 2023 – Present',
+    place: 'Remote',
+    stack: 'NestJS · PostgreSQL · Redis · BullMQ · Bitbucket Pipelines · Docker · React · Next.js',
+    points: [
+      'Built Owiwi, a Nigerian service marketplace (NestJS, PostgreSQL, Redis, BullMQ, 27 modules) with Paystack and KoraPay runtime gateway switching, BullMQ consumers for bank transfers and multi-channel notifications, Vertex AI and Gemini integration and RS256 JWT; shipped with Bitbucket Pipelines and Docker.',
+      'Delivered backend and full-stack work for SME clients: REST APIs, payment systems, digital wallets with double-entry ledgers, and React and Next.js front ends; configured DNS (SPF, DKIM, DMARC, MTA-STS) and deployed to Vercel, GitHub Pages and GCP Storage.',
+    ],
+  },
+  {
+    title: 'Support Staff (Diagnostics & Training)',
+    org: 'Auto Clinic',
+    period: 'Jul 2021 – Aug 2024',
+    place: 'Nigeria',
+    points: [
+      'Performed diagnostics and maintenance for 25+ vehicles weekly.',
+      'Trained 50+ teenagers in automotive diagnostics.',
+      'Produced weekly automotive educational content for Splash FM radio.',
+    ],
+  },
+  {
+    title: 'Fleet Supervisor',
+    org: 'Metro Africa Express (MAX)',
+    period: 'Mar 2021 – Jun 2021',
+    place: 'Nigeria',
+    points: ['Managed refurbishment and documentation for 100+ motorcycles.', 'Oversaw GPS installation and asset monitoring.'],
+  },
+];
 
 const CV = () => {
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="container mx-auto px-6">
+    <div className="min-h-screen">
+      <Band tone="sky" first>
         {/* Header */}
         <AnimatedSection>
-          <div className="max-w-3xl mx-auto text-center mb-10">
+          <div className="max-w-4xl mx-auto">
             <WordReveal text="Resume" className="text-label mb-4" />
             <AnimatedHeadline as="h1" className="text-headline mb-6">
-              Curriculum <span className="text-gradient">Vitae</span>
+              Curriculum vitae
             </AnimatedHeadline>
 
             {/* Contact Info */}
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-muted-foreground mb-5">
+            <div className="flex flex-wrap gap-4 md:gap-6 text-sm text-muted-foreground mb-5">
               <div className="flex items-center gap-1.5">
                 <MapPin size={14} className="text-primary" />
                 <span>England, United Kingdom</span>
@@ -34,7 +110,7 @@ const CV = () => {
               </div>
             </div>
 
-            <div className="flex justify-center gap-4">
+            <div className="flex gap-4">
               <a href="https://github.com/Ayooluwabami" target="_blank" rel="noopener noreferrer"
                  className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
                 <Github size={14} /> GitHub
@@ -51,69 +127,77 @@ const CV = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="white">
         {/* Professional Summary */}
         <AnimatedSection delay={50}>
-          <div className="max-w-4xl mx-auto mb-10">
+          <div className="max-w-4xl mx-auto">
             <div className="p-6 bg-secondary/50 rounded-xl border border-border">
               <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
                 <Briefcase className="text-primary" size={20} />
-                Professional Summary
+                Professional summary
               </h2>
               <p className="text-muted-foreground leading-relaxed text-sm">
-                Cloud & Backend-focused Software Engineer with 3+ years of experience building production systems with
-                Node.js, TypeScript, NestJS, and Express, combined with hands-on cloud and DevOps engineering across AWS, Azure, and GCP.
-                Delivered production systems at scale — including an NHS-aligned health platform with 8 NestJS microservices
-                on EKS, a Nigerian service marketplace with 27 modules and dual payment gateways, and a serverless e-commerce
-                order pipeline across 9 CloudFormation nested stacks with ECS Fargate, SQS, Lambda, SES, and DynamoDB.
-                Reduced deployment time by 90% through CI/CD automation and completed 20+ cloud projects covering GitHub Actions,
-                Jenkins, Terraform, CloudFormation, three-tier AWS architectures, and Kubernetes. Currently pursuing
-                AWS Solutions Architect Associate (SAA-C03). UK-based on Skilled Worker Dependent Visa; eligible to work immediately.
+                Cloud, DevOps and platform engineer with 3+ years of experience designing, deploying and operating infrastructure
+                across AWS, Azure and GCP, on a backend engineering foundation in Node.js, TypeScript and NestJS. Builds CI/CD
+                with blocking security gates as standard (GitHub Actions, Azure DevOps, Jenkins, AWS CodePipeline), provisions
+                infrastructure as code with Terraform and CloudFormation, and runs production-grade Kubernetes on EKS and AKS with
+                GitOps via ArgoCD, zero-trust NetworkPolicies and full observability. Defines SLOs and error-budget policies, and
+                works documentation-first: threat models, runbooks and blameless postmortems included. Cut deployment time by 90%
+                through CI/CD automation and completed 20+ cloud projects. Currently pursuing AWS Solutions Architect Associate
+                (SAA-C03). UK-based on a Skilled Worker Dependant visa; eligible to work immediately.
               </p>
             </div>
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="lavender">
         {/* Core Technical Skills */}
         <AnimatedSection delay={75}>
-          <div className="max-w-4xl mx-auto mb-10">
-            <h2 className="text-lg font-semibold mb-4">Core Technical Skills</h2>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-lg font-semibold mb-4">Core technical skills</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
-                  label: "Languages & Frameworks",
-                  value: "JavaScript, TypeScript, Python, Node.js, NestJS, Express.js, Restana, React, Next.js, React Native (Expo), Vite, Tailwind CSS",
+                  label: "CI/CD & Automation",
+                  value: "GitHub Actions (OIDC keyless auth, matrix builds, PR plan comments, environment approval gates), AWS CodePipeline/CodeBuild/CodeDeploy (blocking gates mirrored as pre-commit hooks), Azure DevOps (multi-stage YAML, self-hosted ARM64 agents, AzureKeyVault@2), Jenkins (Pipeline, Jenkinsfile, RBAC, ECR/ECS, Helm), Bitbucket Pipelines, Docker, Docker Compose, Docker Buildx",
                 },
                 {
-                  label: "Backend & Architecture",
-                  value: "Microservices, MVC, Event-driven (BullMQ, EventEmitter2, Redis pub/sub), Queue processing, WebSockets (Socket.io), Scheduled jobs, Webhooks",
+                  label: "Infrastructure as Code",
+                  value: "Terraform (modular, S3 backend + DynamoDB locking, multi-environment), AWS CloudFormation (nested stacks, 25+ resource single templates, cross-stack exports), Ansible and Puppet (fleet provisioning), ARM/Bicep and AWS CDK (familiar)",
                 },
                 {
-                  label: "Databases",
-                  value: "PostgreSQL, MongoDB, MySQL, Prisma ORM, Prisma Accelerate, Knex.js, Redis (caching, queues, sorted sets, sessions), GeoFirestore",
+                  label: "Kubernetes & Containers",
+                  value: "EKS, AKS, Helm (--atomic), ArgoCD (GitOps, App-of-Apps), RollingUpdate, HPA, PDB, NetworkPolicies, pod security hardening, Seccomp, IRSA, FluentBit DaemonSet, ECR, ACR, ECS Fargate",
+                },
+                {
+                  label: "DevSecOps & Supply Chain",
+                  value: "STRIDE threat modelling, Gitleaks, Checkov, tfsec, Semgrep (SAST), Trivy, OWASP Dependency-Check (SCA), OWASP ZAP (DAST), Syft (SBOM), npm audit, SHA-pinned actions, OIDC keyless CI/CD, least-privilege IAM, IMDSv2, encrypted storage, TLS-only buckets, Key Vault",
+                },
+                {
+                  label: "Observability & SRE",
+                  value: "Prometheus, Grafana, Alertmanager (kube-prometheus-stack), CloudWatch (alarms, Logs Insights, metric-filter alarms), CloudTrail, X-Ray, correlation ID tracing, SLO/SLI definition, error-budget policies, runbooks, blameless postmortems, incident response",
                 },
                 {
                   label: "AWS",
-                  value: "EC2, VPC, S3, IAM, RDS (Aurora MySQL Multi-AZ, Oracle Multi-AZ), ALB, ASG, Lambda, SQS, SES, SNS, CloudFront, Route 53, ACM, CloudFormation, SSM, ECS Fargate, ECR, EFS, DynamoDB, ElastiCache, CloudWatch, CloudTrail, Lightsail",
+                  value: "EC2, VPC, S3, IAM, RDS (Aurora MySQL and Oracle Multi-AZ), ALB, ASG, Lambda, API Gateway, SQS, SES, SNS, CloudFront, Route 53, ACM, SSM, ECS Fargate, ECR, EFS, DynamoDB, ElastiCache, CloudWatch, CloudTrail, CodePipeline, CodeBuild, CodeDeploy, X-Ray, Lightsail",
                 },
                 {
                   label: "Azure & GCP",
-                  value: "Azure VMs, App Service, Functions, Blob Storage, VNet/NSG, Entra ID, RBAC, Key Vault, Azure SQL | GCP Compute Engine, Cloud Storage, Vertex AI",
+                  value: "AKS, ACR, VMs, App Service, Blob Storage, VNet, NSG, Entra ID, RBAC, Key Vault, Azure SQL, Functions | GCP Compute Engine, Cloud Storage, Vertex AI",
                 },
                 {
-                  label: "DevOps & IaC",
-                  value: "Terraform (S3 backend, DynamoDB locking, multi-env, GitHub Actions automation), AWS CloudFormation (nested stacks, cross-stack exports), GitHub Actions, Jenkins (Freestyle, Pipeline, Jenkinsfile, webhook, ECR/ECS/Helm), Bitbucket Pipelines, Docker, Docker Buildx, Kubernetes (EKS, Helm), Bash scripting",
+                  label: "Networking & Linux",
+                  value: "VPC design, subnets, route tables, NAT and internet gateways, security groups, NACLs, VPC peering, DNS (Route 53), SSL/TLS, ACM, SPF/DKIM/DMARC; Ubuntu/Debian daily, Bash, Nginx, SSH, log analysis",
                 },
                 {
-                  label: "AI & Integrations",
-                  value: "Claude API (Anthropic), Google Vertex AI / Gemini, Amazon Rekognition, Firebase, OneSignal, Expo Push, Twilio, Termii, WhatsApp API, Mailchimp, Metamap, Google Maps",
+                  label: "Backend & Languages",
+                  value: "TypeScript, JavaScript, Node.js, NestJS, Express, Restana, Python, Bash, HCL, YAML; PostgreSQL, MySQL, MongoDB, Redis (sorted sets, pub/sub, queues), BullMQ, Prisma, Knex",
                 },
                 {
-                  label: "API, Security & Payments",
-                  value: "OpenAPI/Swagger, JWT (RS256 + HS256), OAuth2, OIDC PKCE, TOTP 2FA, RBAC, bcrypt/argon2, rate limiting, Paystack, Flutterwave, KoraPay, Piggyvest, Stripe",
-                },
-                {
-                  label: "Monitoring & Testing",
-                  value: "CloudWatch (alarms, Logs Insights, FluentBit DaemonSet), CloudTrail, SNS alerts, Papertrail, Pino, Winston, Jest, Supertest, correlation ID tracing",
+                  label: "Security, APIs & Payments",
+                  value: "JWT (RS256 + HS256), OAuth2, OIDC PKCE, TOTP 2FA, RBAC, bcrypt/argon2, rate limiting, OpenAPI/Swagger; Paystack, Flutterwave, KoraPay, Piggyvest, Stripe",
                 },
               ].map((skill, index) => (
                 <div key={index} className="p-4 bg-secondary/50 rounded-lg border border-border">
@@ -125,202 +209,55 @@ const CV = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="white">
         {/* Professional Experience */}
         <AnimatedSection delay={100}>
-          <div className="max-w-4xl mx-auto mb-10">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <Briefcase className="text-primary" size={20} />
-              Professional Experience
+              Professional experience
             </h2>
             <div className="space-y-6">
-              {/* Cloudboosta */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="relative pl-5 border-l-2 border-primary/30"
-              >
-                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
-                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
-                    <div>
-                      <h3 className="font-semibold text-primary">Cloud & DevOps Engineer</h3>
-                      <p className="font-medium">Cloudboosta Academy</p>
+              {ROLES.map((role, i) => (
+                <motion.div
+                  key={role.org + role.title}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: Math.min(i, 3) * 0.05 }}
+                  className="relative pl-5 border-l-2 border-primary/30"
+                >
+                  <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
+                  <div className="p-5 bg-secondary/50 rounded-lg border border-border">
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+                      <div>
+                        <h3 className="font-semibold text-primary">{role.title}</h3>
+                        <p className="font-medium">{role.org}</p>
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
+                        <p>{role.period}</p>
+                        <p>{role.place}</p>
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>Jan 2026 – Present</p>
-                      <p>Remote</p>
-                    </div>
+                    {role.stack && <p className="text-xs text-muted-foreground mb-3 font-mono">{role.stack}</p>}
+                    <ul className="space-y-2 text-xs text-muted-foreground">
+                      {role.points.map((pt) => (
+                        <li key={pt} className="flex gap-2.5 leading-relaxed">
+                          <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-primary/70" />
+                          <span>{pt}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-3 font-mono">
-                    AWS (EC2, ECS, EKS, CloudFormation, RDS, Lambda, SQS, SES, DynamoDB, CloudWatch) · Terraform · Jenkins · GitHub Actions · Docker · Kubernetes · Helm · Azure · Python
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
-                    <li>Built end-to-end GitHub Actions CI/CD pipelines: matrix builds, Terraform automation, PR plan comments, staging/production approval gates</li>
-                    <li>Provisioned Jenkins on EC2 with webhook integration, RBAC credentials vault, full Jenkinsfile pipeline, and ECR/ECS ecommerce deployment</li>
-                    <li>Built CarePulse (NHS-aligned health platform) on EKS: IRSA, zero-downtime RollingUpdate, pod security hardening, FluentBit DaemonSet, Jenkins CI/CD: CFN validation → lint/tests → ECR build → Helm staging → smoke test → Helm production</li>
-                    <li>Built serverless e-commerce order pipeline across 9 CloudFormation nested stacks: API Gateway → Lambda → SQS (DLQ) → ECS Fargate → S3 → Lambda → SES; DynamoDB order tracking; CloudWatch correlation ID tracing</li>
-                    <li>Deployed three-tier AWS architecture (EC2/ALB/ASG/Aurora MySQL/ACM/Route 53) and full CloudFormation multi-tier stack validated with live WordPress deployment</li>
-                    <li>Deployed RDS Oracle Multi-AZ; connected via SSM Session Manager; validated manual failover with zero data loss</li>
-                    <li>Completed Azure projects: Blob Storage, VNet/NSG, Entra ID, App Service + Managed Identity + Key Vault, Azure SQL + serverless Functions</li>
-                    <li>Independently resolved a Lightsail VPC peering limitation — architected a cost-optimised hybrid Lightsail + EC2 solution with Nginx reverse proxy</li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* DriveWell */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="relative pl-5 border-l-2 border-primary/30"
-              >
-                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
-                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
-                    <div>
-                      <h3 className="font-semibold text-primary">Backend Engineer</h3>
-                      <p className="font-medium">Ebidhaa Services (DriveWell Platform)</p>
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>Feb 2025 – Dec 2025</p>
-                      <p>Remote</p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-3 font-mono">
-                    Node.js, Restana, TypeScript, MySQL, Knex.js, Redis, Paystack, Flutterwave, Piggyvest, Google Cloud Storage, Docker, GitHub Actions
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
-                    <li>Engineered backend for multi-service platform (vehicle hire, towing, documentation, licensing)</li>
-                    <li>Integrated 10+ third-party services: payments, messaging (Termii, WhatsApp, Mailchimp), verification (Metamap), maps</li>
-                    <li>Designed JWT + bcrypt authentication, API key management, Redis sessions</li>
-                    <li>Built multi-env config (40+ validated variables) → improved stability</li>
-                    <li>Implemented CI/CD (GitHub Actions + Docker Buildx + GCE) → 90% faster deployments</li>
-                    <li>Added centralised logging (Papertrail) and SQL query optimisation</li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* Freelance Software Engineer */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 }}
-                className="relative pl-5 border-l-2 border-primary/30"
-              >
-                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
-                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
-                    <div>
-                      <h3 className="font-semibold text-primary">Software Engineer – Freelance</h3>
-                      <p className="font-medium">Remote</p>
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>Jan 2023 – Present</p>
-                      <p>Remote</p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-3 font-mono">
-                    Node.js, NestJS, Express.js, Restana, React, Vite, Tailwind, MongoDB, MySQL, Redis, Paystack
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
-                    <li>Delivered backend and frontend solutions for startups and SMEs, specialising in payment systems, REST APIs, and production-ready web applications.</li>
-                    <li>Built and maintained RESTful APIs for car hire, marketplace, and service-booking platforms using Node.js, NestJS, ExpressJS, Restana, MongoDB, MySQL, and Redis.</li>
-                    <li>Implemented secure digital wallet and escrow systems with double-entry ledger logic, webhook verification, dispute handling, and multi-gateway payment integrations (Paystack).</li>
-                    <li>Developed frontend applications with React, Vite, and Tailwind, improving performance, usability, and deployment speed.</li>
-                    <li>Configured Google Workspace and DNS security (SPF, DKIM, DMARC, MTA-STS), significantly improving email deliverability and reliability.</li>
-                    <li>Delivered end-to-end features independently, from requirements and system design to deployment and documentation.</li>
-                    <li>Contributed to Owiwi, a multi-category service marketplace and business automation platform, building backend APIs and platform features enabling service discovery, bookings, and provider workflow automation.</li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* AI4AI Internship */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="relative pl-5 border-l-2 border-primary/30"
-              >
-                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
-                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
-                    <div>
-                      <h3 className="font-semibold text-primary">Backend Engineer (Internship)</h3>
-                      <p className="font-medium">African Institute for Artificial Intelligence (AI4AI)</p>
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>April 2025 – August 2025</p>
-                      <p>Remote</p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-3 font-mono">
-                    NestJS, PostgreSQL, Prisma, Redis, JWT, RBAC
-                  </p>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
-                    <li>Contributed to multi-tenant SaaS backend (SchoolHub) serving 50+ schools</li>
-                    <li>Designed modular services, tenant-aware RBAC, data validation</li>
-                    <li>Implemented JWT auth (access/refresh), bcrypt/argon2, audit logging</li>
-                    <li>Configured env-specific deployments, DB pooling, SSL, auto-migrations, health checks</li>
-                    <li>Improved performance with Redis caching, throttling & query optimisation</li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* Auto Clinic */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="relative pl-5 border-l-2 border-primary/30"
-              >
-                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
-                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
-                    <div>
-                      <h3 className="font-semibold text-primary">Support Staff (Diagnostics & Training)</h3>
-                      <p className="font-medium">Auto Clinic</p>
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>July 2021 – Aug 2024</p>
-                      <p>Nigeria</p>
-                    </div>
-                  </div>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
-                    <li>Performed diagnostics and maintenance for 25+ vehicles weekly</li>
-                    <li>Trained 50+ teenagers on automotive diagnostics</li>
-                    <li>Produced weekly automotive educational content for Splash FM radio</li>
-                  </ul>
-                </div>
-              </motion.div>
-
-              {/* MAX */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className="relative pl-5 border-l-2 border-primary/30"
-              >
-                <div className="absolute -left-[7px] top-1.5 w-3 h-3 bg-primary rounded-full" />
-                <div className="p-5 bg-secondary/50 rounded-lg border border-border">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
-                    <div>
-                      <h3 className="font-semibold text-primary">Fleet Supervisor</h3>
-                      <p className="font-medium">Metro Africa Express (MAX)</p>
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1 md:mt-0 md:text-right">
-                      <p>Mar 2021 – June 2021</p>
-                      <p>Nigeria</p>
-                    </div>
-                  </div>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground list-none">
-                    <li>Managed refurbishment & documentation for 100+ motorcycles</li>
-                    <li>Oversaw GPS installation and asset monitoring</li>
-                  </ul>
-                </div>
-              </motion.div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="mint">
         {/* Education & Volunteer – side by side on large screens */}
         <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Education */}
@@ -328,12 +265,12 @@ const CV = () => {
             <div>
               <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <GraduationCap className="text-primary" size={20} />
-                Education & Certifications
+                Education & certifications
               </h2>
               <div className="space-y-3">
                 {[
-                  { degree: "AWS SimuLearn: Cloud Practitioner", inst: "Amazon Web Services (AWS)", year: "Issued Apr 2026", highlight: true },
-                  { degree: "Cloud & Advanced DevOps Engineering (AWS & Azure)", inst: "Cloudboosta Academy", year: "Ongoing" },
+                  { degree: "AWS SimuLearn: Cloud Practitioner", inst: "Amazon Web Services (AWS)", year: "2026", highlight: true },
+                  { degree: "Cloud & Advanced DevOps Engineering (AWS & Azure)", inst: "Cloudboosta Academy", year: "2026" },
                   { degree: "Introduction to Cybersecurity Certification", inst: "Cisco Networking Academy", year: "2025" },
                   { degree: "Diploma in Backend Engineering", inst: "AltSchool Africa, School of Engineering", year: "2024" },
                   { degree: "JavaScript Essentials", inst: "Cisco & JS Institute", year: "2024" },
@@ -369,7 +306,7 @@ const CV = () => {
             <div>
               <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <Heart className="text-primary" size={20} />
-                Leadership & Volunteer
+                Leadership & volunteering
               </h2>
               <div className="space-y-4">
                 <div className="p-4 bg-secondary/50 rounded-lg border border-border">
@@ -397,9 +334,11 @@ const CV = () => {
           </AnimatedSection>
         </div>
 
+      </Band>
+      <Band tone="white">
         {/* Awards */}
         <AnimatedSection delay={175}>
-          <div className="max-w-4xl mx-auto mb-10">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <Award className="text-primary" size={20} />
               Awards
@@ -420,35 +359,36 @@ const CV = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="brand">
         {/* CTA */}
         <AnimatedSection delay={200}>
-          <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="max-w-4xl mx-auto space-y-4 border-t border-border pt-10">
             <p className="text-sm text-muted-foreground">
-              Want a formatted copy? Download the PDF version of this CV.
+              Need a copy? Save this page as a PDF from the print dialog.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {/* TODO: Host your CV PDF on Vercel/S3 and update this href */}
-              <a
-                href="/ayobami-edun-cv.pdf"
-                download
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => window.print()}
                 className="btn-secondary inline-flex items-center gap-2 px-6 py-3 text-sm"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
                 </svg>
-                Download PDF
-              </a>
+                Save as PDF
+              </button>
               <Link
                 to="/contact"
                 className="btn-primary inline-flex items-center gap-2 px-6 py-3"
               >
-                Get in Touch
+                Get in touch
                 <ArrowRight size={16} />
               </Link>
             </div>
           </div>
         </AnimatedSection>
-      </div>
+      </Band>
     </div>
   );
 };

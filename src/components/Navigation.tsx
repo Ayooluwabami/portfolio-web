@@ -82,6 +82,15 @@ const Navigation = () => {
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle isDark={isDark} onToggle={() => setIsDark((p) => !p)} />
             <button
+              onClick={() => window.dispatchEvent(new Event('open-terminal'))}
+              className="hidden lg:flex items-center px-2 py-1 rounded border border-border text-xs
+                         text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all font-mono"
+              aria-label="Open terminal"
+              title="Terminal (press `)"
+            >
+              &gt;_
+            </button>
+            <button
               onClick={() =>
                 window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, metaKey: true, bubbles: true }))
               }

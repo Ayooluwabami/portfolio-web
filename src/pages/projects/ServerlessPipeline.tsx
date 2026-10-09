@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Lock } from 'lucide-react';
 import AnimatedSection from '../../components/AnimatedSection';
+import Band from '../../components/Band';
 
 const METRICS = [
   { value: '9', label: 'CloudFormation nested stacks' },
@@ -20,8 +21,9 @@ const PIPELINE_STEPS = [
 ];
 
 const ServerlessPipeline = () => (
-  <div className="min-h-screen pt-28 pb-20">
-    <div className="container mx-auto px-6 max-w-4xl">
+  <div className="min-h-screen">
+    <Band tone="sky" first>
+      <div className="mx-auto max-w-4xl">
       <AnimatedSection>
         <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8 group">
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
@@ -31,7 +33,7 @@ const ServerlessPipeline = () => (
 
       {/* Hero */}
       <AnimatedSection delay={30}>
-        <div className="mb-10">
+        <div className="">
           <span className="text-label block mb-3">Case Study</span>
           <h1 className="text-headline mb-4">Serverless E-Commerce Order Pipeline</h1>
           <p className="text-subheadline max-w-2xl mb-6">
@@ -41,17 +43,20 @@ const ServerlessPipeline = () => (
           <div className="flex flex-wrap gap-3">
             <span className="px-3 py-1.5 bg-primary/10 text-primary text-xs font-medium rounded-full border border-primary/20">Cloud Engineer</span>
             <span className="px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-medium rounded-full border border-border">AWS eu-west-2</span>
-            <a href="https://github.com/Ayooluwabami" target="_blank" rel="noopener noreferrer"
-               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-medium rounded-full border border-border hover:border-primary/40 transition-colors">
-              <Github size={12} /> GitHub
-            </a>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-medium rounded-full border border-border" title="The code isn’t public. Happy to walk through it on a call.">
+              <Lock size={12} /> Private repo · walkthrough on request
+            </span>
           </div>
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="white">
+      <div className="mx-auto max-w-4xl">
       {/* Metrics */}
       <AnimatedSection delay={50}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {METRICS.map((m) => (
             <div key={m.label} className="p-4 bg-secondary/50 rounded-xl border border-border text-center">
               <p className="text-xl font-bold text-primary mb-1">{m.value}</p>
@@ -63,7 +68,7 @@ const ServerlessPipeline = () => (
 
       {/* Architecture flow */}
       <AnimatedSection delay={70}>
-        <div className="mb-12">
+        <div className="">
           <h2 className="text-lg font-semibold mb-6">Architecture — Event Flow</h2>
           <div className="p-6 bg-secondary/50 rounded-xl border border-border">
             {/* Linear pipeline */}
@@ -107,9 +112,13 @@ const ServerlessPipeline = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="lavender">
+      <div className="mx-auto max-w-4xl">
       {/* IaC Design */}
       <AnimatedSection delay={90}>
-        <div className="mb-12">
+        <div className="">
           <h2 className="text-lg font-semibold mb-5">Infrastructure as Code — 9 Nested Stacks</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
@@ -132,9 +141,13 @@ const ServerlessPipeline = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="mint">
+      <div className="mx-auto max-w-4xl">
       {/* Key decisions */}
       <AnimatedSection delay={110}>
-        <div className="mb-12">
+        <div className="">
           <h2 className="text-lg font-semibold mb-5">Key Technical Decisions</h2>
           <div className="space-y-3">
             {[
@@ -152,6 +165,10 @@ const ServerlessPipeline = () => (
         </div>
       </AnimatedSection>
 
+      </div>
+    </Band>
+    <Band tone="white">
+      <div className="mx-auto max-w-4xl">
       {/* Nav */}
       <AnimatedSection delay={130}>
         <div className="flex flex-wrap gap-4 justify-between items-center pt-6 border-t border-border">
@@ -165,7 +182,8 @@ const ServerlessPipeline = () => (
           </Link>
         </div>
       </AnimatedSection>
-    </div>
+      </div>
+    </Band>
   </div>
 );
 

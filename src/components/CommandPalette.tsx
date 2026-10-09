@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Home, User, FolderOpen, Code2, FileText, Mail, Github, Linkedin, BookOpen, ArrowRight, X } from 'lucide-react';
+import { Terminal, Keyboard, Home, User, FolderOpen, Code2, FileText, Mail, Github, Linkedin, BookOpen, ArrowRight, X } from 'lucide-react';
 
 const COMMANDS = [
   { id: 'home',     label: 'Home',           desc: 'Go to home page',          icon: Home,      to: '/' },
@@ -10,6 +10,8 @@ const COMMANDS = [
   { id: 'skills',   label: 'Skills',         desc: 'Technical skills',         icon: Code2,     to: '/skills' },
   { id: 'cv',       label: 'CV / Resume',    desc: 'Curriculum vitae',         icon: FileText,  to: '/cv' },
   { id: 'contact',  label: 'Contact',        desc: 'Get in touch',             icon: Mail,      to: '/contact' },
+  { id: 'terminal', label: 'Open terminal',  desc: 'Press ` anytime',          icon: Terminal,  event: 'open-terminal' },
+  { id: 'shortcuts', label: 'Keyboard shortcuts', desc: 'Press ? anytime',      icon: Keyboard,  event: 'open-shortcuts' },
   { id: 'github',   label: 'GitHub',         desc: 'github.com/Ayooluwabami',  icon: Github,    href: 'https://github.com/Ayooluwabami' },
   { id: 'linkedin', label: 'LinkedIn',       desc: 'linkedin.com/in/ayobami-edun', icon: Linkedin, href: 'https://www.linkedin.com/in/ayobami-edun' },
   { id: 'medium',   label: 'Medium',         desc: 'Technical writing',        icon: BookOpen,  href: 'https://medium.com/@ayobamieae' },
@@ -60,7 +62,8 @@ const CommandPalette = ({ onOpen }: CommandPaletteProps) => {
 
   const execute = (cmd: typeof COMMANDS[number]) => {
     setOpen(false);
-    if ('to' in cmd) navigate(cmd.to);
+    if ('event' in cmd) window.setTimeout(() => window.dispatchEvent(new Event(cmd.event)), 80);
+    else if ('to' in cmd) navigate(cmd.to);
     else if ('href' in cmd) window.open(cmd.href, '_blank', 'noopener,noreferrer');
   };
 
@@ -88,7 +91,7 @@ const CommandPalette = ({ onOpen }: CommandPaletteProps) => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: -8 }}
               transition={{ duration: 0.15, ease: 'easeOut' }}
-              className="fixed top-[18%] left-1/2 -translate-x-1/2 w-full max-w-lg z-[101] px-4"
+              className="fixed inset-x-0 top-[18%] mx-auto w-full max-w-lg z-[101] px-4"
             >
               <div className="bg-background border border-border rounded-xl shadow-2xl overflow-hidden">
                 {/* Input */}

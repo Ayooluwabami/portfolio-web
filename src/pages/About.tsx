@@ -5,63 +5,64 @@ import AnimatedSection from '../components/AnimatedSection';
 import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
 import photoshoot from '@/assets/photoshoot.jpg';
 import working from '@/assets/working.jpg';
+import Band from '../components/Band';
 
 const About = () => {
   const expertise = [
     {
-      icon: <Code size={20} />,
-      title: "Backend development",
-      description: "Building robust, scalable systems with Node.js, TypeScript, NestJS, Express.js, and Restana.",
-    },
-    {
-      icon: <Database size={20} />,
-      title: "Database design",
-      description: "MongoDB, MySQL, PostgreSQL, PostGIS. Query optimisation, schema design, Prisma ORM.",
-    },
-    {
       icon: <Cloud size={20} />,
-      title: "Cloud & DevOps",
-      description: "AWS, Azure, GCP. Terraform, CloudFormation, EKS/Kubernetes, Jenkins, GitHub Actions, Docker — three-tier to serverless.",
-    },
-    {
-      icon: <Shield size={20} />,
-      title: "Security & payments",
-      description: "JWT, OAuth2, RBAC, bcrypt/argon2, rate limiting. Paystack, Stripe, Piggyvest, Flutterwave.",
+      title: "Cloud & platform engineering",
+      description: "AWS, Azure and GCP built as code with Terraform and CloudFormation. Internal developer platforms, golden paths and one-command service setup.",
     },
     {
       icon: <Zap size={20} />,
-      title: "API architecture",
-      description: "RESTful API design, OpenAPI/Swagger documentation, microservices with NestJS TCP transport.",
+      title: "CI/CD & GitOps",
+      description: "GitHub Actions, AWS CodePipeline, Azure DevOps and Jenkins. ArgoCD App-of-Apps on EKS and AKS, Helm, automatic rollback.",
+    },
+    {
+      icon: <Shield size={20} />,
+      title: "DevSecOps",
+      description: "Blocking gates for secrets, SAST, SCA, IaC and images, SBOMs, OIDC keyless auth, IRSA, zero-trust NetworkPolicies and STRIDE threat models.",
+    },
+    {
+      icon: <Database size={20} />,
+      title: "Observability & reliability",
+      description: "Prometheus, Grafana, Alertmanager, CloudWatch and X-Ray. SLOs, error-budget policies, runbooks and blameless postmortems.",
+    },
+    {
+      icon: <Code size={20} />,
+      title: "Backend development",
+      description: "Node.js, TypeScript and NestJS microservices, PostgreSQL and Redis, queues with BullMQ, payments and secure auth.",
     },
     {
       icon: <Users size={20} />,
-      title: "Leadership",
-      description: "Agile delivery, code reviews, mentoring developers, and stakeholder communication.",
+      title: "Documentation & mentoring",
+      description: "Documentation-first delivery, technical writing on Medium, code reviews and mentoring 50+ young people.",
     },
   ];
 
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="container mx-auto px-6">
-
+    <div className="min-h-screen">
+      <Band tone="sky" first>
         {/* Header */}
         <AnimatedSection>
-          <div className="max-w-3xl mx-auto text-center mb-14">
+          <div className="max-w-5xl mx-auto">
             <WordReveal text="About me" className="text-label mb-4" />
             <AnimatedHeadline as="h1" className="text-headline mb-5">
-              The story behind{' '}
-              <span className="text-gradient">the code</span>
+              The story behind the code
             </AnimatedHeadline>
-            <p className="text-subheadline mx-auto">
+            <p className="text-subheadline">
               From automotive diagnostics to distributed cloud systems — a non-linear path that built
               a first-principles approach to engineering.
             </p>
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="white">
         {/* Profile — photo left, text right */}
         <AnimatedSection delay={50}>
-          <div className="max-w-5xl mx-auto mb-16">
+          <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
               {/* Photo — rectangular, not circular */}
@@ -85,15 +86,16 @@ const About = () => {
               <div className="space-y-5">
                 <div className="space-y-4 text-muted-foreground leading-relaxed text-sm sm:text-base">
                   <p>
-                    I'm a <span className="text-foreground font-medium">backend-focused Software & Cloud Engineer</span> with
-                    3+ years building production systems with Node.js, TypeScript, NestJS, and Express —
-                    combined with hands-on cloud and DevOps engineering across AWS, Azure, and GCP.
+                    I'm a <span className="text-foreground font-medium">cloud, DevOps and platform engineer</span> with
+                    3+ years of experience across AWS, Azure and GCP, built on a backend foundation in Node.js,
+                    TypeScript and NestJS.
                   </p>
                   <p>
-                    I've deployed distributed microservices on{' '}
-                    <span className="text-foreground font-medium">EKS with Kubernetes</span>, built serverless
-                    pipelines across CloudFormation nested stacks, provisioned infrastructure with Terraform,
-                    and automated deployments with Jenkins and GitHub Actions.
+                    I've built a{' '}
+                    <span className="text-foreground font-medium">zero-trust EKS platform</span> with GitOps and seven
+                    blocking security gates, a CodePipeline that ships from git push to EC2 with automatic rollback, and
+                    serverless pipelines across CloudFormation nested stacks. I define SLOs and error budgets, and write the
+                    threat models and runbooks that keep systems understandable.
                   </p>
                   <p>
                     I work remotely with teams across the globe, owning delivery from requirements and system
@@ -120,13 +122,15 @@ const About = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="lavender">
         {/* Expertise — 2 columns instead of 3 equal */}
         <AnimatedSection delay={100}>
-          <div className="max-w-5xl mx-auto mb-16">
+          <div className="max-w-5xl mx-auto">
             <div className="mb-10">
               <p className="text-label mb-3">What I do</p>
               <AnimatedHeadline as="h2" className="text-section-title">
-                Areas of <span className="text-gradient">expertise</span>
+                Areas of expertise
               </AnimatedHeadline>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -151,9 +155,11 @@ const About = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="mint">
         {/* Beyond the code */}
         <AnimatedSection delay={150}>
-          <div className="max-w-5xl mx-auto mb-16">
+          <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="space-y-5 order-2 lg:order-1">
                 <p className="text-label">Beyond the code</p>
@@ -202,6 +208,8 @@ const About = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="ink">
         {/* Education */}
         <AnimatedSection delay={200}>
           <div className="max-w-4xl mx-auto">
@@ -214,8 +222,8 @@ const About = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {[
-                  { title: "AWS SimuLearn: Cloud Practitioner",    org: "Amazon Web Services",   year: "Issued Apr 2026", badge: "AWS" },
-                  { title: "Cloud & Advanced DevOps Engineering",  org: "Cloudboosta Academy",   year: "Ongoing" },
+                  { title: "AWS SimuLearn: Cloud Practitioner",    org: "Amazon Web Services",   year: "2026", badge: "AWS" },
+                  { title: "Cloud & Advanced DevOps Engineering",  org: "Cloudboosta Academy",   year: "2026" },
                   { title: "Introduction to Cybersecurity",        org: "Cisco Networking Academy", year: "2025" },
                   { title: "Diploma in Backend Engineering",       org: "AltSchool Africa",      year: "2024" },
                   { title: "JavaScript Essentials",                org: "Cisco & JS Institute",  year: "2024" },
@@ -244,7 +252,7 @@ const About = () => {
             </div>
           </div>
         </AnimatedSection>
-      </div>
+      </Band>
     </div>
   );
 };

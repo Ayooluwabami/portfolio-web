@@ -1,6 +1,7 @@
 import { Mail, MapPin, Github, Linkedin, BookOpen, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
+import Band from '../components/Band';
 
 const MediumIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -46,21 +47,23 @@ const socialLinks = [
 
 const Contact = () => {
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="container mx-auto px-6">
+    <div className="min-h-screen">
+      <Band tone="sky" first>
         <AnimatedSection>
-          <div className="max-w-3xl mx-auto text-center mb-14">
+          <div className="max-w-4xl mx-auto">
             <p className="text-label mb-4">Contact</p>
             <h1 className="text-headline mb-5">
               Let's <span className="text-gradient">connect</span>
             </h1>
-            <p className="text-subheadline mx-auto">
+            <p className="text-subheadline">
               Open to backend, cloud, DevOps, DevSecOps, and SRE roles — and happy to discuss
               projects, collaborations, or a quick technical chat.
             </p>
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="white">
         <div className="max-w-4xl mx-auto">
           {/* Contact info card */}
           <AnimatedSection delay={50}>
@@ -114,8 +117,7 @@ const Contact = () => {
                 <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
                   <div className="flex items-center gap-3">
                     <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+                                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
                     </span>
                     <div>
                       <p className="font-medium text-sm">Available now</p>
@@ -158,7 +160,7 @@ const Contact = () => {
 
           {/* CTA */}
           <AnimatedSection delay={150}>
-            <div className="text-center p-8 bg-secondary/50 rounded-xl border border-border">
+            <div className="tone-brand brand-glow text-center p-8 md:p-10 rounded-xl">
               <h2 className="font-display text-lg font-bold mb-3">
                 Got a role or project in mind?
               </h2>
@@ -186,7 +188,7 @@ const Contact = () => {
             </div>
           </AnimatedSection>
         </div>
-      </div>
+      </Band>
     </div>
   );
 };

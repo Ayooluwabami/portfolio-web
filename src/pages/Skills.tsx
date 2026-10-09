@@ -1,55 +1,57 @@
 import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
+import Band from '../components/Band';
 
+// Kept in step with the current Cloud, DevSecOps, SRE and Platform CVs (Jul 2026)
 const SKILL_CATEGORIES = [
   {
-    title: "Languages & frameworks",
-    skills: ["JavaScript", "TypeScript", "Python", "Node.js", "Express.js", "NestJS", "Flask", "Restana", "React", "Vite", "Tailwind CSS"],
+    title: "CI/CD & automation",
+    skills: ["GitHub Actions", "AWS CodePipeline", "CodeBuild", "CodeDeploy", "Azure DevOps", "Jenkins", "Bitbucket Pipelines", "OIDC keyless auth", "Matrix builds", "Environment approval gates", "Pre-commit hooks", "Docker", "Docker Compose", "Docker Buildx"],
   },
   {
-    title: "Databases & caching",
-    skills: ["MongoDB", "MySQL", "PostgreSQL", "PostGIS", "Redis", "Prisma ORM", "Prisma Accelerate", "Knex", "GeoFirestore"],
+    title: "Infrastructure as code",
+    skills: ["Terraform (modules, S3 + DynamoDB state)", "AWS CloudFormation (nested stacks)", "Ansible", "Puppet", "ARM / Bicep (familiar)", "AWS CDK (familiar)"],
+  },
+  {
+    title: "Kubernetes & GitOps",
+    skills: ["EKS", "AKS", "Helm (--atomic)", "ArgoCD (App-of-Apps)", "RollingUpdate", "HPA", "PDB", "NetworkPolicies", "Pod security hardening", "Seccomp", "IRSA", "FluentBit DaemonSet", "ECR", "ACR", "ECS Fargate"],
+  },
+  {
+    title: "DevSecOps & supply chain",
+    skills: ["STRIDE threat modelling", "Gitleaks", "Checkov", "tfsec", "Semgrep (SAST)", "Trivy", "OWASP Dependency-Check (SCA)", "OWASP ZAP (DAST)", "Syft (SBOM)", "npm audit", "Cosign", "SHA-pinned actions", "Least-privilege IAM", "IMDSv2", "Azure Key Vault"],
+  },
+  {
+    title: "Observability & SRE",
+    skills: ["Prometheus", "Grafana", "Alertmanager", "kube-prometheus-stack", "CloudWatch (Logs Insights, metric filters)", "CloudTrail", "AWS X-Ray", "Correlation ID tracing", "SLOs / SLIs", "Error-budget policies", "Runbooks", "Blameless postmortems", "Incident response", "OpenTelemetry (familiar)"],
   },
   {
     title: "AWS",
-    skills: ["EC2", "VPC", "S3", "IAM", "RDS (Aurora MySQL · Oracle Multi-AZ)", "ALB", "ASG", "Lambda", "SQS", "SES", "SNS", "CloudFront", "Route 53", "ACM", "CloudFormation", "SSM", "ECS Fargate", "ECR", "EFS", "DynamoDB", "ElastiCache", "CloudWatch", "CloudTrail", "Lightsail"],
+    skills: ["EC2", "VPC", "S3", "IAM", "RDS (Aurora MySQL · Oracle Multi-AZ)", "ALB", "ASG", "Lambda", "API Gateway", "SQS", "SES", "SNS", "CloudFront", "Route 53", "ACM", "SSM", "ECS Fargate", "ECR", "EFS", "DynamoDB", "ElastiCache", "CodePipeline", "CodeBuild", "CodeDeploy", "X-Ray", "Lightsail"],
   },
   {
     title: "Azure & GCP",
-    skills: ["Azure VMs", "App Service", "Azure Functions", "Blob Storage", "VNet/NSG", "Entra ID", "Key Vault", "Azure SQL", "GCP Compute Engine", "Google Cloud Storage", "Google Vertex AI"],
+    skills: ["AKS", "ACR", "Azure VMs", "App Service", "Azure Functions", "Blob Storage", "VNet / NSG", "Entra ID", "RBAC", "Key Vault", "Azure SQL", "GCP Compute Engine", "Google Cloud Storage", "Vertex AI"],
   },
   {
-    title: "DevOps & IaC",
-    skills: ["Terraform", "AWS CloudFormation", "GitHub Actions", "Jenkins", "Bitbucket Pipelines", "Docker", "Docker Buildx", "Docker Compose", "Kubernetes (EKS)", "Helm", "ArgoCD", "Azure DevOps", "Bash / Shell scripting"],
+    title: "Networking & Linux",
+    skills: ["VPC design", "Subnets & route tables", "NAT & internet gateways", "Security groups & NACLs", "VPC peering", "DNS (Route 53)", "SSL/TLS", "SPF · DKIM · DMARC · MTA-STS", "Ubuntu / Debian", "Nginx", "SSH", "Log analysis"],
   },
   {
-    title: "DevSecOps",
-    skills: ["Semgrep (SAST)", "Checkov (IaC)", "Trivy (container CVE)", "Gitleaks (secret scan)", "OWASP ZAP (DAST)", "OIDC federation", "IRSA", "Cosign / SBOM attestation", "NetworkPolicies", "Least-privilege IAM"],
+    title: "Languages & scripting",
+    skills: ["TypeScript", "JavaScript", "Node.js", "Python", "Bash", "HCL", "YAML", "Makefile"],
   },
   {
-    title: "AI & generative services",
-    skills: ["Claude API (Anthropic)", "Google Gemini API", "Google Vertex AI", "Google Translate API", "Amazon Rekognition", "Firebase Admin", "AI-assisted triage & summaries"],
+    title: "Backend & data",
+    skills: ["NestJS", "Express", "Restana", "PostgreSQL", "PostGIS", "MySQL", "MongoDB", "Redis (sorted sets, pub/sub, queues)", "BullMQ", "Prisma", "Knex", "Microservices (TCP)", "Socket.io", "Webhooks"],
   },
   {
-    title: "Background & event systems",
-    skills: ["BullMQ", "Redis Queues", "Redis Pub/Sub", "Redis Sorted Sets", "Event-driven architecture", "Cron jobs", "NestJS Microservices (TCP)", "AWS SNS/SQS pipeline", "Socket.io", "Webhooks"],
+    title: "Security, APIs & payments",
+    skills: ["JWT (RS256 + HS256)", "OAuth2", "OIDC PKCE", "TOTP 2FA", "RBAC", "bcrypt / argon2", "Rate limiting", "OpenAPI / Swagger", "Paystack", "Flutterwave", "KoraPay", "Stripe", "Piggyvest"],
   },
   {
-    title: "Notifications & integrations",
-    skills: ["OneSignal", "Expo Push", "Firebase FCM", "Twilio", "Termii", "WhatsApp API", "Mailchimp", "Metamap"],
-  },
-  {
-    title: "Security & payments",
-    skills: ["JWT", "OAuth2", "PKCE", "bcrypt / argon2", "Rate limiting", "RBAC", "API key management", "Paystack", "Stripe", "Piggyvest", "Flutterwave"],
-  },
-  {
-    title: "API & testing",
-    skills: ["REST API design", "OpenAPI / Swagger", "Postman", "Insomnia", "Jest", "Supertest", "Pino", "Papertrail", "Sentry"],
-  },
-  {
-    title: "Scripting & tooling",
-    skills: ["Bash scripting", "Shell scripting", "Python scripting", "Makefile", "Git", "GitHub", "CI/CD", "MVC", "Microservices", "DNS management (SPF · DKIM · DMARC)", "Linux / Ubuntu server admin"],
+    title: "AI & integrations",
+    skills: ["Claude API (Anthropic)", "Gemini API", "Vertex AI", "Amazon Rekognition", "OneSignal", "Firebase FCM", "Twilio", "Termii", "WhatsApp API", "Metamap", "Mailchimp"],
   },
 ];
 
@@ -60,23 +62,23 @@ const SOFT_SKILLS = [
 
 const Skills = () => {
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="container mx-auto px-6">
-
+    <div className="min-h-screen">
+      <Band tone="sky" first>
         {/* Header */}
         <AnimatedSection>
-          <div className="max-w-3xl mx-auto text-center mb-14">
+          <div className="max-w-5xl mx-auto">
             <WordReveal text="Expertise" className="text-label mb-4" />
             <AnimatedHeadline as="h1" className="text-headline mb-5">
               Technical <span className="text-gradient">skills</span>
             </AnimatedHeadline>
-            <p className="text-subheadline mx-auto">
-              A comprehensive toolkit for building robust, scalable backend systems
-              and delivering production-ready cloud infrastructure.
+            <p className="text-subheadline">
+              Every tool I have used in production or a real build, grouped by where it sits in the stack.
             </p>
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="white">
         {/* Skills — full-width cards, badges inside */}
         <div className="max-w-5xl mx-auto space-y-5 mb-16">
           {SKILL_CATEGORIES.map((category, categoryIndex) => (
@@ -106,16 +108,18 @@ const Skills = () => {
           ))}
         </div>
 
+      </Band>
+      <Band tone="ink">
         {/* Approach */}
         <AnimatedSection delay={300}>
-          <div className="max-w-4xl mx-auto mb-16">
+          <div className="max-w-4xl mx-auto">
             <div className="p-8 bg-secondary/40 rounded-xl border border-border">
               <h2 className="font-display text-xl font-bold mb-8 tracking-tight">Development approach</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
-                  { title: "Agile",      desc: "Iterative development with continuous feedback and adaptation." },
-                  { title: "CI/CD",      desc: "Automated testing and deployment pipelines for reliability." },
-                  { title: "Clean code", desc: "MVC architecture and separation of concerns for maintainability." },
+                  { title: "Shift left", desc: "Security gates run before merge and locally as pre-commit hooks, so problems are caught where they are cheapest to fix." },
+                  { title: "Everything as code", desc: "Infrastructure, pipelines and policies live in Git and change through reviewed pull requests." },
+                  { title: "Measure reliability", desc: "SLOs, error budgets and alerts that page only when a person should act, backed by runbooks." },
                 ].map((approach) => (
                   <div key={approach.title}>
                     <div className="font-display tabular-nums text-2xl font-bold text-primary mb-2">{approach.title}</div>
@@ -127,6 +131,8 @@ const Skills = () => {
           </div>
         </AnimatedSection>
 
+      </Band>
+      <Band tone="mint">
         {/* Soft skills */}
         <AnimatedSection delay={350}>
           <div className="max-w-4xl mx-auto">
@@ -153,7 +159,7 @@ const Skills = () => {
             </div>
           </div>
         </AnimatedSection>
-      </div>
+      </Band>
     </div>
   );
 };

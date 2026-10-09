@@ -171,7 +171,7 @@
 
   /* Headline — Bricolage Grotesque, tight tracking, balanced wrapping */
   .text-headline {
-    @apply font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-[-0.02em] text-balance;
+    @apply font-display text-[2.75rem] sm:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-[-0.025em] text-balance;
   }
 
   .text-subheadline {
@@ -180,11 +180,16 @@
   }
 
   .text-section-title {
-    @apply font-display text-2xl md:text-3xl font-bold tracking-[-0.015em] text-balance;
+    @apply font-display text-3xl md:text-[2.75rem] font-bold leading-[1.08] tracking-[-0.03em] text-balance;
   }
 
+  /* Sentence-case label with a short rule, instead of tracked all-caps */
   .text-label {
-    @apply text-xs font-semibold uppercase tracking-[0.1em] text-primary;
+    @apply inline-block text-sm font-medium text-primary;
+  }
+  .text-label::before {
+    content: '';
+    @apply mr-2.5 inline-block h-px w-6 bg-primary/60 align-middle;
   }
 
   .text-highlight-primary {
@@ -197,7 +202,7 @@
 
   /* Code window */
   .code-window {
-    @apply bg-secondary/80 border border-border rounded-xl overflow-hidden;
+    @apply bg-secondary border border-border rounded-xl overflow-hidden;
     font-family: 'JetBrains Mono', monospace;
   }
 
@@ -235,9 +240,9 @@
 }
 
 @layer utilities {
+  /* Was a blue gradient on one word per heading. Headlines are now a single colour. */
   .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
+    color: inherit;
   }
 
   .bg-gradient-subtle {
@@ -335,18 +340,7 @@
 }
 
 .text-gradient-animate {
-  background-image: linear-gradient(
-    90deg,
-    hsl(var(--primary)) 0%,
-    hsl(var(--primary) / 0.6) 40%,
-    hsl(var(--primary)) 60%,
-    hsl(var(--primary) / 0.6) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
+  color: inherit;
 }
 
 /* Scrollbar */
@@ -358,4 +352,55 @@
 /* Focus ring */
 *:focus-visible {
   @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
+}
+
+/* Printing the CV: drop site chrome and print on white */
+@media print {
+  nav, footer, .noise-overlay, [aria-label="Open command palette"] { display: none !important; }
+  html, body { background: #fff !important; color: #111 !important; }
+}
+
+/* ── Section tones ──────────────────────────────────────────────────────────
+   Every page alternates clearly different bands, like jotem_agro (white, lavender,
+   brand green, deep green) and bizlift (cream, navy). Here: white, sky, lavender,
+   mint, a saturated brand-blue band and a deep navy band. Dark-mode versions are
+   separate hues too, so the demarcation survives the theme switch.
+   Ink and brand bands also carry the `dark` class so text tokens flip to light.
+   ───────────────────────────────────────────────────────────────────────── */
+.tone-white    { background-color: hsl(0 0% 100%); }
+.tone-sky      { background-color: hsl(213 85% 94%); }
+.tone-lavender { background-color: hsl(248 80% 96%); }
+.tone-mint     { background-color: hsl(162 48% 92%); }
+.tone-ink      { background-color: hsl(222 58% 12%); color: hsl(var(--foreground)); }
+.tone-brand    {
+  background-color: hsl(213 72% 38%);
+  color: hsl(var(--foreground));
+  /* Inside the blue band: white is the accent, blue-tinted greys for secondary text */
+  --foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 213 72% 32%;
+  --muted-foreground: 213 60% 88%;
+  --border: 213 55% 55%;
+  --secondary: 213 65% 32%;
+  --muted: 213 60% 34%;
+  --highlight-primary: 0 0% 100%;
+}
+
+.dark .tone-white    { background-color: hsl(222 16% 12%); }
+.dark .tone-sky      { background-color: hsl(214 48% 15%); }
+.dark .tone-lavender { background-color: hsl(250 28% 15%); }
+.dark .tone-mint     { background-color: hsl(168 34% 11%); }
+.dark .tone-ink      { background-color: hsl(222 40% 4%); }
+.dark .tone-brand    { background-color: hsl(213 68% 30%); }
+
+/* Soft glow used on ink bands, echoing the drifting light on bizlift's dark sections */
+.ink-glow {
+  background-image:
+    radial-gradient(ellipse 60% 70% at 85% 10%, hsl(213 80% 55% / 0.18), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 5% 100%, hsl(168 60% 45% / 0.12), transparent 60%);
+}
+.brand-glow {
+  background-image:
+    radial-gradient(ellipse 55% 80% at 90% 0%, hsl(200 90% 70% / 0.30), transparent 60%),
+    radial-gradient(ellipse 45% 70% at 0% 100%, hsl(230 80% 25% / 0.45), transparent 60%);
 }
