@@ -17,7 +17,7 @@ const META: Record<string, { title: string; description: string }> = {
   },
   '/about': {
     title: `About · ${NAME}`,
-    description: 'From automotive diagnostics to cloud platforms: the path, the approach and the credentials behind Ayobami Edun’s work.',
+    description: 'The path, the approach and the credentials behind Ayobami Edun’s cloud and platform work.',
   },
   '/projects': {
     title: `Projects · ${NAME}`,
