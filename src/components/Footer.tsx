@@ -53,14 +53,7 @@ const Footer = () => (
 
       </div>
 
-      <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[12px] text-muted-foreground">
-        <span>
-          deployed from{' '}
-          <a href="https://github.com/Ayooluwabami/portfolio-web" target="_blank" rel="noopener noreferrer" className="text-accent-ink hover:underline">
-            {__BUILD__.branch}@{__BUILD__.sha}
-          </a>{' '}
-          · built {new Date(__BUILD__.builtAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
-        </span>
+      <div className="mt-14 flex flex-wrap items-center justify-end gap-4 border-t border-white/10 pt-6 font-mono text-[12px] text-muted-foreground">
         <span className="flex items-center gap-4">
           <button onClick={() => window.dispatchEvent(new Event('open-shortcuts'))} className="transition-colors hover:text-foreground">
             press <kbd className="rounded border border-white/15 px-1 text-foreground">?</kbd> for shortcuts

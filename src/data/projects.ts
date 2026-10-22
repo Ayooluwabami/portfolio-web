@@ -121,6 +121,21 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: 'innovaswift',
+    title: 'InnovaSwift Technologies: Company Website',
+    description:
+      'Live website for InnovaSwift Technologies, a registered software company in Ibadan (est. 2018). Services, a four-phase delivery process, clients and an enquiry flow, with an editorial serif headline, a trust ticker and light and dark themes.',
+    tech: ['React', 'Vite', 'TypeScript', 'Tailwind CSS', 'Lenis'],
+    category: 'frontend',
+    role: 'Frontend Developer',
+    impact: 'Live at innovaswift.com.ng • Light and dark themes • Services, process and enquiry flow',
+    live: 'https://innovaswift.com.ng/',
+    private: true,
+    featured: true,
+    image: innovaswiftImg,
+    tags: ['frontend'],
+  },
+  {
     slug: 'lagos-verified-listings',
     title: 'Verified Listings for Lagos: System Design',
     description:
@@ -133,8 +148,8 @@ export const PROJECTS: Project[] = [
     featured: true,
     private: true,
     diagrams: [
-      { src: lagos2, caption: 'High-level design: one Fastify service, PostGIS, S3, Cognito and background jobs' },
       { src: lagos1, caption: 'Requirements: functional, non-functional and the MVP scale' },
+      { src: lagos2, caption: 'High-level design: one Fastify service, PostGIS, S3, Cognito and background jobs' },
       { src: lagos3, caption: 'Verification state machines, workflow and database-level constraints' },
       { src: lagos4, caption: 'Geo search on a low-data budget: PostGIS, SSR, small bundles, edge caching' },
       { src: lagos5, caption: 'Availability and the human bottleneck: SLOs, triggers and runbooks' },
@@ -312,18 +327,6 @@ export const PROJECTS: Project[] = [
     impact: '10k+ transactions handled • Zero double-spend incidents',
     private: true,
     tags: ['backend', 'security'],
-  },
-  {
-    slug: 'innovaswift',
-    title: 'InnovaSwift: Software Consultancy Website',
-    description: 'Marketing and enquiry site for a registered Nigerian software consultancy (est. 2018). Proof over promise, terse copy, Lenis smooth scroll.',
-    tech: ['React', 'Vite', 'TypeScript', 'Tailwind CSS', 'Lenis'],
-    category: 'frontend',
-    role: 'Frontend Developer',
-    live: 'https://innovaswift.com.ng/',
-    private: true,
-    image: innovaswiftImg,
-    tags: ['frontend'],
   },
   {
     slug: 'rekognition',
