@@ -109,6 +109,9 @@ const Navigation = () => {
             >
               {isMac ? '⌘K' : 'Ctrl K'}
             </button>
+            <Link to="/#recruiters" className="ml-1 hidden rounded-lg px-3 py-2 text-[14px] font-medium text-accent-ink transition-colors hover:text-foreground xl:block">
+              Recruiter view
+            </Link>
             <Link to="/contact" className="btn-primary btn-sm ml-1">
               Get in touch
             </Link>
@@ -135,7 +138,7 @@ const Navigation = () => {
             className="fixed inset-x-0 top-[76px] z-40 border-b border-border bg-background shadow-card md:hidden"
           >
             <ul className="container-x space-y-1 py-5">
-              {[...NAV_LINKS, { to: '/contact', label: 'Contact' }].map((l) => (
+              {[...NAV_LINKS, { to: '/#recruiters', label: 'Recruiter view' }, { to: '/contact', label: 'Contact' }].map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}

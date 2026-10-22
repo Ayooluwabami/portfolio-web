@@ -55,7 +55,12 @@ const ProjectVisual = ({ project, index = 0, className = 'aspect-[4/3]' }: { pro
 
   if (!canOpen) return visual;
 
-  const label = diagrams.length ? `View ${diagrams.length > 1 ? `${gallery.length} visuals` : project.image ? 'more' : 'the diagram'}` : 'View larger';
+  // One label system: screenshots for live products, architecture for infrastructure.
+  const label = project.image
+    ? `View ${gallery.length} screenshot${gallery.length > 1 ? 's' : ''}`
+    : diagrams.length > 1
+      ? `View ${diagrams.length} diagrams`
+      : 'View architecture';
 
   return (
     <>
@@ -63,10 +68,10 @@ const ProjectVisual = ({ project, index = 0, className = 'aspect-[4/3]' }: { pro
         type="button"
         onClick={() => setOpen(0)}
         className="group/visual relative block w-full text-left"
-        aria-label={`Open ${project.title} ${diagrams.length ? 'diagrams' : 'screenshot'}`}
+        aria-label={`${label}: ${project.title}`}
       >
         {visual}
-        <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-lg bg-[hsl(221_64%_9%/0.85)] px-2.5 py-1.5 text-[12px] font-medium text-white opacity-0 backdrop-blur transition-opacity duration-300 group-hover/visual:opacity-100 group-focus-visible/visual:opacity-100">
+        <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-lg bg-[hsl(221_64%_9%/0.85)] px-2.5 py-1.5 text-[12px] font-medium text-white backdrop-blur transition-colors duration-300 group-hover/visual:bg-primary">
           <Expand size={13} /> {label}
         </span>
       </button>

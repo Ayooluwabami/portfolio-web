@@ -22,21 +22,32 @@ import {
   RECRUITER_FACTS,
   RECRUITER_SUMMARY,
   SHIPPED_FOR,
+  STATS,
 } from '@/data/profile';
 import working from '@/assets/working.jpg';
 
-/* ── Shipped for ───────────────────────────────────────────────────────────── */
+/* ── Proof strip: the hero's numbers, then who I've shipped for ────────────── */
 export const ShippedFor = () => (
   <section className="border-b border-border bg-background">
-    <div className="container-x flex flex-col gap-4 py-7 md:flex-row md:items-center md:gap-12">
-      <span className="shrink-0 text-[13px] text-muted-foreground">Shipped for</span>
-      <ul className="flex flex-1 flex-wrap items-center justify-between gap-x-8 gap-y-2">
-        {SHIPPED_FOR.map((n) => (
-          <li key={n} className="text-[17px] font-semibold tracking-[-0.01em] text-muted-foreground/90">
-            {n}
-          </li>
+    <div className="container-x grid gap-8 py-8 lg:grid-cols-12 lg:items-center lg:gap-12">
+      <dl className="grid grid-cols-3 gap-4 lg:col-span-5">
+        {STATS.map((st) => (
+          <div key={st.label}>
+            <dt className="display text-[30px] leading-none">{st.value}</dt>
+            <dd className="mt-2 text-[13px] leading-snug text-muted-foreground">{st.label}</dd>
+          </div>
         ))}
-      </ul>
+      </dl>
+      <div className="flex flex-col gap-3 border-t border-border pt-6 lg:col-span-7 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
+        <span className="text-[13px] text-muted-foreground">Shipped for</span>
+        <ul className="flex flex-wrap items-center gap-x-7 gap-y-2">
+          {SHIPPED_FOR.map((n) => (
+            <li key={n} className="text-[16px] font-semibold tracking-[-0.01em] text-muted-foreground/90">
+              {n}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 );
@@ -184,10 +195,10 @@ export const AboutPreview = () => (
           eyebrow="About me"
           title={
             <>
-              From a mechanic’s bay <em>to the cloud</em>
+              Calm in an incident, <em>careful with change</em>
             </>
           }
-          lede="Diagnosing a car and diagnosing a distributed system are the same job: isolate the fault, test one assumption at a time, fix the cause. A few milestones on the way:"
+          lede="I debug the way I build: isolate the fault, test one assumption at a time, and fix the cause rather than the symptom. A few milestones on the way:"
         />
         <AnimatedSection delay={150}>
           <ul className="mt-8 space-y-4">

@@ -1,10 +1,10 @@
 import { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react';
 
 /*
- * The hero's scroll-driven story (bizlift flies a paper plane; this ships a release):
+ * The hero's deploy story (bizlift flies a paper plane; this ships a release):
  * a glowing deploy packet travels a pipeline route that frames the hero — git push,
  * scan, build, deploy, live — drawing its trail and lighting each stage as it passes.
- * The parent drives it with setProgress(0..1) from the pinned scroll position.
+ * The parent drives it with setProgress(0..1).
  */
 
 export type DeployRouteHandle = { setProgress: (p: number) => void };
@@ -12,7 +12,7 @@ export type DeployRouteHandle = { setProgress: (p: number) => void };
 // Drawn in a 1440×900 frame and scaled with `slice`, so it hugs the hero edges at any width.
 const PATH = 'M 40 842 C 400 884, 900 884, 1170 808 S 1398 580, 1388 330 S 1336 96, 1440 36';
 const STAGES = [
-  { at: 0.12, label: 'git push · scroll ↓', dx: 0, dy: -18, anchor: 'middle' },
+  { at: 0.12, label: 'git push', dx: 0, dy: -18, anchor: 'middle' },
   { at: 0.36, label: 'scan · 7 gates', dx: 0, dy: -18, anchor: 'middle' },
   { at: 0.58, label: 'build · test', dx: 0, dy: -18, anchor: 'middle' },
   { at: 0.79, label: 'deploy', dx: -16, dy: 4, anchor: 'end' },

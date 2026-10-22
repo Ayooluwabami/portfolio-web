@@ -35,10 +35,10 @@ const About = () => (
         eyebrow="About me"
         title={
           <>
-            From a mechanic’s bay <em>to the cloud</em>
+            The engineer behind <em>the pipelines</em>
           </>
         }
-        lede="Diagnosing a car and diagnosing a distributed system are the same job: isolate the fault, test one assumption at a time, fix the cause rather than the symptom."
+        lede="I design, build and run cloud platforms, and I write down how they work so teams can run them without me."
       />
     </Section>
 

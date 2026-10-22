@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, X } from 'lucide-react';
 import { EASE } from '@/lib/motion';
 import type { Visual } from '@/data/projects';
 
 /*
  * Full-screen viewer for a project's diagrams. Arrow keys step through, Escape closes,
- * and focus returns to whatever opened it.
+ * focus returns to whatever opened it, and "Full size" opens the original for small labels.
  */
 const DiagramViewer = ({
   title,
@@ -66,9 +66,19 @@ const DiagramViewer = ({
             </span>
           )}
         </p>
-        <button ref={closeRef} onClick={onClose} className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 hover:border-white/50" aria-label="Close">
-          <X size={18} />
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          <a
+            href={item.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-10 items-center gap-1.5 rounded-lg border border-white/20 px-3 text-[13px] hover:border-white/50"
+          >
+            <ExternalLink size={14} /> Full size
+          </a>
+          <button ref={closeRef} onClick={onClose} className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 hover:border-white/50" aria-label="Close">
+            <X size={18} />
+          </button>
+        </div>
       </div>
 
       <div className="relative flex min-h-0 flex-1 items-center justify-center px-4 pb-4 sm:px-16" onClick={(e) => e.stopPropagation()}>
