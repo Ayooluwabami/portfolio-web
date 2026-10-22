@@ -134,8 +134,8 @@ export const AWARDS = [
 /** Headline numbers. Every one is stated on the CVs. */
 export const STATS = [
   { value: '3+', label: 'years in production' },
-  { value: '90%', label: 'faster deployments' },
-  { value: '20+', label: 'cloud builds' },
+  { value: '90%', label: 'faster deploys at DriveWell' },
+  { value: '20+', label: 'projects shipped' },
 ] as const;
 
 export const MILESTONES = [
@@ -162,6 +162,40 @@ export const PROCESS = [
   { title: 'Observe', body: 'Prometheus, CloudWatch and X-Ray against SLOs, with runbooks ready.' },
 ] as const;
 
+/** Who the site is for, and what each of them can ask me to do. */
+export const AUDIENCES = [
+  {
+    who: 'Hiring teams',
+    kind: 'Full-time roles',
+    body: 'Cloud, DevOps, DevSecOps, SRE and platform engineering roles, remote or in the West Midlands.',
+    points: ['Available now, UK right to work', 'CV and a copy-ready summary', 'References on request'],
+    cta: { label: 'Recruiter summary', to: '/#recruiters' },
+  },
+  {
+    who: 'Engineering teams',
+    kind: 'Contract or project work',
+    body: 'Hands-on help with the platform you already run, or the one you are about to build.',
+    points: ['CI/CD with blocking security gates', 'Terraform and CloudFormation', 'Kubernetes, GitOps and SLOs'],
+    cta: { label: 'See the cloud work', to: '/projects' },
+  },
+  {
+    who: 'Businesses',
+    kind: 'Websites built and hosted',
+    body: 'A site built to your design, deployed, and kept running, like the one I shipped for Jotem Agro.',
+    points: ['Design-matched build', 'Domain, hosting and email DNS', 'Contact forms that reach your inbox'],
+    cta: { label: 'Start a conversation', to: '/contact' },
+  },
+] as const;
+
+/** What a project with me looks like, start to finish. */
+export const JOURNEY = [
+  { title: 'Discover', body: 'A short call about the goal, the constraints and who owns what.' },
+  { title: 'Assess', body: 'I review what exists today, then write down what I would change first and why.' },
+  { title: 'Build', body: 'Changes land as code, through pull requests, in steps small enough to review.' },
+  { title: 'Stabilise', body: 'Monitoring, alerts and runbooks go in, and we fix what production teaches us.' },
+  { title: 'Hand over', body: 'Docs and a walkthrough, so your team can run it without me.' },
+] as const;
+
 /** Answers come only from the CVs. */
 export const FAQ = [
   { q: 'Do you have the right to work in the UK?', a: 'Yes. I’m on a Skilled Worker Dependant visa and eligible to work in the UK immediately.' },
@@ -169,6 +203,8 @@ export const FAQ = [
   { q: 'Do you work remotely?', a: 'Yes. I’ve worked remotely with teams across the world, owning delivery from requirements and design through to deployment and monitoring. I’m based in the West Midlands, UK.' },
   { q: 'What roles are you looking for?', a: 'Cloud, DevOps, DevSecOps, site reliability and platform engineering roles, where the infrastructure and the delivery pipeline are the product.' },
   { q: 'Can I see the code for private projects?', a: 'Several projects are client or academy work with private repositories. I’m happy to walk through the architecture and code on a call. Public repositories are linked on each project.' },
+  { q: 'What kinds of work do you take on?', a: 'Full-time roles, plus contract and project work: CI/CD pipelines, infrastructure as code, Kubernetes platforms, and websites built and hosted for businesses.' },
+  { q: 'What happens after I get in touch?', a: 'I reply myself, usually within a day. For a role, I send my CV and availability. For a project, we book a short call to scope it, and I send a written outline before any work starts.' },
   { q: 'Are references available?', a: 'Yes, references are available on request.' },
 ] as const;
 

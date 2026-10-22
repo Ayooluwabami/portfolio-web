@@ -13,6 +13,8 @@ import { DepthGrid, EASE, useViewportProgress } from '@/lib/motion';
 import { PROJECTS } from '@/data/projects';
 import {
   ARTICLES,
+  AUDIENCES,
+  JOURNEY,
   FAQ,
   MILESTONES,
   PROCESS,
@@ -63,7 +65,7 @@ export const Believe = () => (
 );
 
 /* ── Selected work ─────────────────────────────────────────────────────────── */
-const FEATURED = ['aws-devsecops-pipeline', 'drivewell', 'thina'];
+const FEATURED = ['jotem', 'aws-devsecops-pipeline', 'azure-gitops-aks'];
 
 export const SelectedWork = () => {
   const projects = FEATURED.map((s) => PROJECTS.find((p) => p.slug === s)).filter(Boolean) as typeof PROJECTS;
@@ -92,6 +94,77 @@ export const SelectedWork = () => {
     </Section>
   );
 };
+
+/* ── Ways I can help: one door for each kind of visitor ───────────────────── */
+export const WaysToHelp = () => (
+  <Section tone="alt">
+    <SectionHeading
+      eyebrow="Ways I can help"
+      title={
+        <>
+          Hiring, scaling, <em>or just starting</em>
+        </>
+      }
+      lede="Most people arrive here for one of three reasons. Pick yours."
+    />
+    <DepthGrid className="mt-14 grid gap-5 lg:grid-cols-3">
+      {AUDIENCES.map((a, i) => (
+        <AnimatedSection key={a.who} delay={i * 80} className="h-full">
+          <div className="card flex h-full flex-col p-7 shadow-card">
+            <p className="mono-tag">{a.kind}</p>
+            <h3 className="h-card mt-3">{a.who}</h3>
+            <p className="body mt-3">{a.body}</p>
+            <ul className="mt-6 space-y-2.5 border-t border-border pt-6 text-[14px]">
+              {a.points.map((pt) => (
+                <li key={pt} className="flex items-start gap-2.5">
+                  <Check size={15} className="mt-0.5 shrink-0 text-accent-ink" />
+                  {pt}
+                </li>
+              ))}
+            </ul>
+            <Link to={a.cta.to} className="link-arrow mt-auto pt-7 text-[14px]">
+              {a.cta.label} <ArrowRight size={15} />
+            </Link>
+          </div>
+        </AnimatedSection>
+      ))}
+    </DepthGrid>
+  </Section>
+);
+
+/* ── Working with me: the engagement journey, heading pinned beside the steps ── */
+export const Journey = () => (
+  <Section tone="alt">
+    <div className="grid gap-12 lg:grid-cols-12">
+      <div className="lg:col-span-5">
+        <div className="lg:sticky lg:top-32">
+          <SectionHeading
+            eyebrow="Working with me"
+            title={
+              <>
+                No surprises, <em>start to finish</em>
+              </>
+            }
+            lede="The same five steps whether it is a pipeline, a cluster or a website. You see the plan before the work, and you keep everything after it."
+          />
+        </div>
+      </div>
+      <ol className="lg:col-span-6 lg:col-start-7">
+        {JOURNEY.map((s, i) => (
+          <li key={s.title} className="border-t border-border py-7 last:border-b">
+            <AnimatedSection delay={i * 60} className="grid grid-cols-[3.5rem_1fr] gap-4">
+              <span className="font-mono text-[13px] text-accent-ink">0{i + 1}</span>
+              <div>
+                <h3 className="display text-[26px] leading-tight">{s.title}</h3>
+                <p className="body mt-2">{s.body}</p>
+              </div>
+            </AnimatedSection>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Section>
+);
 
 /* ── About preview (Bizlift's "You work directly with the founder") ──────── */
 export const AboutPreview = () => (
@@ -139,7 +212,7 @@ export const AboutPreview = () => (
 
 /* ── Promises (Bizlift's promise cards, on the deep-blue band) ────────────── */
 export const Promises = () => (
-  <Section tone="dark" grid>
+  <Section tone="dark">
     <SectionHeading
       align="center"
       eyebrow="How I work"
@@ -360,18 +433,18 @@ export const Faq = () => {
 
 /* ── Contact band with the working form (Bizlift's closing form) ──────────── */
 export const ContactBand = () => (
-  <Section tone="dark" grid>
+  <Section tone="base" id="contact">
     <div className="grid items-center gap-12 lg:grid-cols-12">
       <div className="lg:col-span-5">
-        <AnimatedHeadline as="h2" className="h-section text-white">
+        <AnimatedHeadline as="h2" className="h-section">
           Have a platform that needs to <em>stay up?</em>
         </AnimatedHeadline>
         <AnimatedSection delay={120}>
           <p className="lede mt-5">Tell me about the role or project. You’ll hear back from me directly, in plain language.</p>
-          <ul className="mt-8 space-y-3 text-[15px] text-white/85">
+          <ul className="mt-8 space-y-3 text-[15px]">
             {['Replies usually within a day', 'Straight to my inbox, no agency', 'Happy to walk through private code on a call'].map((t) => (
               <li key={t} className="flex items-center gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/25 text-accent-ink">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-accent-ink">
                   <Check size={13} />
                 </span>
                 {t}

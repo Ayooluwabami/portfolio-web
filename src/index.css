@@ -102,12 +102,6 @@
       radial-gradient(ellipse 45% 60% at 0% 100%, hsl(223 100% 60% / 0.12), transparent 62%),
       hsl(222 70% 6%);
   }
-  .band-grid {
-    background-image:
-      linear-gradient(hsl(0 0% 100% / 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(0 0% 100% / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
-  }
 
   /* Display type */
   .display {

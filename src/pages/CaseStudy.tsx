@@ -22,7 +22,7 @@ const CaseStudy = () => {
   return (
     <>
       {/* Opening */}
-      <Section tone="dark" grid first>
+      <Section tone="dark" first>
         <AnimatedSection>
           <Link to="/projects" className="link-arrow mb-10 text-white/70 hover:text-white">
             <ArrowLeft size={15} /> All work
@@ -166,7 +166,7 @@ const CaseStudy = () => {
 
       {/* Next */}
       {next && (
-        <Section tone="dark" grid>
+        <Section tone="dark">
           <Link to={`/projects/${next.slug}`} className="group block">
             <p className="eyebrow mb-5">Next case study</p>
             <div className="flex items-end justify-between gap-6">

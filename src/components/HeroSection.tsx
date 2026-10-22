@@ -10,18 +10,10 @@ import photoshoot from '@/assets/photoshoot.jpg';
 /*
  * Home hero: the deep-blue band with drifting light (Bizlift's dark hero, in the brand blue).
  * On tall desktop screens it pins while you scroll: a deploy packet travels the pipeline route
- * around the hero, the pipeline card on the photo ticks through its stages, "stay up" lifts off
- * and the rest of the headline recedes. Everywhere else it is a normal, static hero.
+ * around the hero, "stay up" lifts off and the rest of the headline recedes. Everywhere else it is a normal, static hero.
  */
 
 const PIN_QUERY = '(min-width: 1024px) and (min-height: 800px)';
-
-// Thresholds line up with the route stages in DeployRoute (scan 0.36, build 0.58, deploy 0.79).
-const STAGES = [
-  { label: 'secret scan', at: 0.36 },
-  { label: 'terraform plan', at: 0.58 },
-  { label: 'deploy · eks', at: 0.79 },
-] as const;
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 22 },
@@ -35,8 +27,6 @@ const HeroSection = () => {
   const sideRef = useRef<HTMLDivElement>(null);
   const routeRef = useRef<DeployRouteHandle>(null);
   const [pinned, setPinned] = useState(false);
-  // How many pipeline stages have passed. The static hero shows two done and the deploy running.
-  const [passed, setPassed] = useState(2);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -51,10 +41,7 @@ const HeroSection = () => {
     const pin = pinRef.current;
     const h1 = h1Ref.current;
     const side = sideRef.current;
-    if (!pin || !h1 || !pinned) {
-      setPassed(2);
-      return;
-    }
+    if (!pin || !h1 || !pinned) return;
     const lift = h1.querySelector<HTMLElement>('[data-lift]');
     const others = Array.from(h1.querySelectorAll<HTMLElement>('.wm-w')).filter((w) => !lift?.contains(w));
     let queued = false;
@@ -67,8 +54,6 @@ const HeroSection = () => {
       if (p === last) return;
       last = p;
       routeRef.current?.setProgress(p);
-      const reached = 0.04 + p * 0.94;
-      setPassed(STAGES.filter((s) => reached >= s.at).length);
       const fade = Math.min(1, p / 0.85);
       if (lift) lift.style.transform = `translateY(${(-fade * 16).toFixed(1)}px) scale(${(1 + fade * 0.05).toFixed(4)})`;
       const dim = (1 - fade * 0.55).toFixed(3);
@@ -94,13 +79,10 @@ const HeroSection = () => {
     };
   }, [pinned]);
 
-  const live = passed >= STAGES.length;
-
   return (
     <section ref={pinRef} className={`relative ${pinned ? 'h-[170vh]' : ''}`}>
       <div className={`band-dark hero-grain relative overflow-hidden ${pinned ? 'sticky top-0 flex h-[100svh] items-center pt-[76px]' : ''}`}>
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="band-grid absolute inset-0" />
           <div
             className="aurora aurora-1 -right-[10%] -top-[22%] h-[680px] w-[680px] opacity-30"
             style={{ background: 'radial-gradient(circle, hsl(223 100% 56%), transparent 62%)' }}
@@ -144,7 +126,15 @@ const HeroSection = () => {
                 </Link>
               </motion.div>
 
-              <motion.dl {...fadeUp(0.74)} className="mt-12 grid max-w-[30rem] grid-cols-3 border-t border-white/10 pt-6">
+              <motion.p {...fadeUp(0.7)} className="mt-6 flex items-start gap-2.5 text-[14px] text-white/70">
+                <span className="relative mt-[7px] flex h-2 w-2 shrink-0">
+                  <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:hidden" />
+                  <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+                {SITE.availability} · {SITE.rightToWork}
+              </motion.p>
+
+              <motion.dl {...fadeUp(0.74)} className="mt-10 grid max-w-[30rem] grid-cols-3 border-t border-white/10 pt-6">
                 {STATS.map((s) => (
                   <div key={s.label}>
                     <dt className="display text-[30px] leading-none text-white">{s.value}</dt>
@@ -169,32 +159,6 @@ const HeroSection = () => {
                   transition={{ duration: 1.6, delay: 0.25, ease: EASE }}
                   className="aspect-[4/4.7] w-full object-cover object-top"
                 />
-              </motion.div>
-
-              {/* Pipeline card: ticks through its stages as the packet travels the route */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.8, ease: EASE }}
-                className="code-window absolute -left-6 bottom-6 w-[min(290px,85%)] p-4 text-[12px] sm:-left-12"
-                aria-hidden="true"
-              >
-                <p className="mb-3 flex justify-between text-white/60">
-                  <span>pipeline · main</span>
-                  <span className={live ? 'text-emerald-400' : 'text-[hsl(222_100%_80%)]'}>{live ? 'live' : 'running'}</span>
-                </p>
-                {STAGES.map((s, i) => {
-                  const done = i < passed;
-                  const running = i === passed;
-                  return (
-                    <p key={s.label} className="mt-1.5 flex justify-between">
-                      <span className={done || running ? 'text-white' : 'text-white/40'}>{s.label}</span>
-                      <span className={done ? 'text-emerald-400' : running ? 'text-[hsl(222_100%_80%)]' : 'text-white/30'}>
-                        {done ? 'passed' : running ? 'running' : 'queued'}
-                      </span>
-                    </p>
-                  );
-                })}
               </motion.div>
             </div>
           </div>

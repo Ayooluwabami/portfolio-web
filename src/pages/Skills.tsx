@@ -69,7 +69,7 @@ const PRINCIPLES = [
 
 const Skills = () => (
   <>
-    <Section tone="dark" grid first>
+    <Section tone="dark" first>
       <SectionHeading
         as="h1"
         size="page"

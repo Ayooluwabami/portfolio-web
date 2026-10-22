@@ -2,6 +2,16 @@ import thinaImg from '@/assets/work/thina.jpg';
 import innovaswiftImg from '@/assets/work/innovaswift.jpg';
 import jotemImg from '@/assets/work/jotem.jpg';
 import drivewellImg from '@/assets/work/drivewell.jpg';
+import jotemProductsImg from '@/assets/work/jotem-products.jpg';
+import awsDevsecopsDiagram from '@/assets/diagrams/aws-devsecops-pipeline.webp';
+import azureGitopsDiagram from '@/assets/diagrams/azure-gitops-pipeline.webp';
+import azureArm64Diagram from '@/assets/diagrams/azure-gitops-arm64.webp';
+import wordpressDiagram from '@/assets/diagrams/aws-wordpress-multi-tier.webp';
+import lagos1 from '@/assets/diagrams/lagos-1-requirements.webp';
+import lagos2 from '@/assets/diagrams/lagos-2-high-level-design.webp';
+import lagos3 from '@/assets/diagrams/lagos-3-verification.webp';
+import lagos4 from '@/assets/diagrams/lagos-4-geo-search.webp';
+import lagos5 from '@/assets/diagrams/lagos-5-availability.webp';
 
 /*
  * Single source for every project on the site, kept in step with the current CVs
@@ -11,6 +21,24 @@ import drivewellImg from '@/assets/work/drivewell.jpg';
  */
 
 export type Category = 'cloud' | 'backend' | 'frontend' | 'fullstack';
+
+/** Platform and discipline tags used by the Projects filters. */
+export type Tag = 'aws' | 'azure' | 'gcp' | 'devops' | 'security' | 'backend' | 'frontend';
+
+export const TAG_LABEL: Record<Tag, string> = {
+  aws: 'AWS',
+  azure: 'Azure',
+  gcp: 'GCP',
+  devops: 'DevOps',
+  security: 'Security',
+  backend: 'Backend',
+  frontend: 'Frontend',
+};
+
+export interface Visual {
+  src: string;
+  caption: string;
+}
 
 export interface Project {
   slug: string;
@@ -30,13 +58,33 @@ export interface Project {
   /** Medium write-up */
   article?: string;
   caseStudy?: string;
+  /** Live product screenshot (cropped to fill the card) */
   image?: string;
+  /** Architecture diagrams (shown whole, openable in a viewer). The first one is the card visual. */
+  diagrams?: Visual[];
+  tags: Tag[];
 }
 
 const GH = 'https://github.com/Ayooluwabami';
 const MEDIUM = 'https://medium.com/@ayobamieae';
 
 export const PROJECTS: Project[] = [
+  {
+    slug: 'jotem',
+    title: 'Jotem Agro Allied',
+    description:
+      'Company website for an agro-commodity supplier, built from the designer’s Figma file: React, Vite and Tailwind with scroll-driven process and product sections. Enquiries go through a mailer API I built on Cloudflare Workers and Resend, and every push to main deploys to Namecheap hosting through GitHub Actions over FTPS. I also run the company’s Google Workspace, with SPF, DKIM, DMARC and MTA-STS so trade email reliably lands.',
+    tech: ['React', 'Vite', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'GitHub Actions', 'Cloudflare Workers', 'Google Workspace'],
+    category: 'frontend',
+    role: 'Frontend developer & IT admin',
+    impact: 'Live at jotemagro.com • Figma-matched build • Enquiries through a self-hosted mailer • Push-to-deploy with GitHub Actions',
+    featured: true,
+    live: 'https://www.jotemagro.com/',
+    private: true,
+    image: jotemImg,
+    diagrams: [{ src: jotemProductsImg, caption: 'Products section of the live site' }],
+    tags: ['frontend', 'devops'],
+  },
   {
     slug: 'aws-devsecops-pipeline',
     title: 'AWS DevSecOps Pipeline: CodePipeline, CodeBuild, CodeDeploy',
@@ -50,19 +98,8 @@ export const PROJECTS: Project[] = [
     featured: true,
     github: `${GH}/aws-cicd-pipeline`,
     article: `${MEDIUM}/building-a-production-grade-ci-cd-pipeline-on-aws-codepipeline-codebuild-and-codedeploy-2bde222adc24`,
-  },
-  {
-    slug: 'eks-zero-trust',
-    title: 'Zero-Trust EKS Platform with a Full DevSecOps Pipeline',
-    description:
-      'Three-tier app (TypeScript API, React frontend, PostgreSQL StatefulSet) on EKS across a multi-AZ private-subnet VPC, built with modular Terraform and S3 + DynamoDB remote state. GitOps through ArgoCD App-of-Apps with GitHub Actions OIDC keyless auth. Zero-trust NetworkPolicies and IRSA give every pod its own least-privilege role. Every PR is blocked by Semgrep, OWASP Dependency-Check, Checkov, tfsec, Trivy, Gitleaks and Syft SBOM generation.',
-    tech: ['EKS', 'Terraform', 'ArgoCD', 'GitHub Actions', 'OIDC', 'IRSA', 'tfsec', 'Trivy', 'Syft', 'Prometheus', 'Grafana', 'Alertmanager'],
-    category: 'cloud',
-    role: 'Platform & DevSecOps Engineer',
-    impact:
-      'Zero static credentials (OIDC + IRSA) • Seven blocking security gates on every PR • kube-prometheus-stack with SLO-based alerting • STRIDE threat model: 20+ threats, 4 accepted risks with owners • On-call runbook',
-    featured: true,
-    private: true,
+    tags: ['aws', 'devops', 'security'],
+    diagrams: [{ src: awsDevsecopsDiagram, caption: 'Four-stage CodePipeline: source, security gates, build, CodeDeploy with rollback' }],
   },
   {
     slug: 'azure-gitops-aks',
@@ -77,6 +114,46 @@ export const PROJECTS: Project[] = [
     featured: true,
     github: `${GH}/cicd-azure-gitops-aks`,
     article: `${MEDIUM}/automating-kubernetes-deployments-with-azure-devops-gitops-and-aks-a-security-first-ci-cd-f554e189b985`,
+    tags: ['azure', 'devops', 'security'],
+    diagrams: [
+      { src: azureGitopsDiagram, caption: 'CI with four blocking gates, CD through ArgoCD, and the AKS namespaces' },
+      { src: azureArm64Diagram, caption: 'ARM64 build agent, Key Vault secrets and the GitOps pull into AKS' },
+    ],
+  },
+  {
+    slug: 'lagos-verified-listings',
+    title: 'Verified Listings for Lagos: System Design',
+    description:
+      'System design for a verified property-listings platform built for Lagos on a low-data budget. One Fastify service with PostGIS geo search behind CloudFront, Cognito for identity, S3 for photos and ID documents, and BullMQ for background jobs. Verification runs as a strongly consistent state machine enforced in the database, and the design names the real bottleneck: human verifier capacity, not traffic.',
+    tech: ['Fastify', 'PostgreSQL', 'PostGIS', 'CloudFront', 'Cognito', 'S3', 'BullMQ', 'ECS Fargate'],
+    category: 'cloud',
+    role: 'System design',
+    impact:
+      'Search usable under 3 seconds on 3G • Strongly consistent verification state machine • GIST geo index over premature OpenSearch • Single-AZ MVP with explicit multi-AZ triggers',
+    featured: true,
+    private: true,
+    diagrams: [
+      { src: lagos2, caption: 'High-level design: one Fastify service, PostGIS, S3, Cognito and background jobs' },
+      { src: lagos1, caption: 'Requirements: functional, non-functional and the MVP scale' },
+      { src: lagos3, caption: 'Verification state machines, workflow and database-level constraints' },
+      { src: lagos4, caption: 'Geo search on a low-data budget: PostGIS, SSR, small bundles, edge caching' },
+      { src: lagos5, caption: 'Availability and the human bottleneck: SLOs, triggers and runbooks' },
+    ],
+    tags: ['aws', 'devops', 'backend'],
+  },
+  {
+    slug: 'eks-zero-trust',
+    title: 'Zero-Trust EKS Platform with a Full DevSecOps Pipeline',
+    description:
+      'Three-tier app (TypeScript API, React frontend, PostgreSQL StatefulSet) on EKS across a multi-AZ private-subnet VPC, built with modular Terraform and S3 + DynamoDB remote state. GitOps through ArgoCD App-of-Apps with GitHub Actions OIDC keyless auth. Zero-trust NetworkPolicies and IRSA give every pod its own least-privilege role. Every PR is blocked by Semgrep, OWASP Dependency-Check, Checkov, tfsec, Trivy, Gitleaks and Syft SBOM generation.',
+    tech: ['EKS', 'Terraform', 'ArgoCD', 'GitHub Actions', 'OIDC', 'IRSA', 'tfsec', 'Trivy', 'Syft', 'Prometheus', 'Grafana', 'Alertmanager'],
+    category: 'cloud',
+    role: 'Platform & DevSecOps Engineer',
+    impact:
+      'Zero static credentials (OIDC + IRSA) • Seven blocking security gates on every PR • kube-prometheus-stack with SLO-based alerting • STRIDE threat model: 20+ threats, 4 accepted risks with owners • On-call runbook',
+    featured: true,
+    private: true,
+    tags: ['aws', 'devops', 'security'],
   },
   {
     slug: 'carepulse',
@@ -91,6 +168,7 @@ export const PROJECTS: Project[] = [
     featured: true,
     private: true,
     caseStudy: '/projects/carepulse',
+    tags: ['aws', 'devops', 'backend'],
   },
   {
     slug: 'serverless-pipeline',
@@ -104,18 +182,7 @@ export const PROJECTS: Project[] = [
     featured: true,
     private: true,
     caseStudy: '/projects/serverless-pipeline',
-  },
-  {
-    slug: 'slo-framework',
-    title: 'SLO & Error-Budget Framework (UpCommerce)',
-    description:
-      'Reliability policy for a platform facing doubled peak traffic. Defined four SLOs (availability, latency, pipeline freshness, storage reads), rejected a competitor latency benchmark that could not be defended, modelled the error budget in a live-formula spreadsheet and wrote a release-gating policy that ties feature velocity to the budget left.',
-    tech: ['SLOs / SLIs', 'Error budgets', 'Release gating', 'Capacity planning'],
-    category: 'cloud',
-    role: 'Site Reliability Engineer',
-    impact: '4 SLOs • 7.2-hour monthly error budget • Feature work pauses while the budget burns',
-    featured: true,
-    private: true,
+    tags: ['aws', 'devops'],
   },
   {
     slug: 'thina',
@@ -130,6 +197,7 @@ export const PROJECTS: Project[] = [
     live: 'https://thina.app/',
     private: true,
     image: thinaImg,
+    tags: ['aws', 'backend', 'frontend'],
   },
   {
     slug: 'drivewell',
@@ -145,17 +213,7 @@ export const PROJECTS: Project[] = [
     private: true,
     image: drivewellImg,
     caseStudy: '/projects/drivewell',
-  },
-  {
-    slug: 'jenkins-ecs',
-    title: 'Jenkins to ECS: E-Commerce CI/CD',
-    description:
-      'Jenkins on EC2 with an RBAC credentials vault and a Jenkinsfile pipeline: Docker build, push to ECR, then Terraform provisions the ECS cluster and ALB with S3 + DynamoDB state.',
-    tech: ['Jenkins', 'Docker', 'Amazon ECR', 'Amazon ECS', 'Terraform', 'ALB', 'EC2'],
-    category: 'cloud',
-    role: 'Cloud & DevOps Engineer',
-    github: `${GH}/project-deployment-ecs`,
-    article: `${MEDIUM}/end-to-end-ci-cd-for-an-e-commerce-application-with-jenkins-docker-ecr-ecs-and-terraform-3048b241ece0`,
+    tags: ['gcp', 'devops', 'backend'],
   },
   {
     slug: 'three-tier',
@@ -168,6 +226,33 @@ export const PROJECTS: Project[] = [
     impact: 'High availability across 2 AZs • Subnet segmentation with least-privilege security groups',
     private: true,
     article: `${MEDIUM}/building-a-highly-available-multi-tier-wordpress-platform-on-aws-with-cloudformation-2a35cad00af7`,
+    tags: ['aws'],
+    diagrams: [{ src: wordpressDiagram, caption: 'Two availability zones: ALB, Auto Scaling, EFS and Aurora MySQL Multi-AZ' }],
+  },
+  {
+    slug: 'slo-framework',
+    title: 'SLO & Error-Budget Framework (UpCommerce)',
+    description:
+      'Reliability policy for a platform facing doubled peak traffic. Defined four SLOs (availability, latency, pipeline freshness, storage reads), rejected a competitor latency benchmark that could not be defended, modelled the error budget in a live-formula spreadsheet and wrote a release-gating policy that ties feature velocity to the budget left.',
+    tech: ['SLOs / SLIs', 'Error budgets', 'Release gating', 'Capacity planning'],
+    category: 'cloud',
+    role: 'Site Reliability Engineer',
+    impact: '4 SLOs • 7.2-hour monthly error budget • Feature work pauses while the budget burns',
+    featured: true,
+    private: true,
+    tags: ['devops'],
+  },
+  {
+    slug: 'jenkins-ecs',
+    title: 'Jenkins to ECS: E-Commerce CI/CD',
+    description:
+      'Jenkins on EC2 with an RBAC credentials vault and a Jenkinsfile pipeline: Docker build, push to ECR, then Terraform provisions the ECS cluster and ALB with S3 + DynamoDB state.',
+    tech: ['Jenkins', 'Docker', 'Amazon ECR', 'Amazon ECS', 'Terraform', 'ALB', 'EC2'],
+    category: 'cloud',
+    role: 'Cloud & DevOps Engineer',
+    github: `${GH}/project-deployment-ecs`,
+    article: `${MEDIUM}/end-to-end-ci-cd-for-an-e-commerce-application-with-jenkins-docker-ecr-ecs-and-terraform-3048b241ece0`,
+    tags: ['aws', 'devops'],
   },
   {
     slug: 'naijasafe',
@@ -179,6 +264,7 @@ export const PROJECTS: Project[] = [
     role: 'Full-Stack & Cloud Engineer',
     impact: 'Geo-aware reporting • Anonymous by design • Event-driven AWS pipeline',
     private: true,
+    tags: ['aws', 'devops', 'backend', 'frontend'],
   },
   {
     slug: 'fulcrum',
@@ -190,6 +276,7 @@ export const PROJECTS: Project[] = [
     role: 'Creator',
     impact: 'Fail-closed gate • Cosign-signed artifacts • Deterministic by default',
     private: true,
+    tags: ['devops', 'security'],
   },
   {
     slug: 'owiwi',
@@ -201,6 +288,7 @@ export const PROJECTS: Project[] = [
     role: 'Backend Engineer (Freelance)',
     impact: '27 modules • Dual payment gateways with runtime switching • Async job consumers',
     private: true,
+    tags: ['gcp', 'backend', 'devops'],
   },
   {
     slug: 'schoolhub',
@@ -212,6 +300,7 @@ export const PROJECTS: Project[] = [
     role: 'Backend Engineer, AI4AI',
     impact: '50+ schools • Tenant-aware RBAC • Faster responses under concurrent load',
     private: true,
+    tags: ['backend'],
   },
   {
     slug: 'wallet',
@@ -222,6 +311,7 @@ export const PROJECTS: Project[] = [
     role: 'Backend Engineer',
     impact: '10k+ transactions handled • Zero double-spend incidents',
     private: true,
+    tags: ['backend', 'security'],
   },
   {
     slug: 'innovaswift',
@@ -233,18 +323,7 @@ export const PROJECTS: Project[] = [
     live: 'https://innovaswift.com.ng/',
     private: true,
     image: innovaswiftImg,
-  },
-  {
-    slug: 'jotem',
-    title: 'Jotem Agro Allied',
-    description: 'Company website plus Google Workspace with SPF, DKIM, DMARC and MTA-STS so trade email reliably lands.',
-    tech: ['React', 'Vite', 'Tailwind CSS', 'Google Workspace', 'DNS'],
-    category: 'frontend',
-    role: 'Frontend Developer & IT Admin',
-    impact: 'Email deliverability improved by 95%',
-    live: 'https://www.jotemagro.com/',
-    private: true,
-    image: jotemImg,
+    tags: ['frontend'],
   },
   {
     slug: 'rekognition',
@@ -255,6 +334,7 @@ export const PROJECTS: Project[] = [
     role: 'Cloud Engineer',
     private: true,
     article: `${MEDIUM}/building-a-facial-recognition-application-on-aws-rekognition-lambda-api-gateway-and-dynamodb-0135781a146d`,
+    tags: ['aws'],
   },
   {
     slug: 'carcare',
@@ -264,6 +344,7 @@ export const PROJECTS: Project[] = [
     category: 'backend',
     role: 'Backend Developer',
     github: `${GH}/carcare`,
+    tags: ['backend'],
   },
   {
     slug: 'anythingcar',
@@ -272,6 +353,7 @@ export const PROJECTS: Project[] = [
     tech: ['Express', 'TypeScript', 'MongoDB'],
     category: 'backend',
     github: `${GH}/anythingcar`,
+    tags: ['backend'],
   },
   {
     slug: 'scissor',
@@ -280,6 +362,7 @@ export const PROJECTS: Project[] = [
     tech: ['Node.js', 'Express', 'MongoDB'],
     category: 'backend',
     github: `${GH}/scissor-backend`,
+    tags: ['backend'],
   },
   {
     slug: 'restaurant-chatbot',
@@ -288,6 +371,7 @@ export const PROJECTS: Project[] = [
     tech: ['React', 'Node.js', 'MySQL'],
     category: 'fullstack',
     github: `${GH}/restaurant_chatbot`,
+    tags: ['backend', 'frontend'],
   },
   {
     slug: 'blogging-api',
@@ -296,6 +380,7 @@ export const PROJECTS: Project[] = [
     tech: ['Node.js', 'Express', 'MongoDB', 'Swagger'],
     category: 'backend',
     github: `${GH}/Blogging-API`,
+    tags: ['backend'],
   },
   {
     slug: 'library',
@@ -304,5 +389,6 @@ export const PROJECTS: Project[] = [
     tech: ['Express', 'MongoDB', 'Mongoose', 'JWT'],
     category: 'backend',
     github: `${GH}/library_management-system`,
+    tags: ['backend'],
   },
 ];

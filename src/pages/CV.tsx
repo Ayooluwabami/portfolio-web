@@ -18,7 +18,7 @@ const H = ({ children }: { children: string }) => (
  */
 const CV = () => (
   <>
-    <Section tone="dark" grid first className="no-print">
+    <Section tone="dark" first className="no-print">
       <SectionHeading
         as="h1"
         size="page"

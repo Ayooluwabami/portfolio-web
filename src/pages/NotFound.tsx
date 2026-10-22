@@ -4,7 +4,7 @@ import Section from '../components/site/Section';
 const NotFound = () => {
   const { pathname } = useLocation();
   return (
-    <Section tone="dark" grid first className="min-h-[80vh]">
+    <Section tone="dark" first className="min-h-[80vh]">
       <p className="mb-6 font-mono text-[14px] text-muted-foreground">
         <span className="text-accent-ink">GET</span> {pathname} → 404
       </p>

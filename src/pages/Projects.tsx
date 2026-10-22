@@ -6,33 +6,32 @@ import SectionHeading from '../components/site/SectionHeading';
 import ProjectCard from '../components/site/ProjectCard';
 import AnimatedSection from '../components/AnimatedSection';
 import { EASE } from '@/lib/motion';
-import { PROJECTS, type Category } from '@/data/projects';
+import { PROJECTS, TAG_LABEL, type Tag } from '@/data/projects';
 
-type Filter = 'featured' | 'all' | Category;
+type Filter = 'featured' | 'all' | Tag;
 
-const FILTERS: { value: Filter; label: string }[] = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'cloud', label: 'Cloud & DevOps' },
-  { value: 'backend', label: 'Backend' },
-  { value: 'fullstack', label: 'Full-stack' },
-  { value: 'frontend', label: 'Frontend' },
-  { value: 'all', label: 'Everything' },
-];
+const TAG_ORDER: Tag[] = ['aws', 'azure', 'gcp', 'devops', 'security', 'backend', 'frontend'];
+
+const matches = (f: Filter, p: (typeof PROJECTS)[number]) => (f === 'all' ? true : f === 'featured' ? p.featured : p.tags.includes(f));
 
 const Projects = () => {
   const [filter, setFilter] = useState<Filter>('featured');
 
-  const counts = useMemo(() => {
-    const c: Record<string, number> = { all: PROJECTS.length, featured: PROJECTS.filter((p) => p.featured).length };
-    PROJECTS.forEach((p) => (c[p.category] = (c[p.category] ?? 0) + 1));
-    return c;
+  // Only offer filters that actually have work behind them.
+  const filters = useMemo(() => {
+    const all: { value: Filter; label: string }[] = [
+      { value: 'featured', label: 'Featured' },
+      ...TAG_ORDER.map((t) => ({ value: t as Filter, label: TAG_LABEL[t] })),
+      { value: 'all', label: 'Everything' },
+    ];
+    return all.map((f) => ({ ...f, count: PROJECTS.filter((p) => matches(f.value, p)).length })).filter((f) => f.count > 0);
   }, []);
 
-  const list = PROJECTS.filter((p) => (filter === 'all' ? true : filter === 'featured' ? p.featured : p.category === filter));
+  const list = PROJECTS.filter((p) => matches(filter, p));
 
   return (
     <>
-      <Section tone="dark" grid first>
+      <Section tone="dark" first>
         <SectionHeading
           as="h1"
           size="page"
@@ -49,7 +48,7 @@ const Projects = () => {
       <Section tone="base">
         <AnimatedSection>
           <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects">
-            {FILTERS.map((f) => {
+            {filters.map((f) => {
               const active = f.value === filter;
               return (
                 <button
@@ -63,7 +62,7 @@ const Projects = () => {
                 >
                   {active && <motion.span layoutId="filter-pill" className="absolute inset-0 rounded-xl bg-primary" transition={{ duration: 0.4, ease: EASE }} />}
                   <span className="relative">
-                    {f.label} <span className="font-mono text-[12px] opacity-70">{counts[f.value] ?? 0}</span>
+                    {f.label} <span className="font-mono text-[12px] opacity-70">{f.count}</span>
                   </span>
                 </button>
               );

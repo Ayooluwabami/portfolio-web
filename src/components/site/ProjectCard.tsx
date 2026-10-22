@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, BookOpen, Github, Lock } from 'lucide-react';
 import ProjectVisual from './ProjectVisual';
-import type { Project } from '@/data/projects';
+import { TAG_LABEL, type Project } from '@/data/projects';
 
 /*
  * One project card for the whole site: visual, outcome (in mono), title, summary, stack, links.
@@ -12,7 +12,14 @@ const ProjectCard = ({ project, index = 0, compact = false }: { project: Project
   return (
     <article className="group flex h-full flex-col">
       <ProjectVisual project={project} index={index} />
-      {outcome && <p className="mono-tag mt-5">Outcome · {outcome.toLowerCase()}</p>}
+      <div className="mt-5 flex flex-wrap items-center gap-1.5">
+        {project.tags.map((t) => (
+          <span key={t} className="rounded-md border border-border px-2 py-0.5 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+            {TAG_LABEL[t]}
+          </span>
+        ))}
+      </div>
+      {outcome && <p className="mono-tag mt-3">Outcome · {outcome.toLowerCase()}</p>}
       <h3 className="h-card mt-2">
         {project.caseStudy ? (
           <Link to={project.caseStudy} className="transition-colors hover:text-accent-ink">
@@ -38,12 +45,12 @@ const ProjectCard = ({ project, index = 0, compact = false }: { project: Project
             Live site <ArrowUpRight size={15} />
           </a>
         )}
-        {!compact && project.article && (
+        {project.article && (
           <a href={project.article} target="_blank" rel="noopener noreferrer" className="link-arrow">
             <BookOpen size={14} /> Write-up
           </a>
         )}
-        {!compact && project.github && (
+        {project.github && (
           <a href={project.github} target="_blank" rel="noopener noreferrer" className="link-arrow">
             <Github size={14} /> Code
           </a>

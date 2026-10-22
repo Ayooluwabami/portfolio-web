@@ -86,8 +86,15 @@ const Terminal = () => {
     };
   }, []);
 
+  // Focus the input on open; hand focus back to whatever opened it on close.
   useEffect(() => {
-    if (open) window.setTimeout(() => inputRef.current?.focus(), 60);
+    if (!open) return;
+    const opener = document.activeElement as HTMLElement | null;
+    const t = window.setTimeout(() => inputRef.current?.focus(), 60);
+    return () => {
+      window.clearTimeout(t);
+      if (opener && document.contains(opener)) opener.focus();
+    };
   }, [open]);
 
   useEffect(() => {

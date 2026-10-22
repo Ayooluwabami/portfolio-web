@@ -11,7 +11,7 @@ import { SITE, SOCIALS } from '@/data/profile';
  */
 const Contact = () => (
   <>
-    <Section tone="dark" grid first>
+    <Section tone="dark" first>
       <SectionHeading
         as="h1"
         size="page"

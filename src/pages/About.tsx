@@ -28,7 +28,7 @@ const EXPERTISE = [
 
 const About = () => (
   <>
-    <Section tone="dark" grid first>
+    <Section tone="dark" first>
       <SectionHeading
         as="h1"
         size="page"
@@ -130,7 +130,7 @@ const About = () => (
     </Section>
 
     {/* Beyond the code */}
-    <Section tone="dark" grid>
+    <Section tone="dark">
       <div className="grid items-center gap-12 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <SectionHeading

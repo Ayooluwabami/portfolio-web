@@ -56,8 +56,15 @@ const CommandPalette = ({ onOpen }: CommandPaletteProps) => {
     return () => window.removeEventListener('keydown', handler);
   }, [open]);
 
+  // Focus the input on open; hand focus back to whatever opened it on close.
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 50);
+    if (!open) return;
+    const opener = document.activeElement as HTMLElement | null;
+    const t = window.setTimeout(() => inputRef.current?.focus(), 50);
+    return () => {
+      window.clearTimeout(t);
+      if (opener && document.contains(opener)) opener.focus();
+    };
   }, [open]);
 
   const execute = (cmd: typeof COMMANDS[number]) => {

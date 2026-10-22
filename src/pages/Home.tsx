@@ -5,19 +5,21 @@ import {
   Believe,
   ContactBand,
   Faq,
+  Journey,
   Process,
   Promises,
   Recruiters,
   SelectedWork,
   ShippedFor,
   Writing,
+  WaysToHelp,
 } from '../components/home/HomeSections';
 
 /*
  * Home follows the sequence the reference sites share (Jotem, Bizlift, Thina):
- * who I am → point of view → proof → the person → how I work → the process →
- * the recruiter shortcut → live activity → writing → objections → contact.
- * Bands alternate base / alt, with three deep-blue moments: hero, promises, contact.
+ * who I am → point of view → proof → who it's for → promises → the person → how I ship →
+ * how we'd work → live activity → the recruiter shortcut → objections → writing → contact.
+ * Bands alternate base / alt; the deep blue is kept for the hero, the promises and the footer.
  */
 const Home = () => (
   <>
@@ -25,13 +27,15 @@ const Home = () => (
     <ShippedFor />
     <Believe />
     <SelectedWork />
-    <AboutPreview />
+    <WaysToHelp />
     <Promises />
+    <AboutPreview />
     <Process />
-    <Recruiters />
+    <Journey />
     <GitHubActivity />
-    <Writing />
+    <Recruiters />
     <Faq />
+    <Writing />
     <ContactBand />
   </>
 );
