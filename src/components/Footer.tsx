@@ -25,7 +25,7 @@ const Footer = () => (
           </Link>
         </div>
 
-        <nav className="md:col-span-2" aria-label="Footer">
+        <nav className="md:col-span-2 md:col-start-8" aria-label="Footer">
           <p className="mb-4 text-[14px] font-medium">Pages</p>
           <ul className="space-y-2.5 text-[14px] text-muted-foreground">
             {PAGES.map((p) => (
@@ -38,7 +38,7 @@ const Footer = () => (
           </ul>
         </nav>
 
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 md:col-start-11">
           <p className="mb-4 text-[14px] font-medium">Elsewhere</p>
           <ul className="space-y-2.5 text-[14px] text-muted-foreground">
             {SOCIALS.map((s) => (
@@ -51,13 +51,6 @@ const Footer = () => (
           </ul>
         </div>
 
-        <div className="md:col-span-3">
-          <p className="mb-4 text-[14px] font-medium">Status</p>
-          <p className="flex items-center gap-2 text-[14px] text-muted-foreground">
-            <span className="h-2 w-2 rounded-full bg-emerald-400" />
-            {SITE.availability} · {SITE.rightToWork.replace('Eligible', 'eligible')}
-          </p>
-        </div>
       </div>
 
       <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[12px] text-muted-foreground">

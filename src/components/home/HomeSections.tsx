@@ -8,7 +8,6 @@ import IconTile from '../site/Icon';
 import ProjectCard from '../site/ProjectCard';
 import AnimatedSection from '../AnimatedSection';
 import { AnimatedHeadline } from '../AnimatedHeadline';
-import ContactForm from '../ContactForm';
 import { DepthGrid, EASE, useViewportProgress } from '@/lib/motion';
 import { PROJECTS } from '@/data/projects';
 import {
@@ -22,30 +21,27 @@ import {
   RECRUITER_FACTS,
   RECRUITER_SUMMARY,
   SHIPPED_FOR,
-  STATS,
 } from '@/data/profile';
 import working from '@/assets/working.jpg';
 
-/* ── Proof strip: the hero's numbers, then who I've shipped for ────────────── */
+/* ── Shipped for: a slim band that glides right to left (Bizlift's "Trusted by growing businesses") ── */
 export const ShippedFor = () => (
-  <section className="border-b border-border bg-background">
-    <div className="container-x grid gap-8 py-8 lg:grid-cols-12 lg:items-center lg:gap-12">
-      <dl className="grid grid-cols-3 gap-4 lg:col-span-5">
-        {STATS.map((st) => (
-          <div key={st.label}>
-            <dt className="display text-[30px] leading-none">{st.value}</dt>
-            <dd className="mt-2 text-[13px] leading-snug text-muted-foreground">{st.label}</dd>
-          </div>
-        ))}
-      </dl>
-      <div className="flex flex-col gap-3 border-t border-border pt-6 lg:col-span-7 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-0">
-        <span className="text-[13px] text-muted-foreground">Shipped for</span>
-        <ul className="flex flex-wrap items-center gap-x-7 gap-y-2">
-          {SHIPPED_FOR.map((n) => (
-            <li key={n} className="text-[16px] font-semibold tracking-[-0.01em] text-muted-foreground/90">
-              {n}
-            </li>
-          ))}
+  <section className="band-dark border-t border-white/10" aria-label="Shipped for">
+    <div className="flex flex-col items-center gap-4 py-7 md:flex-row md:gap-0 md:py-6">
+      <p className="container-x shrink-0 text-[13px] text-white/55 md:w-auto md:pr-0">Shipped for</p>
+      <div className="ticker w-full min-w-0 flex-1 overflow-hidden">
+        <ul className="ticker-track flex w-max items-center">
+          {[0, 1].map((copy) =>
+            [...SHIPPED_FOR, ...SHIPPED_FOR].map((n, i) => (
+              <li
+                key={`${copy}-${i}`}
+                aria-hidden={copy === 1 || i >= SHIPPED_FOR.length}
+                className="display shrink-0 px-8 text-[22px] leading-none text-white/70 md:px-10"
+              >
+                {n}
+              </li>
+            )),
+          )}
         </ul>
       </div>
     </div>
@@ -442,30 +438,19 @@ export const Faq = () => {
   );
 };
 
-/* ── Contact band with the working form (Bizlift's closing form) ──────────── */
+/* ── Closing call to action: one line and one button; the form itself lives on /contact ── */
 export const ContactBand = () => (
   <Section tone="base" id="contact">
-    <div className="grid items-center gap-12 lg:grid-cols-12">
-      <div className="lg:col-span-5">
-        <AnimatedHeadline as="h2" className="h-section">
-          Have a platform that needs to <em>stay up?</em>
-        </AnimatedHeadline>
-        <AnimatedSection delay={120}>
-          <p className="lede mt-5">Tell me about the role or project. You’ll hear back from me directly, in plain language.</p>
-          <ul className="mt-8 space-y-3 text-[15px]">
-            {['Replies usually within a day', 'Straight to my inbox, no agency', 'Happy to walk through private code on a call'].map((t) => (
-              <li key={t} className="flex items-center gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-accent-ink">
-                  <Check size={13} />
-                </span>
-                {t}
-              </li>
-            ))}
-          </ul>
-        </AnimatedSection>
-      </div>
-      <AnimatedSection delay={150} className="lg:col-span-6 lg:col-start-7">
-        <ContactForm />
+    <div className="flex flex-col items-start justify-between gap-8 border-t border-border pt-12 md:flex-row md:items-end">
+      <AnimatedHeadline as="h2" className="h-section max-w-[18ch]">
+        Have a platform that needs to <em>stay up?</em>
+      </AnimatedHeadline>
+      <AnimatedSection delay={120} className="flex shrink-0 flex-col items-start gap-3 md:items-end">
+        <Link to="/contact" className="btn-primary group">
+          Get in touch
+          <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+        </Link>
+        <p className="text-[13px] text-muted-foreground">Replies usually within a day</p>
       </AnimatedSection>
     </div>
   </Section>

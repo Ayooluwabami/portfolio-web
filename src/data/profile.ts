@@ -132,12 +132,6 @@ export const AWARDS = [
 ] as const;
 
 /** Headline numbers. Every one is stated on the CVs. */
-export const STATS = [
-  { value: '3+', label: 'years in production' },
-  { value: '90%', label: 'faster deploys at DriveWell' },
-  { value: '20+', label: 'projects shipped' },
-] as const;
-
 export const MILESTONES = [
   { title: 'Cloud & DevOps Engineer, Cloudboosta', note: 'Zero-trust EKS, CodePipeline with rollback, SLO framework' },
   { title: 'Backend & Cloud Engineer, DriveWell', note: 'Made deployments 90% faster on GCP' },

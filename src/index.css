@@ -237,21 +237,17 @@
   80% { transform: translate(3%, 3%); }
 }
 
-/* Deploy packet idles with a gentle bob before the visitor starts scrolling */
-.packet-idle { animation: packetBob 2.6s ease-in-out infinite; }
-@keyframes packetBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+/* Logo band: names glide right to left, faded at both edges, paused on hover */
+.ticker { mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); }
+.ticker-track { animation: tickerDrift 38s linear infinite; }
+@keyframes tickerDrift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker:hover .ticker-track { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
   .wm .wm-i { transform: none !important; transition: none !important; }
   .scrub-w { color: hsl(var(--foreground)) !important; }
   .curtain { clip-path: none !important; }
   .curtain > img { transform: none !important; }
-  .aurora, .hero-grain::after, .packet-idle { animation: none !important; }
+  .aurora, .hero-grain::after, .ticker-track { animation: none !important; }
 }
 
-/* Deploy route stages: dim until the packet reaches them */
-.route-stage .stage-dot { fill: hsl(221 64% 9%); stroke: hsl(var(--muted-foreground) / 0.5); stroke-width: 1.5; transition: fill .5s ease, stroke .5s ease, r .5s cubic-bezier(.22,1,.36,1); }
-.route-stage .stage-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: hsl(var(--muted-foreground) / 0.55); transition: fill .5s ease; }
-.route-stage.stage-on .stage-dot { fill: hsl(var(--primary)); stroke: hsl(var(--primary)); r: 6; }
-.route-stage.stage-on .stage-label { fill: hsl(var(--foreground)); }
-.route-stage.stage-live.stage-on .stage-dot { fill: #22c55e; stroke: #22c55e; }
