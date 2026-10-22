@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "fraunces",
+        "createdAt": "2026-10-22T10:54:32.788Z",
+        "reason": "user confirmed: chose font option B (Fraunces display headings) from the side-by-side preview on 2026-10-22"
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument sans",
+        "createdAt": "2026-10-22T10:54:32.805Z",
+        "reason": "user confirmed: chose font option B (Fraunces + Instrument Sans body) from the side-by-side preview on 2026-10-22"
+      }
+    ]
+  }
+}

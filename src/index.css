@@ -2,407 +2,185 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design system
+ * ─────────────
+ * One brand blue family + neutrals, expressed as roles. Light and dark mode swap the
+ * values of the roles, never the design, so every page stays in harmony.
+ *
+ * Type, each with one job:
+ *   Fraunces        display headings, with one italic accent phrase in brand blue
+ *   Instrument Sans  everything people read and click
+ *   JetBrains Mono   technical facts only: stacks, commands, metrics, pipeline output
+ */
 @layer base {
   :root {
-    /*
-     * Light mode — cool slate base, not pure white.
-     * Hue 215 (cool blue-grey) gives a "technical spec sheet" feel:
-     * precise, readable, clearly not a generic white marketing site.
-     * Cards are distinctly visible against the background.
-     * Primary shifts deeper (42% L) for AA contrast on the lighter surface.
-     */
-    --background: 216 24% 94%;
-    --foreground: 222 32% 11%;
-
-    --primary: 213 72% 40%;
+    --background: 0 0% 100%;          /* page */
+    --alt: 220 50% 98%;               /* alternate section */
+    --surface: 0 0% 100%;             /* cards */
+    --foreground: 220 49% 8%;         /* text */
+    --muted-foreground: 217 14% 41%;  /* secondary text */
+    --border: 216 33% 91%;            /* hairlines */
+    --primary: 223 100% 56%;          /* brand blue: actions, focus */
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 216 22% 88%;
-    --secondary-foreground: 222 32% 11%;
-
-    --accent: 213 72% 40%;
+    --accent-ink: 224 79% 44%;        /* brand blue for text on light */
+    --muted: 217 45% 95%;             /* subtle fills */
+    --secondary: 220 50% 98%;
+    --secondary-foreground: 220 49% 8%;
+    --accent: 223 100% 56%;
     --accent-foreground: 0 0% 100%;
-
-    --muted: 216 18% 84%;
-    --muted-foreground: 218 14% 40%;
-
-    --border: 216 18% 78%;
-    --ring: 213 72% 40%;
-    --radius: 0.625rem;
-
-    --highlight-primary: 213 72% 40%;
-    --highlight-secondary: 222 32% 11%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(213 72% 36%), hsl(213 72% 54%));
-    --gradient-subtle: linear-gradient(180deg, hsl(216 24% 94%), hsl(216 22% 88%));
-    --shadow-elegant: 0 4px 24px -8px hsl(213 72% 40% / 0.20);
-    --shadow-hover: 0 16px 48px -12px hsl(213 72% 40% / 0.28);
-    --shadow-card: 0 2px 12px -3px hsl(222 32% 11% / 0.10);
+    --ring: 223 100% 56%;
+    --radius: 0.75rem;
+    --shadow-card: 0 1px 2px hsl(220 49% 8% / 0.04), 0 8px 24px -12px hsl(220 49% 8% / 0.12);
+    --shadow-hover: 0 18px 40px -18px hsl(223 100% 40% / 0.30);
+    --highlight-primary: var(--primary);
   }
 
   .dark {
-    /*
-     * Dark mode — deep charcoal-navy, not GitHub's #0D1117.
-     * Hue 220 (slightly warm navy) at low saturation keeps it
-     * readable without copying GitHub's exact tone.
-     */
-    --background: 222 18% 8%;
-    --foreground: 213 18% 82%;
-
-    --primary: 213 80% 62%;
-    --primary-foreground: 222 18% 8%;
-
-    --secondary: 220 16% 13%;
-    --secondary-foreground: 213 18% 82%;
-
-    --accent: 213 80% 62%;
-    --accent-foreground: 222 18% 8%;
-
-    --muted: 220 14% 11%;
-    --muted-foreground: 214 10% 54%;
-
-    --border: 220 16% 19%;
-    --ring: 213 80% 62%;
-
-    --highlight-primary: 213 80% 62%;
-    --highlight-secondary: 0 0% 100%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(213 80% 58%), hsl(213 80% 72%));
-    --gradient-subtle: linear-gradient(180deg, hsl(222 18% 8%), hsl(220 16% 13%));
-    --shadow-elegant: 0 4px 24px -8px hsl(213 80% 62% / 0.18);
-    --shadow-hover: 0 16px 48px -12px hsl(213 80% 62% / 0.24);
-    --shadow-card: 0 2px 16px -4px hsl(0 0% 0% / 0.5);
+    --background: 221 52% 8%;
+    --alt: 220 51% 10%;
+    --surface: 221 50% 13%;
+    --foreground: 218 55% 94%;
+    --muted-foreground: 217 21% 66%;
+    --border: 221 39% 19%;
+    --primary: 222 100% 66%;
+    --primary-foreground: 221 52% 8%;
+    --accent-ink: 222 100% 78%;
+    --muted: 221 46% 16%;
+    --secondary: 220 51% 10%;
+    --secondary-foreground: 218 55% 94%;
+    --accent: 222 100% 66%;
+    --accent-foreground: 221 52% 8%;
+    --ring: 222 100% 66%;
+    --shadow-card: 0 1px 2px hsl(0 0% 0% / 0.3), 0 10px 30px -14px hsl(0 0% 0% / 0.6);
+    --shadow-hover: 0 18px 40px -18px hsl(222 100% 60% / 0.35);
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
+
+  html { scroll-behavior: smooth; }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Instrument Sans', system-ui, sans-serif;
     font-feature-settings: 'kern' 1, 'liga' 1;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
+  ::selection { background: hsl(var(--primary) / 0.22); color: hsl(var(--foreground)); }
 
-  ::selection {
-    background: hsl(var(--highlight-primary) / 0.2);
-    color: hsl(var(--foreground));
-  }
-}
-
-@layer utilities {
-  /* Display font utility — Bricolage Grotesque for headlines */
-  .font-display {
-    font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-    font-optical-sizing: auto;
-  }
-
-  .text-highlight {
-    @apply font-bold text-transparent bg-clip-text;
-    background-image: var(--gradient-primary);
-  }
-
-  .text-highlight-solid {
-    @apply font-bold;
-    color: hsl(var(--highlight-primary));
-  }
-
-  /* Grain / noise overlay — breaks flat-screen sterility */
-  .noise-overlay {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0.028;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 128px 128px;
-  }
-
-  /* Text balance for headlines */
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .text-pretty {
-    text-wrap: pretty;
-  }
+  *:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 3px; border-radius: 6px; }
 }
 
 @layer components {
-  .container-tight {
-    @apply max-w-5xl mx-auto px-6;
+  .container-x { @apply mx-auto w-full max-w-[1240px] px-6 md:px-10; }
+  .section { @apply py-20 md:py-28; }
+
+  /* Deep-blue band with drifting light (Bizlift's dark sections, in the brand blue).
+     Re-declares the roles so everything inside reads as dark mode. */
+  .band-dark {
+    --background: 221 64% 9%;
+    --alt: 221 60% 11%;
+    --surface: 221 55% 14%;
+    --foreground: 218 60% 96%;
+    --muted-foreground: 218 30% 74%;
+    --border: 221 45% 22%;
+    --primary: 223 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --accent-ink: 222 100% 80%;
+    --muted: 221 50% 17%;
+    --secondary: 221 55% 14%;
+    --secondary-foreground: 218 60% 96%;
+    color: hsl(var(--foreground));
+    background:
+      radial-gradient(ellipse 55% 70% at 88% 0%, hsl(223 100% 56% / 0.38), transparent 62%),
+      radial-gradient(ellipse 45% 60% at 0% 100%, hsl(223 100% 60% / 0.16), transparent 62%),
+      hsl(221 64% 9%);
+  }
+  .dark .band-dark {
+    background:
+      radial-gradient(ellipse 55% 70% at 88% 0%, hsl(223 100% 56% / 0.30), transparent 62%),
+      radial-gradient(ellipse 45% 60% at 0% 100%, hsl(223 100% 60% / 0.12), transparent 62%),
+      hsl(222 70% 6%);
+  }
+  .band-grid {
+    background-image:
+      linear-gradient(hsl(0 0% 100% / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
   }
 
-  .section-padding {
-    @apply py-20 md:py-28;
+  /* Display type */
+  .display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    font-variation-settings: 'SOFT' 50, 'opsz' 72;
+    text-wrap: balance;
   }
+  .display em { font-style: italic; color: hsl(var(--accent-ink)); }
+  .h-hero { @apply display text-[42px] leading-[1.06] sm:text-[52px] lg:text-[64px] lg:leading-[1.04]; }
+  .h-page { @apply display text-[40px] leading-[1.08] sm:text-[48px] lg:text-[58px]; }
+  .h-section { @apply display text-[32px] leading-[1.12] md:text-[44px] md:leading-[1.1]; }
+  .h-statement { @apply display text-[26px] leading-[1.32] md:text-[34px] md:leading-[1.28]; }
+  .h-card { @apply text-[19px] font-medium leading-snug tracking-[-0.01em]; }
 
-  .card-base {
-    @apply bg-secondary/60 border border-border rounded-xl;
-  }
+  .lede { @apply text-[16px] leading-[1.7] text-muted-foreground md:text-[17px]; }
+  .body { @apply text-[15px] leading-[1.7] text-muted-foreground; }
 
-  .card-hover {
-    @apply transition-all duration-300
-           hover:border-primary/35 hover:shadow-elegant hover:-translate-y-0.5;
-  }
+  /* The label above every heading: a short rule, then the words */
+  .eyebrow { @apply inline-flex items-center gap-2.5 text-[13px] font-medium; color: hsl(var(--accent-ink)); }
+  .eyebrow::before { content: ''; @apply block h-px w-6; background: currentColor; }
 
-  .btn-primary {
-    @apply px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-sm
-           transition-all duration-200 hover:brightness-110 hover:shadow-elegant active:scale-[0.97];
-  }
+  .mono-tag { @apply font-mono text-[12px] leading-relaxed; color: hsl(var(--accent-ink)); }
 
-  .btn-secondary {
-    @apply px-6 py-2.5 bg-transparent border border-border rounded-lg font-medium text-sm
-           transition-all duration-200 hover:border-primary/40 hover:bg-secondary/60 active:scale-[0.97];
-  }
+  /* Buttons: one filled, one outline, one text link */
+  .btn { @apply inline-flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-[15px] font-medium transition-all duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60; }
+  .btn-sm { @apply h-11 px-5 text-[14px]; }
+  .btn-primary { @apply btn bg-primary text-primary-foreground hover:brightness-110; box-shadow: var(--shadow-hover); }
+  .btn-secondary { @apply btn border border-border bg-transparent text-foreground hover:border-primary/60 hover:text-[hsl(var(--accent-ink))]; }
+  .btn-outline { @apply btn border text-[hsl(var(--accent-ink))] hover:bg-primary hover:text-primary-foreground; border-color: hsl(var(--primary) / 0.7); }
+  .link-arrow { @apply inline-flex items-center gap-1.5 text-[14px] font-medium text-[hsl(var(--accent-ink))] transition-all hover:gap-2.5; }
+
+  .card { @apply rounded-2xl border border-border bg-[hsl(var(--surface))]; }
+  .card-hover { @apply transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40; }
+  .card-hover:hover { box-shadow: var(--shadow-hover); }
 
   .link-underline {
-    @apply relative after:content-[''] after:absolute after:bottom-0 after:left-0
-           after:w-0 after:h-px after:bg-primary after:transition-all after:duration-300
-           hover:after:w-full;
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 after:content-[''] hover:after:w-full;
   }
 
-  /* Headline — Bricolage Grotesque, tight tracking, balanced wrapping */
-  .text-headline {
-    @apply font-display text-[2.75rem] sm:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-[-0.025em] text-balance;
-  }
-
-  .text-subheadline {
-    @apply text-base sm:text-lg text-muted-foreground leading-relaxed text-pretty;
-    max-width: 62ch;
-  }
-
-  .text-section-title {
-    @apply font-display text-3xl md:text-[2.75rem] font-bold leading-[1.08] tracking-[-0.03em] text-balance;
-  }
-
-  /* Sentence-case label with a short rule, instead of tracked all-caps */
-  .text-label {
-    @apply inline-block text-sm font-medium text-primary;
-  }
-  .text-label::before {
-    content: '';
-    @apply mr-2.5 inline-block h-px w-6 bg-primary/60 align-middle;
-  }
-
-  .text-highlight-primary {
-    color: hsl(var(--highlight-primary));
-  }
-
-  .text-highlight-secondary {
-    color: hsl(var(--highlight-secondary));
-  }
-
-  /* Code window */
-  .code-window {
-    @apply bg-secondary border border-border rounded-xl overflow-hidden;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .code-header {
-    @apply flex items-center gap-2 px-4 py-2.5 bg-muted/40 border-b border-border;
-  }
-
-  .code-dot {
-    @apply w-2.5 h-2.5 rounded-full;
-  }
-
-  .code-content {
-    @apply p-4 text-sm leading-relaxed overflow-x-auto;
-  }
-
-  .code-keyword {
-    color: hsl(var(--highlight-primary));
-  }
-
-  .code-string {
-    @apply text-emerald-500 dark:text-emerald-400;
-  }
-
-  .code-comment {
-    @apply text-muted-foreground italic;
-  }
-
-  .code-function {
-    @apply text-amber-500 dark:text-amber-400;
-  }
-
-  .code-variable {
-    @apply text-foreground;
-  }
+  /* Code window used in the hero and project visuals */
+  .code-window { @apply overflow-hidden rounded-xl border border-white/10 font-mono text-white; background: hsl(221 60% 13% / 0.92); backdrop-filter: blur(8px); }
+  .code-header { @apply flex items-center gap-2 border-b border-white/10 px-4 py-2.5; }
+  .code-dot { @apply h-2.5 w-2.5 rounded-full; }
+  .code-content { @apply overflow-x-auto p-4 text-[13px] leading-relaxed; }
+  .code-keyword { color: hsl(222 100% 78%); }
+  .code-string { color: hsl(152 60% 62%); }
+  .code-function { color: hsl(40 90% 68%); }
+  .code-variable { color: hsl(218 60% 94%); }
+  .code-comment { @apply italic; color: hsl(218 30% 60%); }
 }
 
 @layer utilities {
-  /* Was a blue gradient on one word per heading. Headlines are now a single colour. */
-  .text-gradient {
-    color: inherit;
-  }
-
-  .bg-gradient-subtle {
-    background-image: var(--gradient-subtle);
-  }
-
-  /* Dot pattern */
-  .bg-dots {
-    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.12) 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-
-  /* Fine grid */
-  .bg-grid {
-    background-image:
-      linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-
-  .animate-float {
-    animation: float 9s ease-in-out infinite;
-  }
-
-  .animate-float-delayed {
-    animation: float 9s ease-in-out infinite;
-    animation-delay: -4.5s;
-  }
-
-  .animate-pulse-slow {
-    animation: pulse-slow 2.8s ease-in-out infinite;
-  }
-
-  /* Tabular numbers for stats/metrics */
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
-  }
+  .text-accent-ink { color: hsl(var(--accent-ink)); }
+  .bg-alt { background-color: hsl(var(--alt)); }
+  .bg-surface { background-color: hsl(var(--surface)); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-hover { box-shadow: var(--shadow-hover); }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
-}
-
-@keyframes pulse-slow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.45; }
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── Spotlight card ─────────────────────────────────────────────────────────
-   Cursor-following radial glow that illuminates the card surface.
-   --mx / --my are set via JS in SpotlightCard.tsx.
-   When the cursor is absent (--mx not set), the gradient is off-screen.
-   ───────────────────────────────────────────────────────────────────────── */
-.spotlight-card {
-  position: relative;
-  isolation: isolate;
-}
-
-.spotlight-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    550px circle at var(--mx, -9999px) var(--my, -9999px),
-    hsl(var(--primary) / 0.13),
-    transparent 42%
-  );
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.25s ease;
-  opacity: 0;
-}
-
-.spotlight-card:hover::before {
-  opacity: 1;
-}
-
-/* Ensure card children sit above the glow layer */
-.spotlight-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* ── Gradient shimmer on text-gradient elements ──────────────────────────── */
-@keyframes shimmer {
-  0%   { background-position: 200% center; }
-  100% { background-position: -200% center; }
-}
-
-.text-gradient-animate {
-  color: inherit;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: hsl(var(--background)); }
 ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.45); }
-
-/* Focus ring */
-*:focus-visible {
-  @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background;
-}
 
 /* Printing the CV: drop site chrome and print on white */
 @media print {
-  nav, footer, .noise-overlay, [aria-label="Open command palette"] { display: none !important; }
+  nav, footer, header, .no-print { display: none !important; }
   html, body { background: #fff !important; color: #111 !important; }
-}
-
-/* ── Section tones ──────────────────────────────────────────────────────────
-   Every page alternates clearly different bands, like jotem_agro (white, lavender,
-   brand green, deep green) and bizlift (cream, navy). Here: white, sky, lavender,
-   mint, a saturated brand-blue band and a deep navy band. Dark-mode versions are
-   separate hues too, so the demarcation survives the theme switch.
-   Ink and brand bands also carry the `dark` class so text tokens flip to light.
-   ───────────────────────────────────────────────────────────────────────── */
-.tone-white    { background-color: hsl(0 0% 100%); }
-.tone-sky      { background-color: hsl(213 85% 94%); }
-.tone-lavender { background-color: hsl(248 80% 96%); }
-.tone-mint     { background-color: hsl(162 48% 92%); }
-.tone-ink      { background-color: hsl(222 58% 12%); color: hsl(var(--foreground)); }
-.tone-brand    {
-  background-color: hsl(213 72% 38%);
-  color: hsl(var(--foreground));
-  /* Inside the blue band: white is the accent, blue-tinted greys for secondary text */
-  --foreground: 0 0% 100%;
-  --primary: 0 0% 100%;
-  --primary-foreground: 213 72% 32%;
-  --muted-foreground: 213 60% 88%;
-  --border: 213 55% 55%;
-  --secondary: 213 65% 32%;
-  --muted: 213 60% 34%;
-  --highlight-primary: 0 0% 100%;
-}
-
-.dark .tone-white    { background-color: hsl(222 16% 12%); }
-.dark .tone-sky      { background-color: hsl(214 48% 15%); }
-.dark .tone-lavender { background-color: hsl(250 28% 15%); }
-.dark .tone-mint     { background-color: hsl(168 34% 11%); }
-.dark .tone-ink      { background-color: hsl(222 40% 4%); }
-.dark .tone-brand    { background-color: hsl(213 68% 30%); }
-
-/* Soft glow used on ink bands, echoing the drifting light on bizlift's dark sections */
-.ink-glow {
-  background-image:
-    radial-gradient(ellipse 60% 70% at 85% 10%, hsl(213 80% 55% / 0.18), transparent 60%),
-    radial-gradient(ellipse 50% 60% at 5% 100%, hsl(168 60% 45% / 0.12), transparent 60%);
-}
-.brand-glow {
-  background-image:
-    radial-gradient(ellipse 55% 80% at 90% 0%, hsl(200 90% 70% / 0.30), transparent 60%),
-    radial-gradient(ellipse 45% 70% at 0% 100%, hsl(230 80% 25% / 0.45), transparent 60%);
+  .band-dark { background: #fff !important; color: #111 !important; }
 }
 
 /* ── Motion vocabulary (see src/lib/motion.tsx) ──────────────────────────────
@@ -478,7 +256,7 @@
 }
 
 /* Deploy route stages: dim until the packet reaches them */
-.route-stage .stage-dot { fill: hsl(var(--background)); stroke: hsl(var(--muted-foreground) / 0.5); stroke-width: 1.5; transition: fill .5s ease, stroke .5s ease, r .5s cubic-bezier(.22,1,.36,1); }
+.route-stage .stage-dot { fill: hsl(221 64% 9%); stroke: hsl(var(--muted-foreground) / 0.5); stroke-width: 1.5; transition: fill .5s ease, stroke .5s ease, r .5s cubic-bezier(.22,1,.36,1); }
 .route-stage .stage-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: hsl(var(--muted-foreground) / 0.55); transition: fill .5s ease; }
 .route-stage.stage-on .stage-dot { fill: hsl(var(--primary)); stroke: hsl(var(--primary)); r: 6; }
 .route-stage.stage-on .stage-label { fill: hsl(var(--foreground)); }

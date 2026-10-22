@@ -1,260 +1,201 @@
 import { Link } from 'react-router-dom';
-import { Code, Database, Cloud, Shield, Zap, Users, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, Cloud, Code2, Gauge, GitBranch, ShieldCheck, Users } from 'lucide-react';
+import Section from '../components/site/Section';
+import SectionHeading from '../components/site/SectionHeading';
 import AnimatedSection from '../components/AnimatedSection';
-import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
+import { Curtain, DepthGrid } from '@/lib/motion';
+import { EDUCATION, SITE } from '@/data/profile';
 import photoshoot from '@/assets/photoshoot.jpg';
 import working from '@/assets/working.jpg';
-import Band from '../components/Band';
 
-const About = () => {
-  const expertise = [
-    {
-      icon: <Cloud size={20} />,
-      title: "Cloud & platform engineering",
-      description: "AWS, Azure and GCP built as code with Terraform and CloudFormation. Internal developer platforms, golden paths and one-command service setup.",
-    },
-    {
-      icon: <Zap size={20} />,
-      title: "CI/CD & GitOps",
-      description: "GitHub Actions, AWS CodePipeline, Azure DevOps and Jenkins. ArgoCD App-of-Apps on EKS and AKS, Helm, automatic rollback.",
-    },
-    {
-      icon: <Shield size={20} />,
-      title: "DevSecOps",
-      description: "Blocking gates for secrets, SAST, SCA, IaC and images, SBOMs, OIDC keyless auth, IRSA, zero-trust NetworkPolicies and STRIDE threat models.",
-    },
-    {
-      icon: <Database size={20} />,
-      title: "Observability & reliability",
-      description: "Prometheus, Grafana, Alertmanager, CloudWatch and X-Ray. SLOs, error-budget policies, runbooks and blameless postmortems.",
-    },
-    {
-      icon: <Code size={20} />,
-      title: "Backend development",
-      description: "Node.js, TypeScript and NestJS microservices, PostgreSQL and Redis, queues with BullMQ, payments and secure auth.",
-    },
-    {
-      icon: <Users size={20} />,
-      title: "Documentation & mentoring",
-      description: "Documentation-first delivery, technical writing on Medium, code reviews and mentoring 50+ young people.",
-    },
-  ];
+const PATH = [
+  { year: '2019', title: 'University of Ibadan', body: 'BA Religious Studies, 2:1. Learned to read closely and argue from evidence.' },
+  { year: '2021', title: 'Auto Clinic', body: 'Diagnosed 25+ vehicles a week and trained 50+ teenagers in automotive diagnostics.' },
+  { year: '2023', title: 'First backend work', body: 'Freelance APIs for startups and SMEs: payments, wallets with double-entry ledgers, booking platforms.' },
+  { year: '2024', title: 'AltSchool Africa', body: 'Diploma in Backend Engineering: Node.js, TypeScript, databases and system design.' },
+  { year: '2025', title: 'DriveWell and AI4AI', body: 'Made DriveWell’s deployments 90% faster on GCP. Built multi-tenant SaaS for 50+ schools.' },
+  { year: '2026', title: 'Cloudboosta', body: 'Zero-trust EKS, a CodePipeline with automatic rollback, GitOps on AKS and an SLO framework.' },
+];
 
-  return (
-    <div className="min-h-screen">
-      <Band tone="sky" first>
-        {/* Header */}
-        <AnimatedSection>
-          <div className="max-w-5xl mx-auto">
-            <WordReveal text="About me" className="text-label mb-4" />
-            <AnimatedHeadline as="h1" className="text-headline mb-5">
-              The story behind the code
-            </AnimatedHeadline>
-            <p className="text-subheadline">
-              From automotive diagnostics to distributed cloud systems — a non-linear path that built
-              a first-principles approach to engineering.
+const EXPERTISE = [
+  { icon: Cloud, title: 'Cloud & platform engineering', body: 'AWS, Azure and GCP built as code with Terraform and CloudFormation. Golden paths and one-command service setup.' },
+  { icon: GitBranch, title: 'CI/CD & GitOps', body: 'GitHub Actions, CodePipeline, Azure DevOps and Jenkins. ArgoCD on EKS and AKS, Helm and automatic rollback.' },
+  { icon: ShieldCheck, title: 'DevSecOps', body: 'Blocking gates for secrets, SAST, SCA, IaC and images, SBOMs, OIDC, IRSA, NetworkPolicies and STRIDE.' },
+  { icon: Gauge, title: 'Observability & reliability', body: 'Prometheus, Grafana, CloudWatch and X-Ray. SLOs, error budgets, runbooks and blameless postmortems.' },
+  { icon: Code2, title: 'Backend development', body: 'Node.js, TypeScript and NestJS services, PostgreSQL and Redis, BullMQ queues, payments and secure auth.' },
+  { icon: Users, title: 'Documentation & mentoring', body: 'Documentation-first delivery, technical writing on Medium, code reviews and mentoring young people.' },
+];
+
+const About = () => (
+  <>
+    <Section tone="dark" grid first>
+      <SectionHeading
+        as="h1"
+        size="page"
+        eyebrow="About me"
+        title={
+          <>
+            From a mechanic’s bay <em>to the cloud</em>
+          </>
+        }
+        lede="Diagnosing a car and diagnosing a distributed system are the same job: isolate the fault, test one assumption at a time, fix the cause rather than the symptom."
+      />
+    </Section>
+
+    {/* Story */}
+    <Section tone="base">
+      <div className="grid items-start gap-12 lg:grid-cols-12">
+        <AnimatedSection className="lg:col-span-5">
+          <Curtain src={photoshoot} alt="Ayobami Edun" parallax={20} className="aspect-[4/5] overflow-hidden rounded-2xl" imgClassName="h-full w-full object-cover object-top" />
+          <p className="mt-4 text-[13px] text-muted-foreground">
+            {SITE.location} · eligible to work in the UK immediately
+          </p>
+        </AnimatedSection>
+        <div className="lg:col-span-6 lg:col-start-7">
+          <SectionHeading
+            eyebrow="Who I am"
+            title={
+              <>
+                Infrastructure people <em>can rely on</em>
+              </>
+            }
+          />
+          <AnimatedSection delay={120} className="body mt-6 space-y-4 text-[16px]">
+            <p>
+              I’m a <span className="font-medium text-foreground">cloud, DevOps and platform engineer</span> with 3+ years of
+              experience across AWS, Azure and GCP, built on a backend foundation in Node.js, TypeScript and NestJS.
             </p>
-          </div>
-        </AnimatedSection>
+            <p>
+              I’ve built a <span className="font-medium text-foreground">zero-trust EKS platform</span> with GitOps and seven
+              blocking security gates, a CodePipeline that ships from git push to EC2 with automatic rollback, and serverless
+              pipelines across CloudFormation nested stacks. I define SLOs and error budgets, and write the threat models and
+              runbooks that keep systems understandable.
+            </p>
+            <p>
+              I work remotely with teams across the world, owning delivery from requirements and system design through to
+              cloud deployment and monitoring. I’m currently studying for the{' '}
+              <span className="font-medium text-foreground">AWS Solutions Architect Associate (SAA-C03)</span>.
+            </p>
+          </AnimatedSection>
+        </div>
+      </div>
+    </Section>
 
-      </Band>
-      <Band tone="white">
-        {/* Profile — photo left, text right */}
-        <AnimatedSection delay={50}>
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    {/* Path */}
+    <Section tone="alt">
+      <SectionHeading
+        eyebrow="The path"
+        title={
+          <>
+            Not a straight line, <em>on purpose</em>
+          </>
+        }
+      />
+      <ol className="mt-12">
+        {PATH.map((p, i) => (
+          <li key={p.year} className="border-t border-border">
+            <AnimatedSection delay={i * 40} className="grid gap-2 py-7 md:grid-cols-12 md:gap-6">
+              <span className="display text-[34px] leading-none text-accent-ink md:col-span-2">{p.year}</span>
+              <span className="h-card md:col-span-4">{p.title}</span>
+              <span className="body md:col-span-6">{p.body}</span>
+            </AnimatedSection>
+          </li>
+        ))}
+      </ol>
+    </Section>
 
-              {/* Photo — rectangular, not circular */}
-              <div className="flex justify-center lg:justify-start">
-                <div className="relative w-full max-w-xs">
-                  <div className="rounded-xl overflow-hidden border border-border shadow-card aspect-[3/4]">
-                    <img
-                      src={photoshoot}
-                      alt="Ayobami Edun"
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </div>
-                  {/* Location badge */}
-                  <div className="absolute -bottom-3 -right-3 px-3 py-1.5 bg-background border border-border rounded-lg shadow-card text-xs font-medium text-muted-foreground">
-                    📍 West Midlands, UK
-                  </div>
-                </div>
-              </div>
-
-              {/* Text */}
-              <div className="space-y-5">
-                <div className="space-y-4 text-muted-foreground leading-relaxed text-sm sm:text-base">
-                  <p>
-                    I'm a <span className="text-foreground font-medium">cloud, DevOps and platform engineer</span> with
-                    3+ years of experience across AWS, Azure and GCP, built on a backend foundation in Node.js,
-                    TypeScript and NestJS.
-                  </p>
-                  <p>
-                    I've built a{' '}
-                    <span className="text-foreground font-medium">zero-trust EKS platform</span> with GitOps and seven
-                    blocking security gates, a CodePipeline that ships from git push to EC2 with automatic rollback, and
-                    serverless pipelines across CloudFormation nested stacks. I define SLOs and error budgets, and write the
-                    threat models and runbooks that keep systems understandable.
-                  </p>
-                  <p>
-                    I work remotely with teams across the globe, owning delivery from requirements and system
-                    design through to cloud deployment and monitoring.
-                  </p>
-                  <p>
-                    Pursuing the{' '}
-                    <span className="text-foreground font-medium">AWS Solutions Architect Associate (SAA-C03)</span> certification.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <p className="font-display tabular-nums text-xl font-bold text-primary">20+</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Cloud projects (AWS/Azure/GCP)</p>
-                  </div>
-                  <div className="p-4 bg-secondary/50 rounded-lg border border-border">
-                    <p className="font-display tabular-nums text-xl font-bold text-primary">90%</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Faster deployments via CI/CD</p>
-                  </div>
-                </div>
-              </div>
+    {/* What I do */}
+    <Section tone="base">
+      <SectionHeading
+        eyebrow="What I do"
+        title={
+          <>
+            Six things teams <em>hire me for</em>
+          </>
+        }
+      />
+      <DepthGrid className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {EXPERTISE.map(({ icon: Icon, title, body }, i) => (
+          <AnimatedSection key={title} delay={(i % 3) * 80} className="h-full">
+            <div className="card card-hover h-full p-7">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-accent-ink">
+                <Icon size={20} strokeWidth={1.75} />
+              </span>
+              <h3 className="h-card mt-6">{title}</h3>
+              <p className="body mt-2">{body}</p>
             </div>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
+        ))}
+      </DepthGrid>
+    </Section>
 
-      </Band>
-      <Band tone="lavender">
-        {/* Expertise — 2 columns instead of 3 equal */}
-        <AnimatedSection delay={100}>
-          <div className="max-w-5xl mx-auto">
-            <div className="mb-10">
-              <p className="text-label mb-3">What I do</p>
-              <AnimatedHeadline as="h2" className="text-section-title">
-                Areas of expertise
-              </AnimatedHeadline>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {expertise.map((item, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ y: -2 }}
-                  className="group p-5 bg-secondary/50 rounded-xl border border-border hover:border-primary/35
-                             transition-all duration-200 flex gap-4"
-                >
-                  <div className="shrink-0 mt-0.5 p-2 bg-primary/10 rounded-lg text-primary h-fit
-                                  group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold mb-1.5 text-sm">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+    {/* Beyond the code */}
+    <Section tone="dark" grid>
+      <div className="grid items-center gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-6">
+          <SectionHeading
+            eyebrow="Beyond the code"
+            title={
+              <>
+                Building people <em>compounds</em>
+              </>
+            }
+          />
+          <AnimatedSection delay={120} className="body mt-6 space-y-4 text-[16px]">
+            <p>
+              I’ve mentored more than <span className="font-medium text-white">50 teenagers</span> in technical and leadership
+              roles, because building people compounds faster than building software.
+            </p>
+            <p>
+              Before software I worked in <span className="font-medium text-white">automotive technology</span>, which taught me
+              precision, diagnostics and systematic fault isolation. Those habits translate directly to debugging distributed
+              systems.
+            </p>
+            <p>
+              I wrote weekly educational segments for “Gist with the Mechanic” on Splash FM, and I play in the worship team at
+              Champions Church, Netherton.
+            </p>
+          </AnimatedSection>
+        </div>
+        <AnimatedSection delay={150} className="lg:col-span-5 lg:col-start-8">
+          <Curtain src={working} alt="Ayobami at work" parallax={20} className="aspect-[4/3] overflow-hidden rounded-2xl ring-1 ring-white/10" imgClassName="h-full w-full object-cover object-[50%_35%]" />
         </AnimatedSection>
+      </div>
+    </Section>
 
-      </Band>
-      <Band tone="mint">
-        {/* Beyond the code */}
-        <AnimatedSection delay={150}>
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-5 order-2 lg:order-1">
-                <p className="text-label">Beyond the code</p>
-                <AnimatedHeadline as="h2" className="text-section-title" delay={0.08}>
-                  A unique background
-                </AnimatedHeadline>
-                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                  <p>
-                    I've mentored over{' '}
-                    <span className="text-foreground font-medium">50 teenagers</span> in technical and
-                    leadership roles — because building people compounds faster than building software.
-                  </p>
-                  <p>
-                    Before software, I worked in{' '}
-                    <span className="text-foreground font-medium">automotive technology</span> — which taught
-                    me precision, diagnostics, and systematic fault isolation. Those habits translate
-                    directly to debugging distributed systems.
-                  </p>
-                  <p>
-                    I wrote weekly educational articles for the "Gist with the Mechanic" segment on
-                    Splash FM — combining a long-standing interest in teaching with technology.
-                  </p>
-                </div>
-                <Link
-                  to="/cv"
-                  className="inline-flex items-center gap-2 text-primary text-sm font-medium hover:gap-3 transition-all"
-                >
-                  Full experience on CV
-                  <ArrowRight size={16} />
-                </Link>
-              </div>
-
-              {/* Working photo — rectangular */}
-              <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-xs">
-                  <div className="rounded-xl overflow-hidden border border-border shadow-card aspect-[4/3]">
-                    <img
-                      src={working}
-                      alt="Ayobami at work"
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    {/* Credentials */}
+    <Section tone="alt">
+      <div className="grid gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <SectionHeading
+            eyebrow="Credentials"
+            title={
+              <>
+                Study, <em>ongoing</em>
+              </>
+            }
+          />
+          <AnimatedSection delay={150}>
+            <Link to="/cv" className="btn-outline btn-sm mt-8">
+              Read the CV <ArrowRight size={15} />
+            </Link>
+          </AnimatedSection>
+        </div>
+        <AnimatedSection delay={100} className="lg:col-span-7 lg:col-start-6">
+          <ul className="card overflow-hidden shadow-card">
+            {EDUCATION.map((e, i) => (
+              <li key={e.title} className={`flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-6 py-4 ${i ? 'border-t border-border' : ''}`}>
+                <span className="text-[15px] font-medium">{e.title}</span>
+                <span className="text-[13px] text-muted-foreground">
+                  {e.org} · <span className="font-mono">{e.year}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </AnimatedSection>
-
-      </Band>
-      <Band tone="ink">
-        {/* Education */}
-        <AnimatedSection delay={200}>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-secondary/40 rounded-xl p-8 border border-border">
-              <div className="mb-8">
-                <p className="text-label mb-3">Education</p>
-                <AnimatedHeadline as="h2" className="text-section-title">
-                  Credentials & certifications
-                </AnimatedHeadline>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  { title: "AWS SimuLearn: Cloud Practitioner",    org: "Amazon Web Services",   year: "2026", badge: "AWS" },
-                  { title: "Cloud & Advanced DevOps Engineering",  org: "Cloudboosta Academy",   year: "2026" },
-                  { title: "Introduction to Cybersecurity",        org: "Cisco Networking Academy", year: "2025" },
-                  { title: "Diploma in Backend Engineering",       org: "AltSchool Africa",      year: "2024" },
-                  { title: "JavaScript Essentials",                org: "Cisco & JS Institute",  year: "2024" },
-                  { title: "B.A. Religious Studies (2:1)",         org: "University of Ibadan",  year: "2019" },
-                ].map((edu, index) => (
-                  <div
-                    key={index}
-                    className={`p-4 rounded-lg border transition-colors ${
-                      edu.badge
-                        ? 'bg-primary/5 border-primary/20 hover:border-primary/35'
-                        : 'bg-background/40 border-border hover:border-primary/25'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-2 mb-1">
-                      <p className="font-medium text-sm">{edu.title}</p>
-                      {edu.badge && (
-                        <span className="shrink-0 text-[10px] font-semibold px-1.5 py-0.5 bg-primary/10 text-primary rounded border border-primary/20 tracking-wide">
-                          {edu.badge}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground">{edu.org} · {edu.year}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-      </Band>
-    </div>
-  );
-};
+      </div>
+    </Section>
+  </>
+);
 
 export default About;

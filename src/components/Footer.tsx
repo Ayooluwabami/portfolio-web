@@ -1,80 +1,79 @@
 import { Link } from 'react-router-dom';
+import { Wordmark } from './Navigation';
+import { SITE, SOCIALS } from '@/data/profile';
 
-const LINKS = [
-  { to: '/projects', label: 'Projects' },
+const PAGES = [
+  { to: '/projects', label: 'Work' },
   { to: '/about', label: 'About' },
   { to: '/skills', label: 'Skills' },
   { to: '/cv', label: 'CV' },
   { to: '/contact', label: 'Contact' },
 ];
 
-const ELSEWHERE = [
-  { href: 'https://github.com/Ayooluwabami', label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/ayobami-edun', label: 'LinkedIn' },
-  { href: 'https://medium.com/@ayobamieae', label: 'Medium' },
-];
-
+/* Deepest navy in the system: the page always ends on the darkest shade of the brand blue. */
 const Footer = () => (
-  <footer className="border-t border-border">
-    <div className="container mx-auto px-6 py-12">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-12">
-        <div className="md:col-span-6">
-          <p className="font-display text-lg font-bold tracking-[-0.02em]">Ayobami Edun</p>
-          <p className="mt-1 text-sm text-muted-foreground">Cloud, DevOps & platform engineer · West Midlands, UK</p>
-          <Link to="/contact" className="link-underline mt-5 inline-block pb-0.5 text-sm text-foreground">
-            Send me a message →
+  <footer className="band-dark border-t border-white/10">
+    <div className="container-x py-16">
+      <div className="grid gap-12 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <Wordmark onDark />
+          <p className="mt-5 max-w-xs text-[14px] leading-relaxed text-muted-foreground">
+            {SITE.role.charAt(0).toUpperCase() + SITE.role.slice(1)} based in the {SITE.location}.
+          </p>
+          <Link to="/contact" className="link-arrow mt-6">
+            Send me a message <span aria-hidden="true">→</span>
           </Link>
         </div>
-        <nav className="text-sm md:col-span-3" aria-label="Footer">
-          <ul className="space-y-2">
-            {LINKS.map((l) => (
-              <li key={l.to}>
-                <Link to={l.to} className="text-muted-foreground transition-colors hover:text-foreground">
-                  {l.label}
+
+        <nav className="md:col-span-2" aria-label="Footer">
+          <p className="mb-4 text-[14px] font-medium">Pages</p>
+          <ul className="space-y-2.5 text-[14px] text-muted-foreground">
+            {PAGES.map((p) => (
+              <li key={p.to}>
+                <Link to={p.to} className="transition-colors hover:text-foreground">
+                  {p.label}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <ul className="space-y-2 text-sm md:col-span-3">
-          {ELSEWHERE.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} target="_blank" rel="me noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground">
-                {l.label} ↗
-              </a>
-            </li>
-          ))}
-        </ul>
+
+        <div className="md:col-span-2">
+          <p className="mb-4 text-[14px] font-medium">Elsewhere</p>
+          <ul className="space-y-2.5 text-[14px] text-muted-foreground">
+            {SOCIALS.map((s) => (
+              <li key={s.href}>
+                <a href={s.href} target="_blank" rel="me noopener noreferrer" className="transition-colors hover:text-foreground">
+                  {s.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="md:col-span-3">
+          <p className="mb-4 text-[14px] font-medium">Status</p>
+          <p className="flex items-center gap-2 text-[14px] text-muted-foreground">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            {SITE.availability} · {SITE.rightToWork.replace('Eligible', 'eligible')}
+          </p>
+        </div>
       </div>
-      {/* Status line: real commit and build time, injected by Vite at build */}
-      <div className="mx-auto mt-12 flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-border pt-6 font-mono text-xs text-muted-foreground">
-        <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="inline-flex items-center gap-2 text-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-            All systems operational
-          </span>
-          <span>
-            deployed from{' '}
-            <a
-              href={`https://github.com/Ayooluwabami`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              {__BUILD__.branch}@{__BUILD__.sha}
-            </a>
-          </span>
-          <span>
-            built{' '}
-            {new Date(__BUILD__.builtAt).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-          </span>
-        </p>
-        <p className="flex items-center gap-3">
-          <button onClick={() => window.dispatchEvent(new Event('open-shortcuts'))} className="hover:text-foreground">
-            press <kbd className="rounded border border-border bg-muted px-1 text-foreground">?</kbd> for shortcuts
+
+      <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 font-mono text-[12px] text-muted-foreground">
+        <span>
+          deployed from{' '}
+          <a href="https://github.com/Ayooluwabami/portfolio-web" target="_blank" rel="noopener noreferrer" className="text-accent-ink hover:underline">
+            {__BUILD__.branch}@{__BUILD__.sha}
+          </a>{' '}
+          · built {new Date(__BUILD__.builtAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+        </span>
+        <span className="flex items-center gap-4">
+          <button onClick={() => window.dispatchEvent(new Event('open-shortcuts'))} className="transition-colors hover:text-foreground">
+            press <kbd className="rounded border border-white/15 px-1 text-foreground">?</kbd> for shortcuts
           </button>
-          <span>© {new Date().getFullYear()} Ayobami Edun</span>
-        </p>
+          <span>© {new Date().getFullYear()} {SITE.name}</span>
+        </span>
       </div>
     </div>
   </footer>

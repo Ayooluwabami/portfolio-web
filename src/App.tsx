@@ -17,9 +17,7 @@ const Skills = lazy(() => import('./pages/Skills'));
 const CV = lazy(() => import('./pages/CV'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
-const CarePulse = lazy(() => import('./pages/projects/CarePulse'));
-const ServerlessPipeline = lazy(() => import('./pages/projects/ServerlessPipeline'));
-const DriveWell = lazy(() => import('./pages/projects/DriveWell'));
+const CaseStudy = lazy(() => import('./pages/CaseStudy'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -77,9 +75,7 @@ const App = () => (
               <Route path="/skills" element={<Skills />} />
               <Route path="/cv" element={<CV />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/projects/carepulse" element={<CarePulse />} />
-              <Route path="/projects/serverless-pipeline" element={<ServerlessPipeline />} />
-              <Route path="/projects/drivewell" element={<DriveWell />} />
+              <Route path="/projects/:slug" element={<CaseStudy />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

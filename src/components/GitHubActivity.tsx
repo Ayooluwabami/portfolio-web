@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
-import { WordReveal, AnimatedHeadline } from './AnimatedHeadline';
+import Section from './site/Section';
+import SectionHeading from './site/SectionHeading';
 
 /*
  * Live public data from the GitHub API: repo count, language mix and what was pushed most recently.
@@ -86,32 +87,27 @@ const GitHubActivity = () => {
   const total = data?.languages.reduce((n, [, c]) => n + c, 0) ?? 1;
 
   return (
-    <section className="tone-white section-padding">
-      <div className="container mx-auto px-6">
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
+    <Section tone="base">
+        <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <AnimatedSection>
-              <WordReveal text="Live from GitHub" className="text-label mb-5" />
-              <AnimatedHeadline as="h2" className="text-section-title mb-5">
-                Still shipping
-              </AnimatedHeadline>
-              <p className="mb-8 text-muted-foreground">
-                Pulled live from the GitHub API each visit, not typed in. What I write in, and what I pushed most recently.
-              </p>
-              <a
-                href={`https://github.com/${USER}`}
-                target="_blank"
-                rel="me noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-sm font-medium text-primary"
-              >
-                <span className="link-underline pb-0.5">github.com/{USER}</span>
-                <ArrowUpRight size={15} />
+            <SectionHeading
+              eyebrow="Live from GitHub"
+              title={
+                <>
+                  Still <em>shipping</em>
+                </>
+              }
+              lede="Pulled live from the GitHub API on every visit, not typed in: what I write in, and what I pushed most recently."
+            />
+            <AnimatedSection delay={150}>
+              <a href={`https://github.com/${USER}`} target="_blank" rel="me noopener noreferrer" className="btn-outline btn-sm mt-8">
+                github.com/{USER} <ArrowUpRight size={15} />
               </a>
             </AnimatedSection>
           </div>
 
           <AnimatedSection delay={100} className="lg:col-span-7 lg:col-start-6">
-            <div className="overflow-hidden rounded-xl border border-border bg-white shadow-card dark:bg-background">
+            <div className="card overflow-hidden shadow-card">
               {failed ? (
                 <div className="p-8 text-sm text-muted-foreground">
                   GitHub didn’t answer just now. The repositories are all at{' '}
@@ -125,12 +121,12 @@ const GitHubActivity = () => {
                   {/* Counters */}
                   <div className="grid grid-cols-2 divide-x divide-border border-b border-border">
                     <div className="p-6">
-                      {data ? <p className="font-display tabular-nums text-4xl font-bold tracking-[-0.03em]">{data.repos}</p> : <Skeleton className="h-10 w-16" />}
+                      {data ? <p className="display tabular-nums text-[40px] leading-none">{data.repos}</p> : <Skeleton className="h-10 w-16" />}
                       <p className="mt-1 text-sm text-muted-foreground">public repositories</p>
                     </div>
                     <div className="p-6">
                       {data ? (
-                        <p className="font-display tabular-nums text-4xl font-bold tracking-[-0.03em]">{new Date(data.since).getFullYear()}</p>
+                        <p className="display tabular-nums text-[40px] leading-none">{new Date(data.since).getFullYear()}</p>
                       ) : (
                         <Skeleton className="h-10 w-20" />
                       )}
@@ -171,9 +167,9 @@ const GitHubActivity = () => {
                     {data
                       ? data.recent.map((r) => (
                           <li key={r.name} className="border-b border-border last:border-0">
-                            <a href={r.html_url} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 px-6 py-3.5 transition-colors hover:bg-secondary/50">
+                            <a href={r.html_url} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 px-6 py-3.5 transition-colors hover:bg-alt">
                               <span className={`h-2 w-2 shrink-0 rounded-full ${r.language ? LANG_COLOR[r.language] ?? 'bg-muted-foreground' : 'bg-muted-foreground/40'}`} />
-                              <span className="flex-1 truncate font-mono text-sm text-foreground group-hover:text-primary">{r.name}</span>
+                              <span className="flex-1 truncate font-mono text-sm text-foreground group-hover:text-accent-ink">{r.name}</span>
                               <span className="shrink-0 text-xs text-muted-foreground">pushed {ago(r.pushed_at)}</span>
                             </a>
                           </li>
@@ -190,8 +186,7 @@ const GitHubActivity = () => {
             </div>
           </AnimatedSection>
         </div>
-      </div>
-    </section>
+    </Section>
   );
 };
 

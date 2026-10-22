@@ -1,168 +1,151 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Logo from './Logo';
-import ThemeToggle from './ThemeToggle';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, Moon, Sun, X } from 'lucide-react';
+import { EASE } from '@/lib/motion';
 
 const NAV_LINKS = [
-  { to: '/',         label: 'Home' },
-  { to: '/about',    label: 'About' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/skills',   label: 'Skills' },
-  { to: '/cv',       label: 'CV' },
+  { to: '/', label: 'Home' },
+  { to: '/projects', label: 'Work' },
+  { to: '/about', label: 'About' },
+  { to: '/skills', label: 'Skills' },
+  { to: '/cv', label: 'CV' },
 ] as const;
 
-const Navigation = () => {
-  const [scrolled, setScrolled]         = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
+/** Initial theme: the visitor's saved choice, otherwise their system setting. */
+const initialDark = () => {
+  try {
     const saved = localStorage.getItem('theme');
-    return saved ? saved === 'dark' : true;
-  });
-  const location = useLocation();
+    if (saved) return saved === 'dark';
+  } catch {
+    /* storage unavailable */
+  }
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+};
+
+export const Wordmark = ({ onDark = false }: { onDark?: boolean }) => (
+  <span className="flex items-center gap-3">
+    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary font-mono text-[13px] font-medium text-white">AE</span>
+    <span className={`text-[15px] font-semibold tracking-[-0.01em] ${onDark ? 'text-white' : 'text-foreground'}`}>Ayobami Edun</span>
+  </span>
+);
+
+const iconBtn =
+  'flex h-10 w-10 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground';
+
+const Navigation = () => {
+  const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(initialDark);
+  const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.documentElement.classList.toggle('dark', dark);
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {
+      /* ignore */
+    }
+  }, [dark]);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileMenuOpen(false); }, [location]);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
-
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (to: string) => (to === '/' ? pathname === '/' : pathname.startsWith(to));
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.35, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
-          scrolled
-            ? 'bg-background/92 backdrop-blur-md border-b border-border py-3'
-            : 'bg-transparent py-4'
+      <header
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-300 ${
+          scrolled ? 'border-border bg-background/90 shadow-card backdrop-blur-md' : 'border-border/60 bg-background/95 backdrop-blur-md'
         }`}
       >
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
-            <Logo size="md" />
+        <nav className="container-x flex h-[76px] items-center justify-between" aria-label="Main">
+          <Link to="/" aria-label="Ayobami Edun, home" className="transition-opacity hover:opacity-85">
+            <Wordmark />
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex gap-0.5 items-center">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                aria-current={isActive(link.to) ? 'page' : undefined}
-                className={`relative px-3.5 py-2 text-sm font-medium transition-colors rounded-md ${
-                  isActive(link.to)
-                    ? 'text-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {link.label}
-                {/* Active indicator — full-width underline, clearly visible */}
-                {isActive(link.to) && (
-                  <motion.span
-                    layoutId="activeNav"
-                    className="absolute bottom-0.5 left-3.5 right-3.5 h-[2px] bg-primary rounded-full"
-                  />
-                )}
-              </Link>
+          <ul className="hidden items-center gap-1 md:flex">
+            {NAV_LINKS.map((l) => (
+              <li key={l.to}>
+                <NavLink
+                  to={l.to}
+                  className={`relative rounded-lg px-3.5 py-2 text-[14px] transition-colors ${
+                    isActive(l.to) ? 'font-medium text-accent-ink' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {l.label}
+                  {isActive(l.to) && (
+                    <motion.span layoutId="nav-active" className="absolute inset-x-3.5 -bottom-[19px] h-[2px] rounded-full bg-primary" transition={{ duration: 0.4, ease: EASE }} />
+                  )}
+                </NavLink>
+              </li>
             ))}
-          </div>
+          </ul>
 
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle isDark={isDark} onToggle={() => setIsDark((p) => !p)} />
+          <div className="hidden items-center gap-2 md:flex">
+            <button onClick={() => setDark((d) => !d)} className={iconBtn} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+              {dark ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
             <button
               onClick={() => window.dispatchEvent(new Event('open-terminal'))}
-              className="hidden lg:flex items-center px-2 py-1 rounded border border-border text-xs
-                         text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all font-mono"
+              className={`${iconBtn} hidden font-mono text-[12px] lg:flex`}
               aria-label="Open terminal"
               title="Terminal (press `)"
             >
               &gt;_
             </button>
             <button
-              onClick={() =>
-                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, metaKey: true, bubbles: true }))
-              }
-              className="hidden lg:flex items-center gap-1 px-2 py-1 rounded border border-border text-xs
-                         text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all font-mono"
+              onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, metaKey: true, bubbles: true }))}
+              className={`${iconBtn} hidden w-auto px-2.5 font-mono text-[12px] lg:flex`}
               aria-label="Open command palette"
             >
-              <span>{typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform) ? '⌘' : 'Ctrl'}</span>
-              <span>K</span>
+              {isMac ? '⌘K' : 'Ctrl K'}
             </button>
-            <Link to="/contact" className="btn-primary text-sm">
-              Let's talk
+            <Link to="/contact" className="btn-primary btn-sm ml-1">
+              Get in touch
             </Link>
           </div>
 
-          {/* Mobile controls */}
-          <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle isDark={isDark} onToggle={() => setIsDark((p) => !p)} size="sm" />
-            <button
-              className="p-2"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          <div className="flex items-center gap-2 md:hidden">
+            <button onClick={() => setDark((d) => !d)} className={iconBtn} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+              {dark ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+            <button onClick={() => setOpen((o) => !o)} className={iconBtn} aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open}>
+              {open ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
-        </div>
-      </motion.nav>
+        </nav>
+      </header>
 
-      {/* Mobile menu */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="fixed inset-x-0 top-[76px] z-40 border-b border-border bg-background shadow-card md:hidden"
           >
-            <div
-              className="absolute inset-0 bg-background/98 backdrop-blur-md"
-              onClick={() => setMobileMenuOpen(false)}
-            />
-            <div className="relative h-full flex flex-col items-center justify-center gap-5">
-              {NAV_LINKS.map((link, index) => (
-                <motion.div
-                  key={link.to}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
+            <ul className="container-x space-y-1 py-5">
+              {[...NAV_LINKS, { to: '/contact', label: 'Contact' }].map((l) => (
+                <li key={l.to}>
                   <Link
-                    to={link.to}
-                    aria-current={isActive(link.to) ? 'page' : undefined}
-                    className={`text-xl font-display font-semibold transition-colors ${
-                      isActive(link.to) ? 'text-primary' : 'text-muted-foreground'
-                    }`}
+                    to={l.to}
+                    className={`block rounded-xl px-4 py-3 text-[16px] ${isActive(l.to) ? 'bg-alt font-medium text-accent-ink' : 'text-foreground'}`}
                   >
-                    {link.label}
+                    {l.label}
                   </Link>
-                </motion.div>
+                </li>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_LINKS.length * 0.05 }}
-              >
-                <Link to="/contact" className="btn-primary mt-4">
-                  Let's talk
-                </Link>
-              </motion.div>
-            </div>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>

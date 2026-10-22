@@ -15,6 +15,13 @@ export default {
     extend: {
       colors: {
         border: "hsl(var(--border))",
+        alt: "hsl(var(--alt))",
+        surface: "hsl(var(--surface))",
+        "accent-ink": "hsl(var(--accent-ink))",
+        brand: {
+          50: "#EEF4FF", 100: "#DCE7FF", 200: "#B9CEFF", 300: "#8FB0FF", 500: "#3B74FF",
+          600: "#1F5EFF", 700: "#1747C7", 800: "#123A9E", 900: "#0C2560", 950: "#071636",
+        },
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -46,8 +53,8 @@ export default {
         'card': 'var(--shadow-card)',
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
-        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        sans: ['"Instrument Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Fraunces"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       keyframes: {

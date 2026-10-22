@@ -2,28 +2,26 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import HeroNetwork from './HeroNetwork';
-import CodeSnippet from './CodeSnippet';
 import DeployRoute, { type DeployRouteHandle } from './DeployRoute';
 import { EASE, WordMask, prefersReducedMotion } from '@/lib/motion';
+import { SITE, STATS } from '@/data/profile';
 import photoshoot from '@/assets/photoshoot.jpg';
 
 /*
- * Pinned, scroll-driven hero in the spirit of bizlift's: the hero holds still for a
- * stretch of scrolling while a deploy packet travels the pipeline route around it.
- * "cloud" lifts off as the rest of the headline recedes, and the photo column drifts up.
- * Pinning only switches on where the hero fits the viewport (desktop, 800px+ tall)
- * and never for reduced-motion visitors; everywhere else it is a normal hero.
+ * Home hero: the deep-blue band with drifting light (Bizlift's dark hero, in the brand blue).
+ * On tall desktop screens it pins while you scroll: a deploy packet travels the pipeline route
+ * around the hero, the pipeline card on the photo ticks through its stages, "stay up" lifts off
+ * and the rest of the headline recedes. Everywhere else it is a normal, static hero.
  */
 
-const SOCIALS = [
-  { href: 'https://github.com/Ayooluwabami', label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/ayobami-edun', label: 'LinkedIn' },
-  { href: 'https://medium.com/@ayobamieae', label: 'Medium' },
-  { href: '/contact', label: 'Message me' },
-];
-
 const PIN_QUERY = '(min-width: 1024px) and (min-height: 800px)';
+
+// Thresholds line up with the route stages in DeployRoute (scan 0.36, build 0.58, deploy 0.79).
+const STAGES = [
+  { label: 'secret scan', at: 0.36 },
+  { label: 'terraform plan', at: 0.58 },
+  { label: 'deploy · eks', at: 0.79 },
+] as const;
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 22 },
@@ -37,6 +35,8 @@ const HeroSection = () => {
   const sideRef = useRef<HTMLDivElement>(null);
   const routeRef = useRef<DeployRouteHandle>(null);
   const [pinned, setPinned] = useState(false);
+  // How many pipeline stages have passed. The static hero shows two done and the deploy running.
+  const [passed, setPassed] = useState(2);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -51,9 +51,8 @@ const HeroSection = () => {
     const pin = pinRef.current;
     const h1 = h1Ref.current;
     const side = sideRef.current;
-    if (!pin || !h1) return;
-    if (!pinned) {
-      routeRef.current?.setProgress(0);
+    if (!pin || !h1 || !pinned) {
+      setPassed(2);
       return;
     }
     const lift = h1.querySelector<HTMLElement>('[data-lift]');
@@ -68,12 +67,13 @@ const HeroSection = () => {
       if (p === last) return;
       last = p;
       routeRef.current?.setProgress(p);
-      // "cloud" literally lifts off; the other words recede so it reads on its own
+      const reached = 0.04 + p * 0.94;
+      setPassed(STAGES.filter((s) => reached >= s.at).length);
       const fade = Math.min(1, p / 0.85);
-      if (lift) lift.style.transform = `translateY(${(-fade * 20).toFixed(1)}px) scale(${(1 + fade * 0.06).toFixed(4)})`;
-      const dim = (1 - fade * 0.62).toFixed(3);
+      if (lift) lift.style.transform = `translateY(${(-fade * 16).toFixed(1)}px) scale(${(1 + fade * 0.05).toFixed(4)})`;
+      const dim = (1 - fade * 0.55).toFixed(3);
       others.forEach((w) => (w.style.opacity = dim));
-      if (side) side.style.translate = `0 ${(-p * 56).toFixed(1)}px`;
+      if (side) side.style.translate = `0 ${(-p * 48).toFixed(1)}px`;
     };
     const queue = () => {
       if (!queued) {
@@ -81,7 +81,6 @@ const HeroSection = () => {
         requestAnimationFrame(render);
       }
     };
-    // Let the entrance word-mask finish before scroll takes over the headline
     const t = window.setTimeout(queue, 50);
     window.addEventListener('scroll', queue, { passive: true });
     window.addEventListener('resize', queue);
@@ -95,111 +94,72 @@ const HeroSection = () => {
     };
   }, [pinned]);
 
+  const live = passed >= STAGES.length;
+
   return (
-    <section ref={pinRef} className={`relative ${pinned ? 'h-[175vh]' : ''}`}>
-      <div className={`hero-grain relative overflow-hidden ${pinned ? 'sticky top-0 flex h-[100svh] items-center' : ''}`}>
-        {/* Atmosphere: drifting light, the infrastructure mesh, and the deploy route */}
+    <section ref={pinRef} className={`relative ${pinned ? 'h-[170vh]' : ''}`}>
+      <div className={`band-dark hero-grain relative overflow-hidden ${pinned ? 'sticky top-0 flex h-[100svh] items-center pt-[76px]' : ''}`}>
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="band-grid absolute inset-0" />
           <div
-            className="aurora aurora-1 -right-[8%] -top-[18%] h-[640px] w-[640px] opacity-[0.16]"
-            style={{ background: 'radial-gradient(circle, hsl(var(--primary)), transparent 65%)' }}
+            className="aurora aurora-1 -right-[10%] -top-[22%] h-[680px] w-[680px] opacity-30"
+            style={{ background: 'radial-gradient(circle, hsl(223 100% 56%), transparent 62%)' }}
           />
           <div
-            className="aurora aurora-2 -bottom-[24%] -left-[12%] h-[520px] w-[520px] opacity-[0.10]"
-            style={{ background: 'radial-gradient(circle, hsl(168 70% 45%), transparent 65%)' }}
+            className="aurora aurora-2 -bottom-[28%] -left-[12%] h-[520px] w-[520px] opacity-20"
+            style={{ background: 'radial-gradient(circle, hsl(222 100% 66%), transparent 62%)' }}
           />
-          <HeroNetwork className="absolute inset-0 [mask-image:radial-gradient(ellipse_75%_70%_at_70%_45%,black_30%,transparent_80%)]" />
           {pinned && <DeployRoute ref={routeRef} className="absolute inset-0 h-full w-full" />}
         </div>
 
-        <div className={`container relative z-10 mx-auto px-6 ${pinned ? 'pt-20' : 'pb-20 pt-32 md:pb-28 md:pt-40'}`}>
-          <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
+        <div className={`container-x relative z-10 ${pinned ? '' : 'pb-20 pt-36 md:pb-24 md:pt-44'}`}>
+          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
-              <motion.p
-                {...fadeUp(0.05)}
-                className="mb-8 inline-flex items-center gap-2.5 rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs font-medium text-muted-foreground"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                Open to cloud, DevOps and SRE roles · eligible to work in the UK
+              <motion.p {...fadeUp(0.05)} className="eyebrow mb-6">
+                {SITE.role.charAt(0).toUpperCase() + SITE.role.slice(1)}
               </motion.p>
 
-              <motion.p {...fadeUp(0.12)} className="mb-4 text-base font-medium text-foreground">
-                Ayobami Edun <span className="text-muted-foreground">· Cloud, DevOps & platform engineer</span>
-              </motion.p>
-
-              {/* Words rise from their masks on load; on scroll, "cloud" lifts off */}
               <div ref={h1Ref}>
-                <WordMask as="h1" immediate delay={0.2} className="text-headline mb-7 max-w-[13ch]">
-                  I build the backend{' '}
-                  <span className="text-muted-foreground">
-                    and run the{' '}
-                    <span data-lift className="relative inline-block origin-bottom text-foreground will-change-transform">
-                      cloud
-                      <svg
-                        data-nosplit
-                        className="absolute -bottom-[0.12em] left-0 h-[0.32em] w-full overflow-visible"
-                        viewBox="0 0 200 20"
-                        preserveAspectRatio="none"
-                        aria-hidden="true"
-                      >
-                        <motion.path
-                          d="M3 14 C 50 4, 110 3, 197 9"
-                          fill="none"
-                          stroke="hsl(var(--primary))"
-                          strokeWidth="5"
-                          strokeLinecap="round"
-                          vectorEffect="non-scaling-stroke"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ duration: 1, delay: 1.1, ease: EASE }}
-                        />
-                      </svg>
-                    </span>{' '}
-                    it lives on.
-                  </span>
+                <WordMask as="h1" immediate delay={0.15} className="h-hero max-w-[15ch] text-white">
+                  Cloud platforms that{' '}
+                  <em data-lift className="inline-block origin-bottom-left will-change-transform">
+                    stay up
+                  </em>{' '}
+                  and ship safely.
                 </WordMask>
               </div>
 
-              <motion.p {...fadeUp(0.55)} className="text-subheadline mb-9">
-                Cloud, DevOps and platform engineering on AWS, Azure and GCP: Terraform, Kubernetes and security-gated
-                CI/CD that <span className="font-medium text-foreground">cut deployment time by 90%</span>, on a NestJS
-                backend foundation.
+              <motion.p {...fadeUp(0.5)} className="lede mt-6 max-w-[34rem] !text-white/75">
+                I design, build and run infrastructure on AWS, Azure and GCP: Terraform, Kubernetes and security-gated
+                CI/CD, on a NestJS backend foundation.
               </motion.p>
 
-              <motion.div {...fadeUp(0.68)} className="mb-10 flex flex-wrap items-center gap-3">
-                <Link to="/projects" className="btn-primary group flex items-center gap-2">
-                  See projects
+              <motion.div {...fadeUp(0.62)} className="mt-10 flex flex-wrap gap-3">
+                <Link to="/projects" className="btn-primary group">
+                  See the work
                   <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                 </Link>
-                <Link to="/cv" className="btn-secondary">
+                <Link to="/cv" className="btn border border-white/25 text-white hover:border-white/60">
                   Read the CV
                 </Link>
               </motion.div>
 
-              <motion.ul {...fadeUp(0.8)} className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                {SOCIALS.map((s) => (
-                  <li key={s.label}>
-                    {s.href.startsWith('/') ? (
-                      <Link to={s.href} className="link-underline pb-0.5 transition-colors hover:text-foreground">
-                        {s.label}
-                      </Link>
-                    ) : (
-                      <a href={s.href} target="_blank" rel="me noopener noreferrer" className="link-underline pb-0.5 transition-colors hover:text-foreground">
-                        {s.label}
-                      </a>
-                    )}
-                  </li>
+              <motion.dl {...fadeUp(0.74)} className="mt-12 grid max-w-[30rem] grid-cols-3 border-t border-white/10 pt-6">
+                {STATS.map((s) => (
+                  <div key={s.label}>
+                    <dt className="display text-[30px] leading-none text-white">{s.value}</dt>
+                    <dd className="mt-2 text-[13px] text-white/60">{s.label}</dd>
+                  </div>
                 ))}
-              </motion.ul>
+              </motion.dl>
             </div>
 
-            {/* Photo with the Terraform window overlapping it; drifts up as the hero is scrolled */}
-            <div ref={sideRef} className="relative mx-auto w-full max-w-[420px] will-change-transform lg:col-span-5 lg:mr-0">
+            <div ref={sideRef} className="relative mx-auto w-full max-w-[400px] will-change-transform lg:col-span-5 lg:ml-auto lg:mr-0">
               <motion.div
                 initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
                 animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
                 transition={{ duration: 1.15, delay: 0.25, ease: EASE }}
-                className="ml-auto w-[78%] overflow-hidden rounded-2xl border border-border shadow-card"
+                className="overflow-hidden rounded-2xl ring-1 ring-white/10"
               >
                 <motion.img
                   src={photoshoot}
@@ -207,21 +167,38 @@ const HeroSection = () => {
                   initial={{ scale: 1.12 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 1.6, delay: 0.25, ease: EASE }}
-                  className={`w-full object-cover object-top ${pinned ? 'aspect-[4/4.6]' : 'aspect-[4/5]'}`}
+                  className="aspect-[4/4.7] w-full object-cover object-top"
                 />
               </motion.div>
+
+              {/* Pipeline card: ticks through its stages as the packet travels the route */}
               <motion.div
-                initial={{ opacity: 0, y: 36 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.75, ease: EASE }}
-                className="relative -mt-24 w-[88%] sm:-mt-28"
+                transition={{ duration: 1, delay: 0.8, ease: EASE }}
+                className="code-window absolute -left-6 bottom-6 w-[min(290px,85%)] p-4 text-[12px] sm:-left-12"
+                aria-hidden="true"
               >
-                <CodeSnippet />
+                <p className="mb-3 flex justify-between text-white/60">
+                  <span>pipeline · main</span>
+                  <span className={live ? 'text-emerald-400' : 'text-[hsl(222_100%_80%)]'}>{live ? 'live' : 'running'}</span>
+                </p>
+                {STAGES.map((s, i) => {
+                  const done = i < passed;
+                  const running = i === passed;
+                  return (
+                    <p key={s.label} className="mt-1.5 flex justify-between">
+                      <span className={done || running ? 'text-white' : 'text-white/40'}>{s.label}</span>
+                      <span className={done ? 'text-emerald-400' : running ? 'text-[hsl(222_100%_80%)]' : 'text-white/30'}>
+                        {done ? 'passed' : running ? 'running' : 'queued'}
+                      </span>
+                    </p>
+                  );
+                })}
               </motion.div>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

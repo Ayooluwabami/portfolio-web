@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import Section from '../components/site/Section';
+import SectionHeading from '../components/site/SectionHeading';
 import AnimatedSection from '../components/AnimatedSection';
-import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
-import Band from '../components/Band';
 
 // Kept in step with the current Cloud, DevSecOps, SRE and Platform CVs (Jul 2026)
 const SKILL_CATEGORIES = [
@@ -60,108 +61,99 @@ const SOFT_SKILLS = [
   "Communication", "Time management", "Agile delivery", "Mentoring", "Stakeholder communication",
 ] as const;
 
-const Skills = () => {
-  return (
-    <div className="min-h-screen">
-      <Band tone="sky" first>
-        {/* Header */}
-        <AnimatedSection>
-          <div className="max-w-5xl mx-auto">
-            <WordReveal text="Expertise" className="text-label mb-4" />
-            <AnimatedHeadline as="h1" className="text-headline mb-5">
-              Technical <span className="text-gradient">skills</span>
-            </AnimatedHeadline>
-            <p className="text-subheadline">
-              Every tool I have used in production or a real build, grouped by where it sits in the stack.
-            </p>
-          </div>
-        </AnimatedSection>
+const PRINCIPLES = [
+  { title: 'Shift left', body: 'Security gates run before merge and locally as pre-commit hooks, so problems are caught where they are cheapest to fix.' },
+  { title: 'Everything as code', body: 'Infrastructure, pipelines and policies live in Git and change through reviewed pull requests.' },
+  { title: 'Measure reliability', body: 'SLOs, error budgets and alerts that page only when a person should act, backed by runbooks.' },
+];
 
-      </Band>
-      <Band tone="white">
-        {/* Skills — full-width cards, badges inside */}
-        <div className="max-w-5xl mx-auto space-y-5 mb-16">
-          {SKILL_CATEGORIES.map((category, categoryIndex) => (
-            <AnimatedSection key={category.title} delay={categoryIndex * 40}>
-              <div className="p-6 rounded-xl bg-secondary/40 border border-border">
-                <h2 className="text-sm font-semibold text-foreground mb-4 tracking-tight">
-                  {category.title}
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.span
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: skillIndex * 0.02 }}
-                      whileHover={{ scale: 1.03 }}
-                      className="px-3 py-1.5 bg-background text-foreground rounded-md text-xs font-medium
-                                 border border-border hover:border-primary/40 hover:text-primary
-                                 transition-all duration-150 cursor-default select-none"
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
+const Skills = () => (
+  <>
+    <Section tone="dark" grid first>
+      <SectionHeading
+        as="h1"
+        size="page"
+        eyebrow="Skills"
+        title={
+          <>
+            The tools, <em>in context</em>
+          </>
+        }
+        lede="Every tool I’ve used in production or a real build, grouped by where it sits in the stack."
+      />
+    </Section>
+
+    <Section tone="base">
+      <ul>
+        {SKILL_CATEGORIES.map((c, i) => (
+          <li key={c.title} className="border-t border-border last:border-b">
+            <AnimatedSection delay={Math.min(i, 4) * 40} className="grid gap-4 py-7 md:grid-cols-12 md:gap-8">
+              <div className="md:col-span-3">
+                <h2 className="h-card">{c.title}</h2>
+                <p className="mt-1 font-mono text-[12px] text-muted-foreground">{c.skills.length} tools</p>
               </div>
-            </AnimatedSection>
-          ))}
-        </div>
-
-      </Band>
-      <Band tone="ink">
-        {/* Approach */}
-        <AnimatedSection delay={300}>
-          <div className="max-w-4xl mx-auto">
-            <div className="p-8 bg-secondary/40 rounded-xl border border-border">
-              <h2 className="font-display text-xl font-bold mb-8 tracking-tight">Development approach</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { title: "Shift left", desc: "Security gates run before merge and locally as pre-commit hooks, so problems are caught where they are cheapest to fix." },
-                  { title: "Everything as code", desc: "Infrastructure, pipelines and policies live in Git and change through reviewed pull requests." },
-                  { title: "Measure reliability", desc: "SLOs, error budgets and alerts that page only when a person should act, backed by runbooks." },
-                ].map((approach) => (
-                  <div key={approach.title}>
-                    <div className="font-display tabular-nums text-2xl font-bold text-primary mb-2">{approach.title}</div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{approach.desc}</p>
-                  </div>
+              <div className="flex flex-wrap gap-2 md:col-span-9">
+                {c.skills.map((s) => (
+                  <span key={s} className="rounded-lg border border-border bg-alt px-3 py-1.5 text-[13px] text-foreground">
+                    {s}
+                  </span>
                 ))}
               </div>
-            </div>
-          </div>
-        </AnimatedSection>
+            </AnimatedSection>
+          </li>
+        ))}
+      </ul>
+    </Section>
 
-      </Band>
-      <Band tone="mint">
-        {/* Soft skills */}
-        <AnimatedSection delay={350}>
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <p className="text-label mb-3">Beyond technical</p>
-              <h2 className="font-display text-xl font-bold tracking-tight">
-                Soft <span className="text-gradient">skills</span>
-              </h2>
+    <Section tone="alt">
+      <SectionHeading
+        eyebrow="Approach"
+        title={
+          <>
+            How the tools <em>get used</em>
+          </>
+        }
+      />
+      <div className="mt-12 grid gap-5 md:grid-cols-3">
+        {PRINCIPLES.map((p, i) => (
+          <AnimatedSection key={p.title} delay={i * 80} className="h-full">
+            <div className="card h-full p-7 shadow-card">
+              <span className="font-mono text-[13px] text-accent-ink">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="display mt-5 text-[26px] leading-tight">{p.title}</h3>
+              <p className="body mt-3">{p.body}</p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {SOFT_SKILLS.map((skill, index) => (
-                <motion.span
-                  key={skill}
-                  initial={{ opacity: 0, y: 5 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.03 }}
-                  whileHover={{ scale: 1.03 }}
-                  className="px-4 py-2 bg-secondary/50 rounded-lg border border-border hover:border-primary/40
-                             text-sm font-medium transition-all duration-150 cursor-default select-none"
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </div>
+          </AnimatedSection>
+        ))}
+      </div>
+    </Section>
+
+    <Section tone="base">
+      <div className="grid gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <SectionHeading
+            eyebrow="Beyond technical"
+            title={
+              <>
+                How I work <em>with people</em>
+              </>
+            }
+          />
+        </div>
+        <AnimatedSection delay={120} className="lg:col-span-7 lg:col-start-6">
+          <div className="flex flex-wrap gap-2.5">
+            {SOFT_SKILLS.map((s) => (
+              <span key={s} className="rounded-xl border border-border px-4 py-2.5 text-[14px]">
+                {s}
+              </span>
+            ))}
           </div>
+          <Link to="/cv" className="btn-outline btn-sm mt-10">
+            See where I used them <ArrowRight size={15} />
+          </Link>
         </AnimatedSection>
-      </Band>
-    </div>
-  );
-};
+      </div>
+    </Section>
+  </>
+);
 
 export default Skills;
