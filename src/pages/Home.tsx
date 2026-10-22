@@ -4,27 +4,19 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatedHeadline, WordReveal } from '../components/AnimatedHeadline';
 import CountUp from '../components/CountUp';
-import CodeSnippet from '../components/CodeSnippet';
-import HeroNetwork from '../components/HeroNetwork';
+import HeroSection from '../components/HeroSection';
 import StackMarquee from '../components/StackMarquee';
 import PipelinePanel from '../components/PipelinePanel';
+import { Curtain, DepthGrid, ScrubText } from '@/lib/motion';
 import RecruiterBrief from '../components/RecruiterBrief';
 import WhatYouGet from '../components/WhatYouGet';
 import GitHubActivity from '../components/GitHubActivity';
-import photoshoot from '@/assets/photoshoot.jpg';
 import thina from '@/assets/work/thina.jpg';
 import drivewell from '@/assets/work/drivewell.jpg';
 import innovaswift from '@/assets/work/innovaswift.jpg';
 import jotem from '@/assets/work/jotem.jpg';
 
 const ease = [0.16, 1, 0.3, 1] as const;
-
-const SOCIALS = [
-  { href: 'https://github.com/Ayooluwabami', label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/ayobami-edun', label: 'LinkedIn' },
-  { href: 'https://medium.com/@ayobamieae', label: 'Medium' },
-  { href: 'mailto:ayobamieae@gmail.com', label: 'Email' },
-];
 
 const STATS = [
   { to: 3, suffix: '+', label: 'Years building production backends' },
@@ -67,126 +59,9 @@ const ARTICLES = [
   },
 ];
 
-const rise = (delay: number) => ({
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, ease, delay },
-});
-
 const Home = () => (
   <div className="min-h-screen">
-    {/* ── Hero ── */}
-    <section className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div
-          className="absolute -top-40 right-[-10%] h-[620px] w-[820px] opacity-[0.10]"
-          style={{ background: 'radial-gradient(ellipse at 60% 30%, hsl(var(--primary)), transparent 65%)' }}
-        />
-        <div className="absolute -bottom-40 left-[-10%] h-[520px] w-[620px] animate-drift opacity-[0.07]"
-          style={{ background: 'radial-gradient(circle, hsl(var(--primary)), transparent 65%)' }}
-        />
-        <HeroNetwork className="absolute inset-0 [mask-image:radial-gradient(ellipse_75%_70%_at_70%_45%,black_30%,transparent_80%)]" />
-      </div>
-
-      <div className="container relative z-10 mx-auto px-6 pb-20 pt-32 md:pb-28 md:pt-40">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7">
-            <motion.p {...rise(0.05)} className="mb-8 inline-flex items-center gap-2.5 rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs font-medium text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-              Open to cloud, DevOps and SRE roles · eligible to work in the UK
-            </motion.p>
-
-            <motion.p {...rise(0.1)} className="mb-4 text-base font-medium text-foreground">
-              Ayobami Edun <span className="text-muted-foreground">· Cloud, DevOps & platform engineer</span>
-            </motion.p>
-
-            <div style={{ perspective: '900px' }}>
-              <motion.h1
-                initial={{ opacity: 0, y: 48, rotateX: -18 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 0.9, delay: 0.15, ease }}
-                style={{ transformOrigin: 'bottom center' }}
-                className="text-headline mb-7 max-w-[13ch]"
-              >
-                I build the backend{' '}
-                <span className="text-muted-foreground">
-                  and run the{' '}
-                  <span className="relative inline-block text-foreground">
-                    cloud
-                    <svg className="absolute -bottom-[0.12em] left-0 h-[0.32em] w-full overflow-visible" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true">
-                      <motion.path
-                        d="M3 14 C 50 4, 110 3, 197 9"
-                        fill="none"
-                        stroke="hsl(var(--primary))"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                        vectorEffect="non-scaling-stroke"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 0.9, delay: 1, ease: [0.65, 0, 0.35, 1] }}
-                      />
-                    </svg>
-                  </span>{' '}
-                  it lives on.
-                </span>
-              </motion.h1>
-            </div>
-
-            <motion.p {...rise(0.3)} className="text-subheadline mb-9">
-              NestJS services on AWS, Azure and GCP, provisioned with Terraform and Kubernetes, shipped through
-              security-gated CI/CD that <span className="font-medium text-foreground">cut deployment time by 90%</span>.
-            </motion.p>
-
-            <motion.div {...rise(0.4)} className="mb-10 flex flex-wrap items-center gap-3">
-              <Link to="/projects" className="btn-primary group flex items-center gap-2">
-                See projects
-                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-              </Link>
-              <Link to="/cv" className="btn-secondary">
-                Read the CV
-              </Link>
-            </motion.div>
-
-            <motion.ul {...rise(0.5)} className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-              {SOCIALS.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target={s.href.startsWith('mailto') ? undefined : '_blank'}
-                    rel="me noopener noreferrer"
-                    className="link-underline pb-0.5 transition-colors hover:text-foreground"
-                  >
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-            </motion.ul>
-          </div>
-
-          {/* Photo with the Terraform window overlapping it, so the two read as one composition */}
-          <div className="relative mx-auto w-full max-w-[420px] lg:col-span-5 lg:mr-0">
-            <motion.div
-              initial={{ opacity: 0, clipPath: 'inset(100% 0% 0% 0%)' }}
-              animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)' }}
-              transition={{ duration: 1.1, delay: 0.2, ease }}
-              className="ml-auto w-[78%] overflow-hidden rounded-2xl border border-border shadow-card"
-            >
-              <motion.img
-                src={photoshoot}
-                alt="Ayobami Edun"
-                initial={{ scale: 1.12 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 1.5, delay: 0.2, ease }}
-                className="aspect-[4/5] w-full object-cover object-top"
-              />
-            </motion.div>
-            <div className="relative -mt-24 w-[88%] sm:-mt-28">
-              <CodeSnippet />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <HeroSection />
 
     <StackMarquee />
 
@@ -202,12 +77,10 @@ const Home = () => (
               </AnimatedHeadline>
             </AnimatedSection>
             <AnimatedSection delay={100}>
-              <p className="text-subheadline mb-8">
-                Most teams lose weeks wiring deploys, chasing outages and bolting on security late. I build systems where
-                that work is already done: NestJS services on EKS with Helm blue/green deploys, infrastructure as code in
-                Terraform and CloudFormation, and pipelines that gate on SAST, secret and container scans{' '}
-                <span className="font-medium text-foreground">before anything ships</span>.
-              </p>
+              <ScrubText
+                className="font-display mb-8 text-2xl font-semibold leading-snug tracking-[-0.02em] md:text-[1.9rem]"
+                text="Most teams lose weeks wiring deploys, chasing outages and bolting on security late. I build systems where that work is already done: Kubernetes with GitOps, infrastructure as code, and pipelines that scan secrets, code and containers before anything ships."
+              />
               <Link to="/about" className="group inline-flex items-center gap-2 text-sm font-medium text-primary">
                 <span className="link-underline pb-0.5">More about my journey</span>
                 <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -353,18 +226,18 @@ const Home = () => (
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2">
+          <DepthGrid className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2">
             {LIVE.map((p, i) => (
               <AnimatedSection key={p.title} delay={(i % 2) * 90}>
                 <a href={p.href} target="_blank" rel="noopener noreferrer" className="group block">
-                  <div className="overflow-hidden rounded-xl border border-border bg-secondary">
-                    <img
-                      src={p.img}
-                      alt={`${p.title} website`}
-                      loading="lazy"
-                      className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    />
-                  </div>
+                  <Curtain
+                    src={p.img}
+                    alt={`${p.title} website`}
+                    index={i % 2}
+                    parallax={26}
+                    className="aspect-[16/10] overflow-hidden rounded-xl border border-border bg-secondary transition-shadow duration-500 group-hover:shadow-hover"
+                    imgClassName="h-full w-full object-cover object-top"
+                  />
                   <div className="mt-5 flex items-start justify-between gap-4">
                     <div>
                       <h3 className="font-display text-xl font-bold tracking-[-0.02em] transition-colors group-hover:text-primary">{p.title}</h3>
@@ -377,7 +250,7 @@ const Home = () => (
                 </a>
               </AnimatedSection>
             ))}
-          </div>
+          </DepthGrid>
         </div>
       </div>
     </section>
@@ -455,8 +328,8 @@ const Home = () => (
                   Get in touch
                   <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                 </Link>
-                <a href="mailto:ayobamieae@gmail.com" className="btn-secondary">
-                  ayobamieae@gmail.com
+                <a href="https://www.linkedin.com/in/ayobami-edun" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  LinkedIn
                 </a>
               </div>
             </div>

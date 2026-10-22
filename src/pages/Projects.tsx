@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatedHeadline } from '../components/AnimatedHeadline';
 import Band from '../components/Band';
+import { Curtain } from '@/lib/motion';
 import { PROJECTS as ALL_PROJECTS, type Project } from '../data/projects';
 
 const iconLink = 'rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground';
@@ -21,11 +22,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
           aria-label={`Open the live ${project.title} site`}
           className="block overflow-hidden border-b border-border"
         >
-          <img
+<Curtain
             src={project.image}
             alt={`${project.title} homepage`}
-            loading="lazy"
-            className="aspect-[16/9] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            parallax={20}
+            className="aspect-[16/9] overflow-hidden"
+            imgClassName="h-full w-full object-cover object-top"
           />
         </a>
       )}

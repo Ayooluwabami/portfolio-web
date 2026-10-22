@@ -404,3 +404,82 @@
     radial-gradient(ellipse 55% 80% at 90% 0%, hsl(200 90% 70% / 0.30), transparent 60%),
     radial-gradient(ellipse 45% 70% at 0% 100%, hsl(230 80% 25% / 0.45), transparent 60%);
 }
+
+/* ── Motion vocabulary (see src/lib/motion.tsx) ──────────────────────────────
+   One easing for everything: cubic-bezier(.22,1,.36,1), the same long ease-out
+   bizlift uses. Reduced-motion visitors get every element in its final state. */
+
+/* Word mask: each word rises out of its own clip box, 46ms apart */
+.wm .wm-w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.02em 0.14em 0;
+  margin: 0 -0.02em -0.14em 0;
+}
+.wm .wm-i {
+  display: inline-block;
+  transform: translateY(112%);
+  transition: transform 1s cubic-bezier(.22, 1, .36, 1);
+  transition-delay: calc(var(--wm-delay, 0s) + var(--i, 0) * 46ms);
+}
+.wm.wm-in .wm-i { transform: none; }
+
+/* Scroll-lit statement: dim words light up as the paragraph climbs the screen */
+.scrub-w { transition: color 0.45s ease; color: hsl(var(--muted-foreground) / 0.45); }
+.scrub-w.on { color: hsl(var(--foreground)); }
+
+/* Curtain: the frame wipes up while the image settles from a slight zoom */
+.curtain {
+  overflow: hidden;
+  height: 100%;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.15s cubic-bezier(.22, 1, .36, 1);
+  transition-delay: calc(var(--i, 0) * 120ms);
+}
+.curtain > img { transform: scale(1.1); transition: transform 1.5s cubic-bezier(.22, 1, .36, 1); transition-delay: inherit; }
+.curtain.curtain-in { clip-path: inset(0 0 0 0); }
+.curtain.curtain-in > img { transform: none; }
+
+/* Hero atmosphere: slow drifting light and moving film grain */
+.aurora { position: absolute; border-radius: 9999px; filter: blur(10px); pointer-events: none; }
+.aurora-1 { animation: aurora1 16s ease-in-out infinite; }
+.aurora-2 { animation: aurora2 20s ease-in-out infinite; }
+@keyframes aurora1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-70px, 50px) scale(1.12); } }
+@keyframes aurora2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(80px, -40px) scale(1.08); } }
+
+.hero-grain::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 7s steps(8) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+/* Deploy packet idles with a gentle bob before the visitor starts scrolling */
+.packet-idle { animation: packetBob 2.6s ease-in-out infinite; }
+@keyframes packetBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .wm .wm-i { transform: none !important; transition: none !important; }
+  .scrub-w { color: hsl(var(--foreground)) !important; }
+  .curtain { clip-path: none !important; }
+  .curtain > img { transform: none !important; }
+  .aurora, .hero-grain::after, .packet-idle { animation: none !important; }
+}
+
+/* Deploy route stages: dim until the packet reaches them */
+.route-stage .stage-dot { fill: hsl(var(--background)); stroke: hsl(var(--muted-foreground) / 0.5); stroke-width: 1.5; transition: fill .5s ease, stroke .5s ease, r .5s cubic-bezier(.22,1,.36,1); }
+.route-stage .stage-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: hsl(var(--muted-foreground) / 0.55); transition: fill .5s ease; }
+.route-stage.stage-on .stage-dot { fill: hsl(var(--primary)); stroke: hsl(var(--primary)); r: 6; }
+.route-stage.stage-on .stage-label { fill: hsl(var(--foreground)); }
+.route-stage.stage-live.stage-on .stage-dot { fill: #22c55e; stroke: #22c55e; }

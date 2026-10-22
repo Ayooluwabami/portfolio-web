@@ -21,9 +21,9 @@ const Footer = () => (
         <div className="md:col-span-6">
           <p className="font-display text-lg font-bold tracking-[-0.02em]">Ayobami Edun</p>
           <p className="mt-1 text-sm text-muted-foreground">Cloud, DevOps & platform engineer · West Midlands, UK</p>
-          <a href="mailto:ayobamieae@gmail.com" className="link-underline mt-5 inline-block pb-0.5 text-sm text-foreground">
-            ayobamieae@gmail.com
-          </a>
+          <Link to="/contact" className="link-underline mt-5 inline-block pb-0.5 text-sm text-foreground">
+            Send me a message →
+          </Link>
         </div>
         <nav className="text-sm md:col-span-3" aria-label="Footer">
           <ul className="space-y-2">

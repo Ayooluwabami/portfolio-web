@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 import { WordReveal, AnimatedHeadline } from './AnimatedHeadline';
+import { DepthGrid } from '@/lib/motion';
 
 /*
  * What a team gets from hiring me, stated as outcomes. Every claim points at the project that proves it,
@@ -77,9 +78,9 @@ const WhatYouGet = () => (
           </div>
         </AnimatedSection>
 
-        <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+        <DepthGrid className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {OUTCOMES.map((o, i) => (
-            <AnimatedSection key={o.n} delay={(i % 3) * 70} className="bg-[hsl(222_40%_9%)]">
+            <AnimatedSection key={o.n} delay={(i % 3) * 70} className="overflow-hidden rounded-xl border border-border bg-[hsl(222_40%_9%)] transition-colors duration-300 hover:border-primary/40">
               <Link to={o.to} className="group flex h-full flex-col p-7 transition-colors duration-300 hover:bg-primary/[0.06]">
                 <span className="mb-8 font-mono text-xs text-primary">{o.n}</span>
                 <h3 className="font-display mb-3 text-xl font-bold leading-snug tracking-[-0.02em]">{o.title}</h3>
@@ -91,7 +92,7 @@ const WhatYouGet = () => (
               </Link>
             </AnimatedSection>
           ))}
-        </div>
+        </DepthGrid>
 
         {/* First 90 days */}
         <AnimatedSection delay={100}>
